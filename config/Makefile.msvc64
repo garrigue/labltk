@@ -1,0 +1,5 @@
+# Configuration for Windows, Visual C++ compiler -- NOT SUPPORTED
+WHERE=C:/ocamlms64/lib/ocaml
+include C:/ocamlms64/lib/ocaml/Makefile.config
+TK_DEFS=
+TK_LINK=

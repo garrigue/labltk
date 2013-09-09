@@ -1,0 +1,5 @@
+# Configuration for Windows, Mingw compiler -- NOT SUPPORTED
+WHERE=C:/ocamlmgw64/lib/ocaml
+include C:/ocamlmgw64/lib/ocaml/Makefile.config
+TK_DEFS=
+TK_LINK=

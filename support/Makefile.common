@@ -1,0 +1,39 @@
+#######################################################################
+#                                                                     #
+#                 MLTk, Tcl/Tk interface of OCaml                     #
+#                                                                     #
+#    Francois Rouaix, Francois Pessaux, Jun Furuse and Pierre Weis    #
+#               projet Cristal, INRIA Rocquencourt                    #
+#            Jacques Garrigue, Kyoto University RIMS                  #
+#                                                                     #
+#  Copyright 1999 Institut National de Recherche en Informatique et   #
+#  en Automatique and Kyoto University.  All rights reserved.         #
+#  This file is distributed under the terms of the GNU Library        #
+#  General Public License, with the special exception on linking      #
+#  described in file LICENSE found in the OCaml source tree.          #
+#                                                                     #
+#######################################################################
+
+LIBNAME=labltk
+
+include ../config/Makefile
+
+INSTALLDIR=$(LIBDIR)/$(LIBNAME)
+
+## Tools from the OCaml distribution
+
+CAMLRUN=$(BINDIR)/ocamlrun
+CAMLC=$(BINDIR)/ocamlc
+CAMLOPT=$(BINDIR)/ocamlopt
+CAMLCB=$(BINDIR)/ocamlc
+CAMLOPTB=$(BINDIR)/ocamlopt
+CAMLCOMP=$(CAMLC) -c -warn-error A
+CAMLYACC=$(BINDIR)/ocamlyacc -v
+CAMLLEX=$(BINDIR)/ocamllex
+CAMLLIBR=$(CAMLC) -a
+CAMLDEP=$(BINDIR)/ocamldep
+COMPFLAGS=-g
+LINKFLAGS=
+CAMLOPTLIBR=$(CAMLOPT) -a
+MKLIB=$(BINDIR)/ocamlmklib
+CAMLRUNGEN=$(BINDIR)/ocamlrun

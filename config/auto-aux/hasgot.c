@@ -1,0 +1,3 @@
+main() {
+  Tk_SetGrid();
+}
