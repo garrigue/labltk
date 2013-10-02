@@ -74,7 +74,10 @@ let view_symbol ~kind ~env ?path id =
         Tconstr (cpath, _, _) ->
         if Path.same cpath Predef.path_exn then
           view_signature ~title:(string_of_longident id) ~env ?path
-            [Sig_exception (Ident.create name, {Types.exn_loc = Location.none; exn_args = cd.cstr_args})]
+            [Sig_exception (Ident.create name,
+                            {Types.exn_loc = Location.none;
+                             exn_args = cd.cstr_args;
+                             exn_attributes = []})]
         else
           view_type_decl cpath ~env
       | _ -> ()
@@ -226,7 +229,7 @@ let ident_of_decl ~modlid = function
   | Sig_class_type (id, _, _) -> Lident (Ident.name id), Pcltype
 
 let view_defined ~env ?(show_all=false) modlid =
-  try match lookup_module modlid env with path, Mty_signature sign ->
+  try match lookup_module modlid env with path, {md_type=Mty_signature sign} ->
     let rec iter_sign sign idents =
       match sign with
         [] -> List.rev idents

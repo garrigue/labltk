@@ -232,19 +232,19 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
             Type_abstract -> false
           | Type_variant l ->
             List.exists l ~f:
-            begin fun (_, l, r) ->
+            begin fun {Types.cd_args=l; cd_res=r} ->
               List.exists l ~f:matches ||
               match r with None -> false | Some x -> matches x
             end
           | Type_record(l, rep) ->
-            List.exists l ~f:(fun (_, _, t) -> matches t)
+            List.exists l ~f:(fun {Types.ld_type=t} -> matches t)
           end
           then [lid_of_id id, Ptype] else []
       | Sig_exception (id, l) ->
           if List.exists l.exn_args ~f:matches
           then [lid_of_id id, Pconstructor]
           else []
-      | Sig_module (id, Mty_signature sign, _) ->
+      | Sig_module (id, {md_type=Mty_signature sign}, _) ->
           search_type_in_signature t ~sign ~mode
             ~prefix:(prefix @ [Ident.name id])
       | Sig_module _ -> []
@@ -274,7 +274,7 @@ let search_all_types t ~mode =
     begin fun modname ->
     let mlid = Lident modname in
     try match lookup_module mlid initial with
-      _, Mty_signature sign ->
+      _, {md_type=Mty_signature sign} ->
         List2.flat_map tl
           ~f:(search_type_in_signature ~sign ~prefix:[modname] ~mode)
     | _ -> []
@@ -356,7 +356,7 @@ let search_pattern_symbol text =
   let l = List.map !module_list ~f:
     begin fun modname -> Lident modname,
     try match lookup_module (Lident modname) initial with
-      _, Mty_signature sign ->
+      _,  {md_type=Mty_signature sign} ->
         List2.flat_map sign ~f:
           begin function
             Sig_value (i, _) when check i -> [i, Pvalue]

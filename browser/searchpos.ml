@@ -185,7 +185,7 @@ let rec search_pos_signature l ~pos ~env =
     let env = match pt.psig_desc with
       Psig_open (ovf, id, _) ->
         let path, mt = lookup_module id.txt env in
-        begin match mt with
+        begin match mt.md_type with
           Mty_signature sign -> open_signature ovf path sign env
         | _ -> env
         end
@@ -436,7 +436,7 @@ and view_signature_item sign ~path ~env =
 
 and view_module path ~env =
   match find_module path env with
-    Mty_signature sign ->
+    {md_type=Mty_signature sign} ->
       !view_defined_ref (Searchid.longident_of_path path) ~env
   | modtype ->
       let id = ident_of_path path ~default:"M" in
@@ -491,7 +491,7 @@ and view_expr_type ?title ?path ?env ?(name="noname") t =
     | Some path -> parent_path path, ident_of_path path ~default:name
   in
   view_signature ~title ?path ?env
-    [Sig_value (id, {val_type = t; val_kind = Val_reg;
+    [Sig_value (id, {val_type = t; val_kind = Val_reg; val_attributes=[];
            Types.val_loc = Location.none})]
 
 and view_decl lid ~kind ~env =
@@ -588,15 +588,17 @@ let view_type kind ~env =
       end
   | `Class (path, cty) ->
       let cld = { cty_params = []; cty_variance = []; cty_type = cty;
-                  cty_path = path; cty_new = None } in
+                  cty_path = path; cty_new = None; cty_loc = Location.none;
+                  cty_attributes = []} in
       view_signature_item ~path ~env
         [Sig_class(ident_of_path path ~default:"c", cld, Trec_first)]
   | `Module (path, mty) ->
       match mty with
         Mty_signature sign -> view_signature sign ~path ~env
       | modtype ->
+          let md = {Types.md_type = mty; md_attributes = []} in
           view_signature_item ~path ~env
-            [Sig_module(ident_of_path path ~default:"M", mty, Trec_not)]
+            [Sig_module(ident_of_path path ~default:"M", md, Trec_not)]
 
 let view_type_menu kind ~env ~parent =
   let title =
