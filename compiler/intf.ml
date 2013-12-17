@@ -49,7 +49,7 @@ let labltk_write_create_p ~w wname =
           end))
     with Not_found -> fatal_error "in write_create_p"
   end;
-  w (" ->\n  'a widget -> " ^ wname ^ " widget\n");
+  w (" ->\n  'a widget -> " ^ caml_name wname ^ " widget\n");
   w "(** [create ?name parent options...] creates a new widget with\n";
   w "    parent [parent] and new patch component [name], if specified. *)\n\n"
 ;;

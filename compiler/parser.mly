@@ -306,7 +306,12 @@ ParserArity :
   { MultipleToken }
 ;
 
-
+ModuleName :
+   IDENT
+  { $1 }
+ | STRING
+  { $1 }
+;
 
 entry :
   TYPE ParserArity TypeName LBRACE Constructors RBRACE
@@ -315,15 +320,15 @@ entry :
     { enter_type $4 $3 $6 ~variant: true }
 | TYPE ParserArity TypeName EXTERNAL
     { enter_external_type $3 $2 }
-| SUBTYPE ParserArity OPTION LPAREN IDENT RPAREN LBRACE AbbrevConstructors RBRACE
+| SUBTYPE ParserArity OPTION LPAREN ModuleName RPAREN LBRACE AbbrevConstructors RBRACE
     { enter_subtype "options" $2 $5 $8 }
 | SUBTYPE ParserArity TypeName LPAREN IDENT RPAREN LBRACE AbbrevConstructors RBRACE
     { enter_subtype $3 $2 $5 $8 }
 | Command
     { enter_function $1 }
-| WIDGET IDENT LBRACE WidgetComponents RBRACE
+| WIDGET ModuleName LBRACE WidgetComponents RBRACE
     { enter_widget $2 $4 }
-| MODULE IDENT LBRACE ModuleComponents RBRACE
+| MODULE ModuleName LBRACE ModuleComponents RBRACE
     { enter_module (String.uncapitalize $2) $4 }
 | EOF
     { raise End_of_file }

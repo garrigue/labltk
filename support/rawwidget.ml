@@ -47,6 +47,7 @@ and scale
 and scrollbar
 and text
 and toplevel
+and ttk_labelframe
 
 let forget_type w = (Obj.magic (w : 'a raw_widget) : raw_any raw_widget)
 let coe = forget_type
@@ -122,6 +123,7 @@ and widget_scale_table = [ "scale" ]
 and widget_scrollbar_table = [ "scrollbar" ]
 and widget_text_table = [ "text" ]
 and widget_toplevel_table = [ "toplevel" ]
+and widget_ttk_labelframe_table = [ "ttk::labelframe" ]
 
 let new_suffix clas n =
   try

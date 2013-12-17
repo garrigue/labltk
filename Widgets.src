@@ -2302,3 +2302,11 @@ module Encoding {
   function () system_set ["encoding"; "system"; string]
   function (string) system_get ["encoding"; "system"]
 }
+
+% sample addition: ttk::labelframe
+% widget "ttk::labelframe" {
+%   function (string) after [int]
+% }
+% subtype option("ttk::labelframe") {
+%   Text
+% }

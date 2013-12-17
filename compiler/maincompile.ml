@@ -166,6 +166,7 @@ let option_hack oc =
 
 let realname name =
   (* module name fix for camltk *)
+  let name = caml_name name in
   if !Flags.camltk then "c" ^ String.capitalize name
   else name
 ;;
@@ -290,7 +291,7 @@ let compile () =
     Hashtbl.iter (fun name _ ->
       let cname = realname name in
       output_string oc (Printf.sprintf "module %s = %s;;\n"
-                          (String.capitalize name)
+                          (String.capitalize (caml_name name))
                           (String.capitalize cname))) module_table;
     close_out oc
   end else begin
@@ -311,13 +312,14 @@ module Timer = Timer;;\n\
     Hashtbl.iter (fun name _ ->
       let cname = realname name in
       output_string oc (Printf.sprintf "module %s = %s;;\n"
-                          (String.capitalize name)
+                          (String.capitalize (caml_name name))
                           (String.capitalize cname))) module_table;
     (* widget typer *)
     output_string oc "\n(** Widget typers *)\n\nopen Widget\n\n";
     Hashtbl.iter (fun name def ->
       match def.module_type with
       | Widget ->
+          let name = caml_name name in
           output_string oc (Printf.sprintf
               "let %s (w : any widget) =\n" name);
           output_string oc (Printf.sprintf

@@ -1,3 +1,9 @@
+2013-12-17:
+-----------
+* Add INSTALL file.
+* Update for ocaml trunk.
+* Modify tkcompiler to allow widgets with name containing special characters.
+
 2005-12-20:
 -----------
 * Add Protocol.do_one_event and Protocol.do_pending.

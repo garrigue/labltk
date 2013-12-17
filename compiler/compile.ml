@@ -80,6 +80,15 @@ let count ~item:x l =
   List.iter ~f:(fun y -> if x = y then incr count) l;
   !count
 
+let caml_name s =
+  let b = Buffer.create (String.length s) in
+  for i = 0 to String.length s - 1 do
+    let c = s.[i] in
+    if c <> ':' then Buffer.add_char b c
+    else if i > 0 && s.[i-1] = ':' then Buffer.add_char b '_'
+  done;
+  Buffer.contents b
+
 (* Extract all types from a template *)
 let rec types_of_template = function
     StringArg _ -> []
@@ -108,10 +117,10 @@ let ppMLtype ?(any=false) ?(return=false) ?(def=false) ?(counter=ref 0) =
   | String -> "string"
 (* new *)
   | List (Subtype (sup, sub)) ->
-    if !Flags.camltk then "(* " ^ sub ^ " *) " ^ sup ^ " list"
+    if !Flags.camltk then "(* " ^ sub ^ " *) " ^ caml_name sup ^ " list"
     else begin
       if return then
-        sub ^ "_" ^ sup ^ " list"
+        caml_name sub ^ "_" ^ caml_name sup ^ " list"
       else begin
          try
           let typdef = Hashtbl.find types_table sup in
@@ -145,7 +154,8 @@ let ppMLtype ?(any=false) ?(return=false) ?(def=false) ?(counter=ref 0) =
       String.concat ~sep:" * "
         (List.map tyl ~f:(fun (l, t) -> typelabel l ^ ppMLtype t))
   | Subtype ("widget", sub) ->
-      if !Flags.camltk then "(* " ^ sub ^" *) widget" else sub ^ " widget"
+      if !Flags.camltk then "(* " ^ sub ^" *) widget" else
+      caml_name sub ^ " widget"
   | UserDefined "widget" ->
       if !Flags.camltk then "widget"
       else begin
@@ -182,7 +192,8 @@ let ppMLtype ?(any=false) ?(return=false) ?(def=false) ?(counter=ref 0) =
         with Not_found -> s
       end
   | Subtype (s, s') ->
-      if !Flags.camltk then "(* " ^ s' ^ " *) " ^ s else s' ^ "_" ^ s
+      if !Flags.camltk then "(* " ^ s' ^ " *) " ^ caml_name s else
+      caml_name s' ^ "_" ^ caml_name s
   | Function (Product tyl) ->
         raise (Failure "Function (Product tyl) ? ppMLtype")
   | Function (Record tyl) ->
@@ -300,13 +311,13 @@ let camltk_write_type ~intf:w ~impl:w' name ~def:typdef =
       (sort_components typdef.constructors);
     w "\n\n";
     (* The set of all constructors *)
-    w' ("let "^name^"_any_table = [");
+    w' ("let "^caml_name name^"_any_table = [");
     write_constructor_set ~w:w' ~sep:"; "
       (sort_components typdef.constructors);
     w' ("]\n\n");
     (* The subset of constructors for each subtype *)
     List.iter ~f:(function (s,l) ->
-      w' ("let "^name^"_"^s^"_table = [");
+      w' ("let "^caml_name name^"_"^caml_name s^"_table = [");
       write_constructor_set ~w:w' ~sep:"; " (sort_components l);
       w' ("]\n\n"))
       typdef.subtypes
@@ -576,7 +587,7 @@ let rec converterCAMLtoTK ~context_widget argname ty =
  |  Subtype ("widget", s') ->
        if !Flags.camltk then
          let name = "cCAMLtoTKwidget " in
-         let args = "widget_"^s'^"_table "^argname in
+         let args = "widget_"^caml_name s'^"_table "^argname in
          let args =
            if requires_widget_context "widget" then
              context_widget^" "^args
@@ -584,7 +595,7 @@ let rec converterCAMLtoTK ~context_widget argname ty =
          name^args
        else begin
          let name = "cCAMLtoTKwidget " in
-         let args = "(" ^ argname ^ " : " ^ s' ^ " widget)" in
+         let args = "(" ^ argname ^ " : " ^ caml_name s' ^ " widget)" in
          name ^ args
        end
  |  Subtype (s, s') ->
@@ -594,9 +605,10 @@ let rec converterCAMLtoTK ~context_widget argname ty =
        in
        let args =
          if !Flags.camltk then begin
-           s^"_"^s'^"_table "^argname
+           caml_name s^"_"^caml_name s'^"_table "^argname
          end else begin
-           if safetype then "(" ^ argname ^ " : [< " ^ s' ^ "_" ^ s ^ "])"
+           if safetype then
+             "(" ^ argname ^ " : [< " ^ caml_name s' ^ "_" ^ caml_name s ^ "])"
            else argname
          end
        in
@@ -842,7 +854,7 @@ let rec write_result_parsing ~w = function
       | MultipleToken -> w (converterTKtoCAML ~arg:"(splitlist res)" ty)
 
 let labltk_write_function ~w def =
-  w ("let " ^ def.ml_name);
+  w ("let " ^ caml_name def.ml_name);
   (* a bit approximative *)
   let context_widget = match def.template with
     ListArg (TypeArg(_, UserDefined("widget")) :: _) -> "v1"
@@ -891,7 +903,7 @@ let labltk_write_function ~w def =
   w "\n\n"
 
 let camltk_write_function ~w def =
-  w ("let " ^ def.ml_name);
+  w ("let " ^ caml_name def.ml_name);
   (* a bit approximative *)
   let context_widget = match def.template with
     ListArg (TypeArg(_, UserDefined("widget")) :: _) -> "v1"
@@ -969,8 +981,9 @@ let write_function ~w def =
 ;;
 
 let labltk_write_create ~w clas =
+  let oclas = caml_name clas in
   w ("let create ?name =\n");
-  w ("  " ^ clas ^ "_options_optionals (fun opts parent ->\n");
+  w ("  " ^ oclas ^ "_options_optionals (fun opts parent ->\n");
   w ("     let w = new_atom \"" ^ clas ^ "\" ~parent ?name in\n");
   w  "     tkCommand [|";
   w ("TkToken \"" ^ clas ^ "\";\n");
@@ -1044,7 +1057,8 @@ let write_catch_optionals ~w clas ~def:typdef =
   if typdef.subtypes = [] then () else
   List.iter typdef.subtypes ~f:
   begin fun (subclass, classdefs) ->
-    w  ("let " ^ subclass ^ "_" ^ clas ^ "_optionals f = fun\n");
+    w  ("let " ^ caml_name subclass ^ "_" ^ caml_name clas ^
+        "_optionals f = fun\n");
     let tklabels = List.map ~f:gettklabel classdefs in
     let l =
       List.map classdefs ~f:
@@ -1062,7 +1076,7 @@ let write_catch_optionals ~w clas ~def:typdef =
     let v =
       List.map l ~f:
         begin fun (si, s) ->
-          "(maycons ccCAMLtoTK" ^ clas ^ "_" ^ s ^ " " ^ si
+          "(maycons ccCAMLtoTK" ^ caml_name clas ^ "_" ^ caml_name s ^ " " ^ si
         end in
     w (String.concat ~sep:"\n" p);
     w " ->\n";

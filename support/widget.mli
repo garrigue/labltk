@@ -37,6 +37,7 @@ and scale
 and scrollbar
 and text
 and toplevel
+and ttk_labelframe
 
 val forget_type : 'a widget -> any widget
 val coe : 'a widget -> any widget
@@ -100,6 +101,7 @@ val widget_scale_table : string list
 val widget_scrollbar_table : string list
 val widget_text_table : string list
 val widget_toplevel_table : string list
+val widget_ttk_labelframe_table : string list
 
 val chk_sub : string -> 'a list -> 'a -> unit
 val check_class : 'a widget -> string list -> unit
