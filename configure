@@ -18,6 +18,7 @@ where=`ocamlc -where 2> /dev/null || echo '/usr/local/lib/ocaml'`
 tk_defs=''
 tk_libs=''
 tk_x11=yes
+verbose=no
 
 # The inf(), wrn(), err() functions below can be used to provide a consistent
 # way to notify the user. The notification is always given to the stdout
@@ -40,24 +41,28 @@ exec 3>&1
 # Parse command-line arguments
 
 if echo "$configure_options" | grep -q -e '--\?[a-zA-Z0-9-]\+='; then
-  err "Arguments to this script look like '-prefix /foo/bar', not '-prefix=/foo/bar' (note the '=')."
+  err "Arguments to this script look like '-libdir /foo/bar', not '-libdir=/foo/bar' (note the '=')."
 fi
 
 while : ; do
   case "$1" in
     "") break;;
-    -prefix|--prefix)
-        where=$2/lib/ocaml; shift;;
+    -libdir|--libdir)
+        where=$2; shift;;
     -tkdefs*|--tkdefs*)
         tk_defs=$2; shift;;
     -tklibs*|--tklibs*)
         tk_libs=$2; shift;;
     -tk-no-x11|--tk-no-x11)
         tk_x11=no;;
+    -verbose|--verbose)
+        verbose=yes;;
     *) err "Unknown option \"$1\".";;
   esac
   shift
 done
+
+export verbose
 
 # Sanity checks
 

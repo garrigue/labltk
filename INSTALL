@@ -1,0 +1,69 @@
+                    Installing LablTk from sources
+                    ------------------------------
+
+PREREQUISITES
+
+* OCaml (>= 4.02) should be installed
+
+* Tcl/Tk (>= 8.03) should be installed
+
+INSTALLATION INSTRUCTIONS FOR UNIX AND OSX
+
+1- Configure the system. From the top directory, do:
+
+        ./configure
+
+In case of success, this generates config/Makefile which contains the
+OCaml library path and compilation options.
+
+The "configure" script accepts the following options:
+
+-libdir <dir>                   (default: `ocamlc -where`)
+        Directory where the OCaml library was installed,
+        where Makefile.config can be found.
+
+-tkdefs <cpp flags>             (default: none)
+-tklibs <flags and libraries>   (default: determined automatically)
+        These options specify where to find the Tcl/Tk libraries for
+        LablTk. "-tkdefs" helps to find the headers, and "-tklibs"
+        the C libraries. "-tklibs" may contain either only -L/path and
+        -Wl,... flags, in which case the library names are determined
+        automatically, or the actual libraries, which are used as given.
+        Examples:
+        for an OSX installation using macports, use just
+         ./configure -tklibs -L/opt/local/lib -tkdefs -I/opt/local/include
+        for Japanese Tcl/Tk whose headers are in specific directories
+        and libraries in /usr/local/lib, you can use
+         ./configure -tklibs "-L/usr/local/lib -ltk8.0jp -ltcl8.0jp"
+          -tkdefs "-I/usr/local/include/tcl8.0jp -I/usr/local/include/tk8.0jp"
+
+-tk-no-x11
+        Build LablTk without using X11. This option is needed on
+        Cygwin, or if you want to use the Quartz version on Tk on OSX.
+
+-verbose
+        Verbose output of the configuration tests. Use it if the outcome
+        of configure is not what you were expecting.
+
+2- From the top directory do
+
+        make all
+
+and optionally
+
+        make opt
+
+3- From the top directory do
+
+        make install
+
+It will install labltk inside the OCaml distribution.
+You may need to become superuser first.
+
+
+INSTALLATION INSTRUCTIONS FOR WINDOWS
+
+1- In the config subdirectory, overwrite Makefile with the file
+corresponding to your system
+
+2- Continue from step 2 above

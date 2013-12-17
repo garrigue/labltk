@@ -230,7 +230,7 @@ and search_pos_module m ~pos ~env =
       Pmty_ident lid -> add_found_sig (`Modtype, lid.txt) ~env ~loc:m.pmty_loc
     | Pmty_signature sg -> search_pos_signature sg ~pos ~env
     | Pmty_functor (_ , m1, m2) ->
-        search_pos_module m1 ~pos ~env;
+        Misc.may (search_pos_module ~pos ~env) m1;
         search_pos_module m2 ~pos ~env
     | Pmty_with (m, l) ->
         search_pos_module m ~pos ~env;
@@ -319,7 +319,8 @@ let edit_source ~file ~path ~sign =
 (* List of windows to destroy by Close All *)
 let top_widgets = ref []
 
-let dummy_item = Sig_modtype (Ident.create "dummy", Modtype_abstract)
+let dummy_item = Sig_modtype (Ident.create "dummy",
+                              {mtd_type=None; mtd_attributes=[]})
 
 let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
   let env =

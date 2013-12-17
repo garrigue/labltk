@@ -75,6 +75,7 @@ install:
 	cd jpf; $(MAKE) install
 	cd frx; $(MAKE) install
 	cd browser; $(MAKE) install
+	if test -f lib/labltk.cmxa; then $(MAKE) installopt; else :; fi
 
 installopt:
 	cd support; $(MAKE) installopt
