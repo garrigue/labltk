@@ -619,7 +619,7 @@ class editor ~top ~menus = object (self)
           let env =
             Env.add_module (Ident.create modname)
               (Types.Mty_signature txt.signature)
-              Env.initial
+              !Searchid.start_env
           in Viewer.view_defined (Longident.Lident modname) ~env ~show_all:true
       end;
 

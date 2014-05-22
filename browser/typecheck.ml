@@ -61,7 +61,7 @@ let parse_pp ~parse ~wrap ~ext text =
       let ic = open_in_bin tmpfile in
       let ast =
         try
-          let buffer = Misc.input_bytes ic (String.length ast_magic) in
+          let buffer = really_input_string ic (String.length ast_magic) in
           if buffer = ast_magic then begin
             ignore (input_value ic);
             wrap (input_value ic)
@@ -89,7 +89,7 @@ let nowarnings = ref false
 let f txt =
   let error_messages = ref [] in
   let text = Jg_text.get_all txt.tw
-  and env = ref (Env.open_pers_signature "Pervasives" Env.initial) in
+  and env = ref (Compmisc.initial_env ()) in
   let tl, ew, end_message =
     Jg_message.formatted ~title:"Warnings" ~ppf:Format.err_formatter () in
   Text.tag_remove txt.tw ~tag:"error" ~start:tstart ~stop:tend;

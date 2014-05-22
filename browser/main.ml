@@ -100,7 +100,7 @@ let _ =
   Warnings.parse_options false !Shell.warnings;
   Unix.putenv "TERM" "noterminal";
   begin
-    try Searchid.start_env := Env.open_pers_signature "Pervasives" Env.initial
+    try Searchid.start_env := Compmisc.initial_env ()
     with _ ->
       fatal_error
         (Printf.sprintf "%s\nPlease check that %s %s\nCurrent value is `%s'"

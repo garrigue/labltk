@@ -70,15 +70,21 @@ let view_symbol ~kind ~env ?path id =
       end
   | Pconstructor ->
       let cd = lookup_constructor id env in
-      begin match cd.cstr_res.desc with
-        Tconstr (cpath, _, _) ->
-        if Path.same cpath Predef.path_exn then
+      begin match cd.cstr_tag, cd.cstr_res.desc with
+	Cstr_extension _, Tconstr (cpath, args, _) ->
           view_signature ~title:(string_of_longident id) ~env ?path
-            [Sig_exception (Ident.create name,
-                            {Types.exn_loc = Location.none;
-                             exn_args = cd.cstr_args;
-                             exn_attributes = []})]
-        else
+            [Sig_typext (Ident.create name,
+			 {Types.ext_type_path = cpath;
+			  ext_type_params = args;
+			  ext_args = cd.cstr_args;
+			  ext_ret_type = (if cd.cstr_generalized
+			                  then Some cd.cstr_res else None);
+			  ext_private = cd.cstr_private;
+			  ext_loc = cd.cstr_loc;
+			  ext_attributes = cd.cstr_attributes},
+			 if Path.same cpath Predef.path_exn then Text_exception
+			 else Text_first)]
+      | _, Tconstr (cpath, _, _) ->
           view_type_decl cpath ~env
       | _ -> ()
       end
@@ -123,7 +129,7 @@ let choose_symbol ~title ~env ?signature ?path l =
         match path, li with
           None, Ldot (lip, _) ->
             begin try
-              Some (fst (lookup_module lip env))
+              Some (lookup_module ~load:true lip env)
             with Not_found -> None
             end
         | _ -> path
@@ -222,14 +228,15 @@ let search_symbol () =
 let ident_of_decl ~modlid = function
     Sig_value (id, _) -> Lident (Ident.name id), Pvalue
   | Sig_type (id, _, _) -> Lident (Ident.name id), Ptype
-  | Sig_exception (id, _) -> Ldot (modlid, Ident.name id), Pconstructor
+  | Sig_typext (id, _, _) -> Ldot (modlid, Ident.name id), Pconstructor
   | Sig_module (id, _, _) -> Lident (Ident.name id), Pmodule
   | Sig_modtype (id, _) -> Lident (Ident.name id), Pmodtype
   | Sig_class (id, _, _) -> Lident (Ident.name id), Pclass
   | Sig_class_type (id, _, _) -> Lident (Ident.name id), Pcltype
 
 let view_defined ~env ?(show_all=false) modlid =
-  try match lookup_module modlid env with path, {md_type=Mty_signature sign} ->
+  try match Typetexp.find_module env Location.none modlid with
+    path, {md_type=Mty_signature sign} ->
     let rec iter_sign sign idents =
       match sign with
         [] -> List.rev idents
@@ -577,7 +584,7 @@ object (self)
         begin fun path ->
           if not (List.mem path shown_paths) then
             view_symbol (longident_of_path path) ~kind:Pmodule
-              ~env:Env.initial ~path;
+              ~env:!start_env ~path;
           let n = self#get_box path - 1 in
           see_path path ~box:n
         end;
@@ -609,7 +616,7 @@ object (self)
           match path, li with
             None, Ldot (lip, _) ->
               begin try
-                Some (fst (lookup_module lip env))
+                Some (lookup_module ~load:true lip env)
               with Not_found -> None
               end
           | _ -> path
