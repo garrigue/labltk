@@ -1,3 +1,7 @@
+2014-08-21:
+-----------
+* Add command line flags in ocamlbrowser for -safe-string and -short-paths.
+
 2014-05-22:
 -----------
 * Update for 4.02.
