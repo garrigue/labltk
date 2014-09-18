@@ -2,6 +2,7 @@
 -----------
 * Fix PR#1423: Tkvars.version() call gives Fatal error
 * Fix PR#1411: some void-returning functions are wrongly declared with CAMLprim
+* Fix PR#1412: wrong declaration for argument of camltk_tk_mainloop
 * Improve configuration, and allow using findlib for installation
 
 2014-08-21:

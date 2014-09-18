@@ -22,7 +22,7 @@
 #include <alloc.h>
 #include "camltk.h"
 
-CAMLprim value camltk_tk_mainloop(void)
+CAMLprim value camltk_tk_mainloop(value unit)
 {
   CheckInit();
 
