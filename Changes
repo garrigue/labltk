@@ -1,6 +1,7 @@
 2014-09-18:
 -----------
 * Fix PR#1423: Tkvars.version() call gives Fatal error
+* Fix PR#1411: some void-returning functions are wrongly declared with CAMLprim
 
 2014-08-21:
 -----------

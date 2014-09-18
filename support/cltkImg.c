@@ -75,7 +75,7 @@ CAMLprim value camltk_getimgdata (value imgname) /* ML */
   }
 }
 
-CAMLprim void
+CAMLprim value
 camltk_setimgdata_native (value imgname, value pixmap, value x, value y,
                    value w, value h) /* ML */
 {
@@ -107,12 +107,13 @@ ph,&pib,Int_val(x),Int_val(y),Int_val(w),Int_val(h)
                    , TK_PHOTO_COMPOSITE_SET
 #endif
     );
+  return Val_int(0);
 }
 
-CAMLprim void camltk_setimgdata_bytecode(argv,argn)
+CAMLprim value camltk_setimgdata_bytecode(argv,argn)
      value *argv;
      int argn;
 {
-  camltk_setimgdata_native(argv[0], argv[1], argv[2], argv[3],
-                           argv[4], argv[5]);
+  return camltk_setimgdata_native(argv[0], argv[1], argv[2], argv[3],
+                                  argv[4], argv[5]);
 }
