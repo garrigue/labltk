@@ -2278,11 +2278,11 @@ subtype option(messageBox) {
 function (string) messageBox ["tk_messageBox"; option(messageBox) list]
 
 module Tkvars {
-  function (string) library ["$tk_library"]
-  function (string) patchLevel ["$tk_patchLevel"]
-  function (bool) strictMotif ["$tk_strictMotif"]
+  function (string) library ["set"; "tk_library"]
+  function (string) patchLevel ["set"; "tk_patchLevel"]
+  function (bool) strictMotif ["set"; "tk_strictMotif"]
   function () set_strictMotif ["set"; "tk_strictMotif"; bool]
-  function (string) version ["$tk_version"]
+  function (string) version ["set"; "tk_version"]
 }
 
 % Direct API calls, non Tcl-based modules
