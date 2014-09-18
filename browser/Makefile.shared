@@ -60,8 +60,7 @@ help.ml:
 	echo '";;' >> $@
 
 install:
-	if test -f ocamlbrowser$(EXE); then : ; \
-	  cp ocamlbrowser$(EXE) $(BINDIR); fi
+	cp ocamlbrowser$(EXE) $(INSTALLBINDIR)
 
 clean:
 	rm -f *.cm? ocamlbrowser$(EXE) dummy.mli *~ *.orig *.$(O) help.ml

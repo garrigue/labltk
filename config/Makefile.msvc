@@ -1,6 +1,7 @@
 # Configuration for Windows, Visual C++ compiler
-WHERE=C:/ocamlms/lib/ocaml
 include C:/ocamlms/lib/ocaml/Makefile.config
+INSTALLDIR=$(LIBDIR)/labltk
+INSTALLBINDIR=$(BINDIR)
 TK_ROOT=c:/tcl
 TK_DEFS=-I$(TK_ROOT)/include
 # The following definition avoids hard-wiring $(TK_ROOT) in the libraries

@@ -18,13 +18,11 @@ LIBNAME=labltk
 
 include ../config/Makefile
 
-INSTALLDIR=$(LIBDIR)/$(LIBNAME)
-
 ## Tools from the OCaml distribution
 
 CAMLRUN=$(BINDIR)/ocamlrun
-CAMLC=$(BINDIR)/ocamlc
-CAMLOPT=$(BINDIR)/ocamlopt
+CAMLC=$(BINDIR)/ocamlc$(OPT)
+CAMLOPT=$(BINDIR)/ocamlopt$(OPT)
 CAMLCB=$(BINDIR)/ocamlc
 CAMLOPTB=$(BINDIR)/ocamlopt
 CAMLCOMP=$(CAMLC) -c -warn-error A-3

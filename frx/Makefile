@@ -35,11 +35,20 @@ frxlib.cma: $(OBJS)
 frxlib.cmxa: $(OBJSX)
 	$(CAMLOPTLIBR) -o frxlib.cmxa $(OBJSX)
 
+ifeq ($(USE_FINDLIB),yes)
+install:
+	ocamlfind install labltk -add *.cmi *.mli frxlib.cma
+installopt:
+	ocamlfind install labltk -add frxlib.cmxa frxlib.$(A) *.cmx
+	cd $(INSTALLDIR); ranlib frxlib.$(A)
+else
 install:
 	cp *.cmi *.mli frxlib.cma $(INSTALLDIR)
 
 installopt:
-	cp frxlib.cmxa frxlib.$(A) $(INSTALLDIR)
+	cp frxlib.cmxa frxlib.$(A) *.cmx $(INSTALLDIR)
+	cd $(INSTALLDIR); ranlib frxlib.$(A)
+endif
 
 clean:
 	rm -f *.cm* *.$(O) *.$(A)

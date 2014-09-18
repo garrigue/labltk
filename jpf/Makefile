@@ -36,11 +36,22 @@ jpflib.cma: $(OBJS)
 jpflib.cmxa: $(OBJSX)
 	$(CAMLOPTLIBR) -o jpflib.cmxa $(OBJSX)
 
+ifeq ($(USE_FINDLIB),yes)
+install:
+	ocamlfind install labltk -add \
+	  $(OBJS:.cmo=.cmi) $(OBJS:.cmo=.mli) jpflib.cma
+installopt:
+	ocamlfind install labltk -add \
+	  jpflib.cmxa jpflib.$(A) $(OBJS:.cmo=.cmx)
+	cd $(INSTALLDIR); $(RANLIB) jpflib.$(A)
+else
 install:
 	cp $(OBJS:.cmo=.cmi) $(OBJS:.cmo=.mli) jpflib.cma $(INSTALLDIR)
 
 installopt:
 	cp jpflib.cmxa jpflib.$(A) $(OBJS:.cmo=.cmx) $(INSTALLDIR)
+	cd $(INSTALLDIR); $(RANLIB) jpflib.$(A)
+endif
 
 clean:
 	rm -f *.cm* *.$(O) *.$(A) *~ *test

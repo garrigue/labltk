@@ -31,6 +31,13 @@ labltkobjs: $(LABLTKOBJS)
 
 labltkobjsx: $(LABLTKOBJSX)
 
+ifeq ($(USE_FINDLIB),yes)
+install:
+	ocamlfind install labltk -add \
+	  $(LABLTKOBJS:.cmo=.cmi) $(WIDGETOBJS:.cmo=.mli)
+installopt:
+	ocamlfind install labltk -add $(LABLTKOBJSX)
+else
 install:
 	if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
 	cp $(LABLTKOBJS:.cmo=.cmi) $(WIDGETOBJS:.cmo=.mli) $(INSTALLDIR)
@@ -40,6 +47,7 @@ installopt:
 	@if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
 	cp $(LABLTKOBJSX) $(INSTALLDIR)
 	chmod 644 $(INSTALLDIR)/*.cmx
+endif
 
 clean:
 	$(MAKE) -f Makefile.gen clean

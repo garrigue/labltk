@@ -18,9 +18,17 @@ OCaml library path and compilation options.
 
 The "configure" script accepts the following options:
 
+-use-findlib
+        If you want to use ocamlfind for installation.
+
 -libdir <dir>                   (default: `ocamlc -where`)
         Directory where the OCaml library was installed,
         where Makefile.config can be found.
+
+-installdir <dir>               (default: libdir/labltk)
+-installbindir <dir>            (default: same as ocamlc)
+        Where to install the library and the labltk script.
+        When using findlib, the default is taken from it.
 
 -tkdefs <cpp flags>             (default: none)
 -tklibs <flags and libraries>   (default: determined automatically)
@@ -57,7 +65,7 @@ and optionally
 
         make install
 
-It will install labltk inside the OCaml distribution.
+It will install labltk at the above defined location.
 You may need to become superuser first.
 
 

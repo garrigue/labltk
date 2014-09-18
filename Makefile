@@ -19,7 +19,7 @@
 SUBDIRS=compiler support lib jpf frx examples_labltk \
 	examples_camltk browser
 SUBDIRS_GENERATED=camltk labltk
-
+include config/Makefile
 
 all:
 	cd support; $(MAKE)
@@ -84,6 +84,15 @@ installopt:
 	cd camltk; $(MAKE) installopt
 	cd jpf; $(MAKE) installopt
 	cd frx; $(MAKE) installopt
+
+uninstall:
+	ocamlfind remove labltk
+	rm -f $(INSTALLBINDIR)/labltk
+	rm -f $(INSTALLBINDIR)/ocamlbrowser$(EXE)
+
+reinstall:
+	$(MAKE) uninstall
+	$(MAKE) install
 
 partialclean clean:
 	for d in $(SUBDIRS); do \

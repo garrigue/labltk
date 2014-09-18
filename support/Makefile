@@ -41,6 +41,16 @@ PUBMLI=fileevent.mli protocol.mli textvariable.mli timer.mli \
     rawwidget.mli widget.mli
 PUB= $(PUBMLI) $(PUBMLI:.mli=.cmi) tkthread.mli tkthread.cmi tkthread.cmo
 
+ifeq ($(USE_FINDLIB),yes)
+install:
+	ocamlfind install labltk META $(PUB) lib$(LIBNAME).$(A) \
+	  -optional dll$(LIBNAME)$(EXT_DLL)
+	$(RANLIB) lib$(LIBNAME).$(A)
+
+installopt:
+	ocamlfind install labltk -add \
+	  $(PUBMLI:.mli=.cmx) -optional tkthread.cmx tkthread.$(O)
+else
 install:
 	if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
 	cp $(PUB) lib$(LIBNAME).$(A) $(INSTALLDIR)
@@ -56,6 +66,7 @@ installopt:
 	  cp tkthread.cmx tkthread.$(O) $(INSTALLDIR); \
 	  chmod 644 $(INSTALLDIR)/tkthread.cmx $(INSTALLDIR)/tkthread.$(O); \
 	fi
+endif
 
 clean:
 	rm -f *.cm* *.o *.a *.so *.obj *.lib *.dll *.exp

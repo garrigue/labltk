@@ -78,18 +78,31 @@ $(LIBNAME): Makefile
 	@echo 'exec $(INSTALLDIR)/$(LIBNAME)top$(EXE) -I $(INSTALLDIR) "$$@"' >> $@
 
 install-script: $(LIBNAME)
-	cp $(LIBNAME) $(BINDIR)
-	chmod 755 $(BINDIR)/$(LIBNAME)
+	cp $(LIBNAME) $(INSTALLBINDIR)
+	chmod 755 $(INSTALLBINDIR)/$(LIBNAME)
 
 install-batch:
-	cp labltk.bat $(BINDIR)
+	cp labltk.bat $(INSTALLBINDIR)
 
+ifeq ($USE_FINDLIB,yes)
+install:
+	ocamlfind install labltk -add  $(LIBNAME).cma $(LIBNAME)top$(EXE)
+	chmod 755 $(INSTALLDIR)/$(LIBNAME)top$(EXE)
+	@case x$(TOOLCHAIN) in \
+	  xmingw|xmsvc) $(MAKE) install-batch ;; \
+	  *) 		$(MAKE) install-script ;; \
+	esac
+
+installopt:
+	ocamlfind install labltk -add $(LIBNAME).cmxa $(LIBNAME).$(A)
+	cd $(INSTALLDIR); $(RANLIB) $(LIBNAME).$(A)
+else
 install:
 	if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
 	cp $(LIBNAME).cma $(LIBNAME)top$(EXE) $(INSTALLDIR)
 	chmod 644 $(INSTALLDIR)/$(LIBNAME).cma
 	chmod 755 $(INSTALLDIR)/$(LIBNAME)top$(EXE)
-	@if test -d $(BINDIR); then : ; else mkdir $(BINDIR); fi
+	@if test -d $(INSTALLBINDIR); then : ; else mkdir $(INSTALLBINDIR); fi
 	@case x$(TOOLCHAIN) in \
 	  xmingw|xmsvc) $(MAKE) install-batch ;; \
 	  *) 		$(MAKE) install-script ;; \
@@ -101,3 +114,4 @@ installopt:
 	cd $(INSTALLDIR); $(RANLIB) $(LIBNAME).$(A)
 	chmod 644 $(INSTALLDIR)/$(LIBNAME).cmxa
 	chmod 644 $(INSTALLDIR)/$(LIBNAME).$(A)
+endif
