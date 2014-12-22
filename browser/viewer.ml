@@ -76,7 +76,7 @@ let view_symbol ~kind ~env ?path id =
             [Sig_typext (Ident.create name,
 			 {Types.ext_type_path = cpath;
 			  ext_type_params = args;
-			  ext_args = cd.cstr_args;
+			  ext_args = Cstr_tuple cd.cstr_args;
 			  ext_ret_type = (if cd.cstr_generalized
 			                  then Some cd.cstr_res else None);
 			  ext_private = cd.cstr_private;

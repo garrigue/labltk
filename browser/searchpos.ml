@@ -158,6 +158,16 @@ let rec search_pos_class_type cl ~pos ~env =
     | Pcty_extension _ -> ()
     end
 
+let search_pos_arguments ~pos ~env = function
+    Pcstr_tuple l -> List.iter l ~f:(search_pos_type ~pos ~env)
+  | Pcstr_record l -> List.iter l ~f:(fun ld -> search_pos_type ld.pld_type ~pos ~env)
+
+let search_pos_constructor pcd ~pos ~env =
+  if in_loc ~pos pcd.pcd_loc then begin
+    Misc.may (search_pos_type ~pos ~env) pcd.pcd_res;
+    search_pos_arguments ~pos ~env pcd.pcd_args
+  end
+
 let search_pos_type_decl td ~pos ~env =
   if in_loc ~pos td.ptype_loc then begin
     begin match td.ptype_manifest with
@@ -168,8 +178,7 @@ let search_pos_type_decl td ~pos ~env =
       Ptype_abstract
     | Ptype_open -> ()
     | Ptype_variant dl ->
-        List.iter dl
-          ~f:(fun pcd -> List.iter pcd.pcd_args ~f:(search_pos_type ~pos ~env)) (* iter on pcd_res? *)
+        List.iter dl ~f:(search_pos_constructor ~pos ~env)
     | Ptype_record dl ->
         List.iter dl ~f:(fun pld -> search_pos_type pld.pld_type ~pos ~env) in
     search_tkind td.ptype_kind;
@@ -182,7 +191,7 @@ let search_pos_type_decl td ~pos ~env =
 
 let search_pos_extension ext ~pos ~env =
   begin match ext.pext_kind with
-    Pext_decl (l, _) -> List.iter l ~f:(search_pos_type ~pos ~env)
+    Pext_decl (l, _) -> search_pos_arguments l ~pos ~env
   | Pext_rebind _ -> ()
   end
   

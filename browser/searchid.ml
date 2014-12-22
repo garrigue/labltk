@@ -128,7 +128,7 @@ let rec equal ~prefix t1 t2 =
       begin fun l1 ->
         List.for_all2 l1 l2 ~f:
         begin fun (p1,t1) (p2,t2) ->
-          (p1 = "" || p1 = p2) && equal t1 t2 ~prefix
+          (p1 = Nolabel || p1 = p2) && equal t1 t2 ~prefix
         end
       end
   | Ttuple l1, Ttuple l2 ->
@@ -140,8 +140,7 @@ let rec equal ~prefix t1 t2 =
       && List.for_all2 l1 l2 ~f:(equal ~prefix)
   | _ -> false
 
-let is_opt s = s <> "" && s.[0] = '?'
-let get_options = List.filter ~f:is_opt
+let get_options = List.filter ~f:Btype.is_optional
 
 let rec included ~prefix t1 t2 =
   match (repr t1).desc, (repr t2).desc with
@@ -170,14 +169,14 @@ let rec included ~prefix t1 t2 =
       let l2 = if arr len1 ~card:len2 < 100 then l2 else
           let ll1 = get_options (fst (List.split l1)) in
           List.filter l2
-          ~f:(fun (l,_) -> not (is_opt l) || List.mem l ll1)
+          ~f:(fun (l,_) -> not (is_optional l) || List.mem l ll1)
       in
       len1 <= len2 &&
       List.exists (List2.flat_map ~f:permutations (choose len1 ~card:l2)) ~f:
       begin fun l2 ->
         List.for_all2 l1 l2 ~f:
         begin fun (p1,t1) (p2,t2) ->
-          (p1 = "" || p1 = p2) && included t1 t2 ~prefix
+          (p1 = Nolabel || p1 = p2) && included t1 t2 ~prefix
         end
       end
   | Ttuple l1, Ttuple l2 ->
@@ -217,6 +216,10 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
         `Included -> included t ~prefix
       | `Exact -> equal t ~prefix
   and lid_of_id id = mklid (prefix @ [Ident.name id]) in
+  let constructor_matches = function
+      Types.Cstr_tuple l -> List.exists l ~f:matches
+    | Cstr_record l -> List.exists l ~f:(fun d -> matches d.Types.ld_type)
+  in
   List2.flat_map sign ~f:
   begin fun item -> match item with
         Sig_value (id, vd) ->
@@ -233,8 +236,8 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
 	  | Type_open -> false
           | Type_variant l ->
             List.exists l ~f:
-            begin fun {Types.cd_args=l; cd_res=r} ->
-              List.exists l ~f:matches ||
+            begin fun {Types.cd_args=args; cd_res=r} ->
+              constructor_matches args  ||
               match r with None -> false | Some x -> matches x
             end
           | Type_record(l, rep) ->
@@ -242,7 +245,7 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
           end
           then [lid_of_id id, Ptype] else []
       | Sig_typext (id, l, _) ->
-          if List.exists l.ext_args ~f:matches
+          if constructor_matches l.ext_args
           then [lid_of_id id, Pconstructor]
           else []
       | Sig_module (id, {md_type=Mty_signature sign}, _) ->
@@ -270,7 +273,7 @@ let search_all_types t ~mode =
       `Exact, _ -> [t]
     | `Included, Tarrow _ -> [t]
     | `Included, _ ->
-      [t; newty(Tarrow("",t,newvar(),Cok)); newty(Tarrow("",newvar(),t,Cok))]
+      [t; newty(Tarrow(Nolabel,t,newvar(),Cok)); newty(Tarrow(Nolabel,newvar(),t,Cok))]
   in List2.flat_map !module_list ~f:
     begin fun modname ->
     let mlid = Lident modname in
