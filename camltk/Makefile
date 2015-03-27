@@ -16,7 +16,7 @@
 
 include ../support/Makefile.common
 
-COMPFLAGS= -I ../support
+COMPFLAGS= -I ../support -no-alias-deps
 
 all: camltkobjs
 
