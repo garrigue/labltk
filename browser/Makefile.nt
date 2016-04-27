@@ -29,5 +29,5 @@ XTRALIBS=threads.cma -custom $(WINDOWS_APP)
 
 include Makefile.shared
 
-dummy.mli:
-	cp dummyWin.mli dummy.mli
+dummy.ml:
+	cp dummyWin.ml dummy.ml

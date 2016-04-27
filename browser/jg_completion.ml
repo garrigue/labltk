@@ -14,8 +14,9 @@
 
 (* $Id$ *)
 
-let lt_string ?(nocase=false) s1 s2 =
-  if nocase then String.lowercase s1 < String.lowercase s2 else s1 < s2
+let compare_string ?(nocase=false) s1 s2 =
+  if nocase then compare (String.lowercase s1) (String.lowercase s2)
+  else compare s1 s2
 
 class completion ?nocase texts = object
   val mutable texts = texts
@@ -25,7 +26,7 @@ class completion ?nocase texts = object
   method add c =
     prefix <- prefix ^ c;
     while current < List.length texts - 1 &&
-      lt_string (List.nth texts current) prefix ?nocase
+      compare_string (List.nth texts current) prefix ?nocase < 0
     do
       current <- current + 1
     done;

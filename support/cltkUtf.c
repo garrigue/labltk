@@ -50,7 +50,7 @@ char *external_to_utf( char *str ){
   return res;
 }
 
-char *utf_to_external( char *str ){
+char *utf_to_external( const char *str ){
   char *res;
   Tcl_DString dstr;
   int length;
@@ -69,7 +69,7 @@ char *caml_string_to_tcl( value s )
   return external_to_utf( String_val(s) );
 }
 
-value tcl_string_to_caml( char *s )
+value tcl_string_to_caml( const char *s )
 {
   CAMLparam0();
   CAMLlocal1(res);

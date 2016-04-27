@@ -14,7 +14,7 @@
 
 (* $Id$ *)
 
-val lt_string : ?nocase:bool -> string -> string -> bool
+val compare_string : ?nocase:bool -> string -> string -> int
 
 class timed :  ?nocase:bool -> ?wait:int -> string list -> object
   val mutable texts : string list

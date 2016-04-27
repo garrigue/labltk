@@ -131,7 +131,7 @@ let f ~title ~action:proc ?(dir = Unix.getcwd ())
       List.fold_left !Config.load_path ~init:[] ~f:
       begin fun acc dir ->
         let files = ls ~dir ~pattern in
-        Sort.merge (<) files
+        List.merge compare files
           (List.fold_left files ~init:acc
            ~f:(fun acc name -> List2.exclude name acc))
       end

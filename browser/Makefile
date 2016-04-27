@@ -16,5 +16,5 @@
 
 include Makefile.shared
 
-dummy.mli:
-	cp dummyUnix.mli dummy.mli
+dummy.ml:
+	cp dummyUnix.ml dummy.ml

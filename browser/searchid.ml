@@ -468,7 +468,7 @@ let search_structure str ~name ~kind ~prefix =
             end;
           false
       | Pstr_primitive vd when kind = Pvalue -> name = vd.pval_name.txt
-      | Pstr_type l when kind = Ptype ->
+      | Pstr_type (_, l) when kind = Ptype ->
           List.iter l ~f:
             begin fun td ->
               if td.ptype_name.txt = name
@@ -529,7 +529,7 @@ let search_signature sign ~name ~kind ~prefix =
     begin fun item ->
       if match item.psig_desc with
         Psig_value vd when kind = Pvalue -> name = vd.pval_name.txt
-      | Psig_type l when kind = Ptype ->
+      | Psig_type (_, l) when kind = Ptype ->
           List.iter l ~f:
             begin fun td ->
               if td.ptype_name.txt = name

@@ -14,14 +14,14 @@
 
 (* $Id$ *)
 
-module Mutex : sig
+module Mutex = struct
   type t
   external create : unit -> t = "%ignore"
   external lock : t -> unit = "%ignore"
   external unlock : t -> unit = "%ignore"
 end
 
-module Thread : sig
+module Thread = struct
   type t
   external create : ('a -> 'b) -> 'a -> t = "caml_ml_input"
 end

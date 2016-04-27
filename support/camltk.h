@@ -40,7 +40,7 @@
 extern char *string_to_c(value s);
 
 /* cltkUtf.c */
-extern value tcl_string_to_caml( char * );
+extern value tcl_string_to_caml( const char * );
 extern char * caml_string_to_tcl( value );
 
 /* cltkEval.c */
@@ -53,7 +53,7 @@ extern value *tkerror_exn;
 extern value *handler_code;
 extern int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
                      int argc, CONST84 char *argv[]);
-CAMLTKextern void tk_error(char * errmsg) Noreturn;
+CAMLTKextern void tk_error(const char * errmsg) Noreturn;
 
 /* cltkMain.c */
 extern int signal_events;
