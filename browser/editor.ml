@@ -83,7 +83,7 @@ let goto_line tw =
   and ic = Entry.create fi ~width:10
   and get_int ew =
       try int_of_string (Entry.get ew)
-      with Failure "int_of_string" -> 0
+      with Failure _ -> 0
   in
   let buttons = Frame.create tl in
   let ok = Button.create buttons ~text:"Ok" ~command:

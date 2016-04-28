@@ -609,7 +609,7 @@ object (self)
     let display index =
       let `Num pos = Listbox.index box ~index in
       try
-        let li, k = List.nth l pos in
+        let li, k = try List.nth l pos with Failure _ -> raise Exit in
         self#hide_after (n+1);
         if !current = Some (li,k) then () else
         let path =
@@ -623,7 +623,7 @@ object (self)
         in
         current := Some (li,k);
         view_symbol li ~kind:k ~env ?path
-      with Failure "nth" -> ()
+      with Exit -> ()
     in
     Jg_box.add_completion box ~double:false ~action:display;
     bind box ~events:[`KeyRelease] ~fields:[`Char]
