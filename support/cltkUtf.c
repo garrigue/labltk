@@ -36,7 +36,7 @@
 
 #ifdef UTFCONVERSION
 
-char *external_to_utf( char *str ){
+char *external_to_utf( const char *str ){
   char *res;
   Tcl_DString dstr;
   int length;

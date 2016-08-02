@@ -111,7 +111,7 @@ let tag ?(start=tstart) ?(stop=tend) tw =
       | INFIXOP3 _
       | INFIXOP4 _
       | PREFIXOP _
-      | SHARP
+      | HASH
           -> "infix"
       | LABEL _
       | OPTLABEL _

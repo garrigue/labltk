@@ -485,7 +485,7 @@ and view_type_decl path ~env =
       [Sig_type(ident_of_path path ~default:"t", td, Trec_first)]
 
 and view_type_id li ~env =
-  let path, decl = lookup_type li env in
+  let path = lookup_type li env in
   view_type_decl path ~env
 
 and view_class_id li ~env =
@@ -528,7 +528,7 @@ and view_decl lid ~kind ~env =
 and view_decl_menu lid ~kind ~env ~parent =
   let path, kname =
     try match kind with
-      `Type -> fst (lookup_type lid env), "Type"
+      `Type -> lookup_type lid env, "Type"
     | `Class -> fst (lookup_class lid env), "Class"
     | `Module -> lookup_module ~load:true lid env, "Module"
     | `Modtype -> fst (lookup_modtype lid env), "Module type"
@@ -797,8 +797,9 @@ and search_pos_expr ~pos exp =
   | Texp_construct (_, _, l) -> List.iter l ~f:(search_pos_expr ~pos)
   | Texp_variant (_, None) -> ()
   | Texp_variant (_, Some exp) -> search_pos_expr exp ~pos
-  | Texp_record (l, opt) ->
-      List.iter l ~f:(fun (_, _, exp) -> search_pos_expr exp ~pos);
+  | Texp_record {fields=l; extended_expression=opt} ->
+      Array.iter l ~f:
+        (function (_,Overridden(_,exp)) -> search_pos_expr exp ~pos | _ -> ());
       (match opt with None -> () | Some exp -> search_pos_expr exp ~pos)
   | Texp_field (exp, _, _) -> search_pos_expr exp ~pos
   | Texp_setfield (a, _, _, b) ->
@@ -843,6 +844,8 @@ and search_pos_expr ~pos exp =
       ()
   | Texp_extension_constructor _ ->
       ()
+  | Texp_letexception (_, exp) ->
+      search_pos_expr exp ~pos
   end;
   add_found_str (`Exp(`Expr, exp.exp_type)) ~env:exp.exp_env ~loc:exp.exp_loc
   end

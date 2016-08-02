@@ -83,7 +83,7 @@ let goto_line tw =
   and ic = Entry.create fi ~width:10
   and get_int ew =
       try int_of_string (Entry.get ew)
-      with Failure _ -> 0
+      with Failure _ (*"int_of_string"*) -> 0
   in
   let buttons = Frame.create tl in
   let ok = Button.create buttons ~text:"Ok" ~command:
@@ -184,7 +184,7 @@ let send_phrase txt =
           end;
           match token with
             CLASS | EXTERNAL | EXCEPTION | FUNCTOR
-          | LET | MODULE | OPEN | TYPE | VAL | SHARP when bol ->
+          | LET | MODULE | OPEN | TYPE | VAL | HASH when bol ->
               if !block_start = [] then
                 if !after then pend := pos else start := pos
               else block_start := pos :: List.tl !block_start
