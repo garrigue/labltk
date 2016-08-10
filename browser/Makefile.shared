@@ -69,6 +69,5 @@ depend: help.ml
 	$(CAMLDEP) $(LABLTKLIB) *.ml *.mli > .depend
 
 shell.cmo: dummy.cmi
-dummy.cmo: dummy.cmi
 
 include	.depend
