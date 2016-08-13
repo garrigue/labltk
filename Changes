@@ -1,3 +1,7 @@
+2016-08-13:
+-----------
+* suppress gcc warning about unused variable (Damien Doligez)
+
 2016-08-10:
 -----------
 * Release labltk-8.06.2, for ocaml 4.04
