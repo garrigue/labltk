@@ -229,8 +229,8 @@ let compile () =
     Copyright.write ~w:(output_string oc);
     Copyright.write ~w:(output_string oc');
     begin match wdef.module_type with
-      Widget -> output_string oc' ("(* The "^wname^" widget *)\n")
-    | Family -> output_string oc' ("(* The "^wname^" commands  *)\n")
+      Widget -> output_string oc' ("(** The "^wname^" widget *)\n")
+    | Family -> output_string oc' ("(** The "^wname^" commands  *)\n")
     end;
     List.iter ~f:(fun s -> output_string oc s; output_string oc' s)
       begin

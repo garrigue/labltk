@@ -46,7 +46,7 @@ allopt:
 byte: all
 opt: allopt
 
-.PHONY: all allopt byte opt
+.PHONY: all allopt byte opt apiref
 .PHONY: labltk camltk examples examples_labltk examples_camltk
 .PHONY: install installopt partialclean clean depend
 
@@ -65,6 +65,9 @@ examples_labltk:
 
 examples_camltk:
 	cd examples_camltk; $(MAKE) all
+
+apiref:
+	$(BINDIR)/ocamldoc -I support -I labltk support/*.mli labltk/*.mli -d htdocs/apiref -html || echo "There were errors"
 
 install:
 	cd support; $(MAKE) install
