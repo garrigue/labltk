@@ -68,7 +68,7 @@ examples_camltk:
 
 SUPPORTMLIS= fileevent support textvariable timer tkthread widget
 apiref:
-	$(BINDIR)/ocamldoc -I +threads -I support -I labltk $(SUPPORTMLIS:%=support/%.mli) labltk/*.mli -d htdocs/apiref -html || echo "There were errors"
+	$(BINDIR)/ocamldoc -I +threads -I support -I labltk $(SUPPORTMLIS:%=support/%.mli) labltk/*.mli labltk/tk.ml -sort -d htdocs/apiref -html || echo "There were errors"
 
 install:
 	cd support; $(MAKE) install
