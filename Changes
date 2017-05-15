@@ -1,3 +1,7 @@
+2017-05-15:
+-----------
+* Fix configuration and Makefile for OCaml 4.06
+
 2016-08-13:
 -----------
 * suppress gcc warning about unused variable (Damien Doligez)
