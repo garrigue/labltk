@@ -48,7 +48,7 @@ CAMLprim value camltk_getimgdata (value imgname) /* ML */
   code = Tk_PhotoGetImage(ph,&pib); /* never fails ? */
   (void) code;
   size = pib.width * pib.height * pib.pixelSize;
-  res = alloc_string(size);
+  res = caml_alloc_string(size);
 
   /* no holes, default format ? */
   if ((pib.pixelSize == 3) &&

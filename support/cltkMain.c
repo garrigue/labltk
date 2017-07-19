@@ -51,11 +51,11 @@ int signal_events = 0; /* do we have a pending timer */
 void invoke_pending_caml_signals (ClientData clientdata)
 {
   signal_events = 0;
-  enter_blocking_section(); /* triggers signal handling */
+  caml_enter_blocking_section(); /* triggers signal handling */
   /* Rearm timer */
   Tk_CreateTimerHandler(SIGNAL_INTERVAL, invoke_pending_caml_signals, NULL);
   signal_events = 1;
-  leave_blocking_section();
+  caml_leave_blocking_section();
 }
 
 /* Now the real Tk stuff */
@@ -77,7 +77,7 @@ CAMLprim value camltk_opentk(value argv)
   tmp = Val_unit;
 
   if ( argv == Val_int(0) ){
-    failwith("camltk_opentk: argv is empty");
+    caml_failwith("camltk_opentk: argv is empty");
   }
   argv0 = String_val( Field( argv, 0 ) );
 
@@ -91,7 +91,7 @@ CAMLprim value camltk_opentk(value argv)
       /* Register cltclinterp for use in other related extensions */
       value *interp = caml_named_value("cltclinterp");
       if (interp != NULL)
-        Store_field(*interp,0,copy_nativeint((intnat)cltclinterp));
+        Store_field(*interp,0,caml_copy_nativeint((intnat)cltclinterp));
     }
 
     if (Tcl_Init(cltclinterp) != TCL_OK)
@@ -128,7 +128,7 @@ CAMLprim value camltk_opentk(value argv)
         args = Tcl_Merge(argc, (const char *const*)tkargv); /* args must be freed by Tcl_Free */
         Tcl_SetVar(cltclinterp, "argv", args, TCL_GLOBAL_ONLY);
         Tcl_Free(args);
-        stat_free( tkargv );
+        caml_stat_free( tkargv );
       }
     }
     if (Tk_Init(cltclinterp) != TCL_OK)
@@ -164,10 +164,10 @@ CAMLprim value camltk_opentk(value argv)
       strcat(f, RCNAME);
       if (0 == access(f,R_OK))
         if (TCL_OK != Tcl_EvalFile(cltclinterp,f)) {
-          stat_free(f);
+          caml_stat_free(f);
           tk_error(Tcl_GetStringResult(cltclinterp));
         };
-      stat_free(f);
+      caml_stat_free(f);
     }
   }
 

@@ -49,6 +49,6 @@ CAMLprim value camltk_dooneevent(value flags)
 
   CheckInit();
 
-  ret = Tk_DoOneEvent(convert_flag_list(flags, event_flag_table));
+  ret = Tk_DoOneEvent(caml_convert_flag_list(flags, event_flag_table));
   return Val_int(ret);
 }

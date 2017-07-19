@@ -782,7 +782,7 @@ and search_pos_expr ~pos exp =
         search_pos_expr exp' ~pos
       end;
       search_pos_expr exp ~pos
-  | Texp_function (_, l, _) ->
+  | Texp_function {cases=l; _} ->
       List.iter l ~f:(search_case ~pos)
   | Texp_apply (exp, l) ->
       List.iter l ~f:(fun (_, x) -> Misc.may (search_pos_expr ~pos) x);

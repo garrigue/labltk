@@ -52,11 +52,11 @@ void invoke_pending_caml_signals (clientdata)
      ClientData clientdata;
 {
   signal_events = 0;
-  enter_blocking_section(); /* triggers signal handling */
+  caml_enter_blocking_section(); /* triggers signal handling */
   /* Rearm timer */
   Tk_CreateTimerHandler(SIGNAL_INTERVAL, invoke_pending_caml_signals, NULL);
   signal_events = 1;
-  leave_blocking_section();
+  caml_leave_blocking_section();
 }
 /* The following is taken from byterun/startup.c */
 header_t atom_table[256];
@@ -222,10 +222,10 @@ int Caml_Init(interp)
       strcat(f, RCNAME);
       if (0 == access(f,R_OK))
         if (TCL_OK != Tcl_EvalFile(cltclinterp,f)) {
-          stat_free(f);
+          caml_stat_free(f);
           tk_error(Tcl_GetStringResult(cltclinterp));
         };
-      stat_free(f);
+      caml_stat_free(f);
     }
   }
 

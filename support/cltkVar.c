@@ -35,7 +35,7 @@ CAMLprim value camltk_getvar(value var)
   stable_var = string_to_c(var);
   s = (char *)Tcl_GetVar(cltclinterp,stable_var,
                          TCL_GLOBAL_ONLY|TCL_LEAVE_ERR_MSG);
-  stat_free(stable_var);
+  caml_stat_free(stable_var);
 
   if (s == NULL)
     tk_error(Tcl_GetStringResult(cltclinterp));
@@ -57,11 +57,11 @@ CAMLprim value camltk_setvar(value var, value contents)
   utf_contents = caml_string_to_tcl(contents);
   s = (char *)Tcl_SetVar(cltclinterp,stable_var, utf_contents,
                          TCL_GLOBAL_ONLY|TCL_LEAVE_ERR_MSG);
-  stat_free(stable_var);
+  caml_stat_free(stable_var);
   if( s == utf_contents ){
     tk_error("camltk_setvar: Tcl_SetVar returned strange result. Call the author of mlTk!");
   }
-  stat_free(utf_contents);
+  caml_stat_free(utf_contents);
 
   if (s == NULL)
     tk_error(Tcl_GetStringResult(cltclinterp));
@@ -84,7 +84,7 @@ static char * tracevar(clientdata, interp, name1, name2, flags)
   Tcl_UntraceVar2(interp, name1, name2,
                 TCL_GLOBAL_ONLY|TCL_TRACE_WRITES|TCL_TRACE_UNSETS,
                 tracevar, clientdata);
-  callback2(*handler_code,Val_int(clientdata),Val_unit);
+  caml_callback2(*handler_code,Val_int(clientdata),Val_unit);
   return (char *)NULL;
 }
 
@@ -103,10 +103,10 @@ CAMLprim value camltk_trace_var(value var, value cbid)
                    tracevar,
                    (ClientData) (Long_val(cbid)))
                    != TCL_OK) {
-    stat_free(cvar);
+    caml_stat_free(cvar);
     tk_error(Tcl_GetStringResult(cltclinterp));
   };
-  stat_free(cvar);
+  caml_stat_free(cvar);
   return Val_unit;
 }
 
@@ -123,6 +123,6 @@ CAMLprim value camltk_untrace_var(value var, value cbid)
                  TCL_GLOBAL_ONLY|TCL_TRACE_WRITES|TCL_TRACE_UNSETS,
                  tracevar,
                  (ClientData) (Long_val(cbid)));
-  stat_free(cvar);
+  caml_stat_free(cvar);
   return Val_unit;
 }

@@ -39,7 +39,7 @@ int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
     int id;
     if (Tcl_GetInt(interp, argv[1], &id) != TCL_OK)
       return TCL_ERROR;
-    callback2(*handler_code,Val_int(id),
+    caml_callback2(*handler_code,Val_int(id),
               copy_string_list(argc - 2,(char **)&argv[2]));
     /* Never fails (OCaml would have raised an exception) */
     /* but result may have been set by callback */
@@ -62,10 +62,10 @@ CAMLprim value camltk_return (value v)
   return Val_unit;
 }
 
-/* Note: raise_with_string WILL copy the error message */
+/* Note: caml_raise_with_string WILL copy the error message */
 CAMLprim void tk_error(const char *errmsg)
 {
-  raise_with_string(*tkerror_exn, errmsg);
+  caml_raise_with_string(*tkerror_exn, errmsg);
 }
 
 

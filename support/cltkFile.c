@@ -33,7 +33,7 @@
 
 void FileProc(ClientData clientdata, int mask)
 {
-  callback2(*handler_code,Val_int(clientdata),Val_int(0));
+  caml_callback2(*handler_code,Val_int(clientdata),Val_int(0));
 }
 
 /* Map Unix.file_descr values to Tcl file handles */

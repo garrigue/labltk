@@ -45,7 +45,7 @@ value copy_string_list(int argc, char **argv)
   for (i = argc-1; i >= 0; i--) {
     oldres = res;
     str = tcl_string_to_caml(argv[i]);
-    res = alloc(2, 0);
+    res = caml_alloc(2, 0);
     Field(res, 0) = str;
     Field(res, 1) = oldres;
   }
@@ -71,7 +71,7 @@ CAMLprim value camltk_tcl_eval(value str)
   Tcl_ResetResult(cltclinterp);
   cmd = caml_string_to_tcl(str);
   code = Tcl_Eval(cltclinterp, cmd);
-  stat_free(cmd);
+  caml_stat_free(cmd);
 
   switch (code) {
   case TCL_OK:
@@ -128,7 +128,7 @@ int fill_args (char **argv, int where, value v)
 
   switch (Tag_val(v)) {
   case 0:
-    argv[where] = caml_string_to_tcl(Field(v,0)); /* must free by stat_free */
+    argv[where] = caml_string_to_tcl(Field(v,0)); /* must free by caml_stat_free */
     return (where + 1);
   case 1:
     for (l=Field(v,0); Is_block(l); l=Field(l,1))
@@ -143,9 +143,9 @@ int fill_args (char **argv, int where, value v)
       fill_args(tmpargv,0,Field(v,0));
       tmpargv[size] = NULL;
       merged = Tcl_Merge(size,(const char *const*)tmpargv);
-      for(i = 0; i<size; i++){ stat_free(tmpargv[i]); }
-      stat_free((char *)tmpargv);
-      /* must be freed by stat_free */
+      for(i = 0; i<size; i++){ caml_stat_free(tmpargv[i]); }
+      caml_stat_free((char *)tmpargv);
+      /* must be freed by caml_stat_free */
       argv[where] = (char*)caml_stat_alloc(strlen(merged)+1);
       strcpy(argv[where], merged);
       Tcl_Free(merged);
@@ -176,7 +176,7 @@ CAMLprim value camltk_tcl_direct_eval(value v)
   argv = (char **)caml_stat_alloc((size + 2) * sizeof(char *));
   allocated = (char **)caml_stat_alloc(size * sizeof(char *));
 
-  /* Copy -- argv[i] must be freed by stat_free */
+  /* Copy -- argv[i] must be freed by caml_stat_free */
   {
     int where;
     for(i=0, where=0; i<Wosize_val(v); i++){
@@ -227,10 +227,10 @@ CAMLprim value camltk_tcl_direct_eval(value v)
 
   /* Free the various things we allocated */
   for(i=0; i< size; i ++){
-    stat_free((char *) allocated[i]);
+    caml_stat_free((char *) allocated[i]);
   }
-  stat_free((char *)argv);
-  stat_free((char *)allocated);
+  caml_stat_free((char *)argv);
+  caml_stat_free((char *)allocated);
 
   switch (result) {
   case TCL_OK:

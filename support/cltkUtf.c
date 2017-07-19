@@ -76,14 +76,14 @@ value tcl_string_to_caml( const char *s )
   char *str;
 
   str = utf_to_external( s );
-  res = copy_string(str);
-  stat_free(str);
+  res = caml_copy_string(str);
+  caml_stat_free(str);
   CAMLreturn(res);
 }
 
 #else
 
 char *caml_string_to_tcl(value s){ return string_to_c(s); }
-value tcl_string_to_caml(char *s){ return copy_string(s); }
+value tcl_string_to_caml(char *s){ return caml_copy_string(s); }
 
 #endif

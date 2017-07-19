@@ -26,7 +26,7 @@
 /* Basically the same thing as FileProc */
 void TimerProc (ClientData clientdata)
 {
-  callback2(*handler_code,Val_long(clientdata),Val_int(0));
+  caml_callback2(*handler_code,Val_long(clientdata),Val_int(0));
 }
 
 CAMLprim value camltk_add_timer(value milli, value cbid)

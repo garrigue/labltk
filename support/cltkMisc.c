@@ -41,20 +41,20 @@ CAMLprim value camltk_splitlist (value v)
    { value res = copy_string_list(argc,argv);
      Tcl_Free((char *)argv);    /* only one large block was allocated */
      /* argv points into utf: utf must be freed after argv are freed */
-     stat_free( utf );
+     caml_stat_free( utf );
      return res;
    }
   case TCL_ERROR:
   default:
-    stat_free( utf );
+    caml_stat_free( utf );
     tk_error(Tcl_GetStringResult(cltclinterp));
   }
 }
 
-/* Copy an OCaml string to the C heap. Should deallocate with stat_free */
+/* Copy an OCaml string to the C heap. Should deallocate with caml_stat_free */
 char *string_to_c(value s)
 {
-  int l = string_length(s);
+  int l = caml_string_length(s);
   char *res = caml_stat_alloc(l + 1);
   memmove (res, String_val (s), l);
   res[l] = '\0';
