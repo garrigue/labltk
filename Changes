@@ -1,5 +1,6 @@
 2017-07-19:
 -----------
+* Release labltk-8.06.3, for ocaml 4.05
 * Various fixes for ocaml 4.05 (merge debian patches by Stephane Glondu)
 
 2016-08-13:
