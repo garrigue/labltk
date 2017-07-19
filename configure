@@ -158,7 +158,7 @@ else
   has_tk=true
 fi
 
-cc=`cat $where/Makefile.config | grep '^CC=' | sed -e 's/^CC=//'`
+cc=`cat $where/Makefile.config | grep '^NATIVECC=' | sed -e 's/^NATIVECC=//'`
 cclibs=`cat $where/Makefile.config | grep '^NATIVECCLIBS=' | sed -e 's/^NATIVECCLIBS=//'`
 export cc cclibs
 

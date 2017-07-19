@@ -1,6 +1,6 @@
-2017-05-15:
+2017-07-19:
 -----------
-* Fix configuration and Makefile for OCaml 4.06
+* Various fixes for ocaml 4.05 (merge debian patches by Stephane Glondu)
 
 2016-08-13:
 -----------
