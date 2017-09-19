@@ -464,13 +464,13 @@ class editor ~top ~menus = object (self)
       let file = open_in name
       and tw = current_tw
       and len = ref 0
-      and buf = String.create 4096 in
+      and buf = Bytes.create 4096 in
       Text.delete tw ~start:tstart ~stop:tend;
       while
         len := input file buf 0 4096;
         !len > 0
       do
-        Jg_text.output tw ~buf ~pos:0 ~len:!len
+        Jg_text.output tw ~buf:(Bytes.unsafe_to_string buf) ~pos:0 ~len:!len
       done;
       close_in file;
       Text.mark_set tw ~mark:"insert" ~index;
@@ -614,7 +614,7 @@ class editor ~top ~menus = object (self)
       begin fun () ->
         let txt = List.hd windows in if txt.signature <> [] then
           let basename = Filename.basename txt.name in
-          let modname = String.capitalize
+          let modname = String.capitalize_ascii
               (try Filename.chop_extension basename with _ -> basename) in
           let env =
             Env.add_module (Ident.create modname)

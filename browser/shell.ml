@@ -84,7 +84,8 @@ object (self)
       alive <- false;
       protect close_out out;
       try
-        if use_sigpipe then ignore (Unix.write sig1 ~buf:"T" ~pos:0 ~len:1);
+        if use_sigpipe then
+          ignore (Unix.write sig1 ~buf:(Bytes.make 1 'T') ~pos:0 ~len:1);
         List.iter ~f:(protect Unix.close) [in1; err1; sig1; sig2];
         if not use_threads then begin
           Fileevent.remove_fileinput ~fd:in1;
@@ -100,7 +101,7 @@ object (self)
     if alive then try
       reading <- false;
       if use_sigpipe then begin
-        ignore (Unix.write sig1 ~buf:"C" ~pos:0 ~len:1);
+        ignore (Unix.write sig1 ~buf:(Bytes.make 1 'C') ~pos:0 ~len:1);
         self#send " "
       end else
         Unix.kill ~pid ~signal:Sys.sigint
@@ -112,10 +113,10 @@ object (self)
     with Sys_error _ -> ()
   method private read ~fd ~len =
     begin try
-      let buf = String.create len in
+      let buf = Bytes.create len in
       let len = Unix.read fd ~buf ~pos:0 ~len in
       if len > 0 then begin
-        self#insert (String.sub buf ~pos:0 ~len);
+        self#insert (Bytes.sub_string buf 0 len);
         Text.mark_set textw ~mark:"input" ~index:(`Mark"insert",[`Char(-1)])
       end;
       len
@@ -192,11 +193,11 @@ object (self)
     List.iter ~f:Unix.close [in2;out2;err2];
     if use_threads then begin
       let fileinput_thread fd =
-        let buf = String.create 1024 in
+        let buf = Bytes.create 1024 in
         let len = ref 0 in
         try while len := Unix.read fd ~buf ~pos:0 ~len:1024; !len > 0 do
           Mutex.lock imutex;
-          Buffer.add_substring ibuffer buf 0 !len;
+          Buffer.add_subbytes ibuffer buf 0 !len;
           Mutex.unlock imutex
         done with Unix.Unix_error _ -> ()
       in

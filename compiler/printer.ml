@@ -18,6 +18,8 @@ open Tables;;
 
 open Format;;
 
+let (.![]<-) = Bytes.set ;;
+
 let escape_string s =
   let more = ref 0 in
   for i = 0 to String.length s - 1 do
@@ -26,15 +28,15 @@ let escape_string s =
    |  _ -> ()
   done;
   if !more = 0 then s else
-  let res = String.create (String.length s + !more) in
+  let res = Bytes.create (String.length s + !more) in
   let j = ref 0 in
   for i = 0 to String.length s - 1 do
    let c = s.[i] in
    match c with
-   | '\\' | '\"' |'\'' -> res.[!j] <- '\\'; incr j; res.[!j] <- c; incr j
-   | _ -> res.[!j] <- c; incr j
+   | '\\' | '\"' |'\'' -> res.![!j] <- '\\'; incr j; res.![!j] <- c; incr j
+   | _ -> res.![!j] <- c; incr j
   done;
-  res
+  Bytes.to_string res
 ;;
 
 let escape_char c = if c = '\'' then "\\\'" else String.make 1 c;;

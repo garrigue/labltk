@@ -35,7 +35,7 @@ let list_modules ~path =
         ~f:(fun x -> Filename.check_suffix x ".cmi") in
     let l = List.map l ~f:
     begin fun x ->
-      String.capitalize (Filename.chop_suffix x ".cmi")
+      String.capitalize_ascii (Filename.chop_suffix x ".cmi")
     end in
     List.fold_left l ~init:modules
      ~f:(fun modules item ->
@@ -249,7 +249,10 @@ let view_defined ~env ?(show_all=false) modlid =
     in
     let l = iter_sign sign [] in
     let title = string_of_path path in
-    let env = open_signature Asttypes.Fresh path sign env in
+    let env =
+      match open_signature Asttypes.Fresh path env with None -> env
+      | Some env -> env
+    in
     !choose_symbol_ref l ~title ~signature:sign ~env ~path;
     if show_all then view_signature sign ~title ~env ~path
   | _ -> ()

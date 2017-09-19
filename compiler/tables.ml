@@ -118,22 +118,11 @@ let module_table = (Hashtbl.create 37 : (string, module_def) Hashtbl.t)
 (* variant name *)
 let rec getvarname ml_name temp =
   let offhypben s =
-    let s = String.copy s in
     if (try String.sub s ~pos:0 ~len:1 with _ -> "") = "-" then
       String.sub s ~pos:1 ~len:(String.length s - 1)
     else s
-  and makecapital s =
-    begin
-      try
-        let cd = s.[0] in
-          if cd >= 'a' && cd <= 'z' then
-            s.[0] <- Char.chr (Char.code cd + (Char.code 'A' - Char.code 'a'))
-      with
-        _ -> ()
-    end;
-    s
   in
-    let head =  makecapital (offhypben begin
+    let head =  String.capitalize_ascii (offhypben begin
                   match temp with
                     StringArg s -> s
                   | TypeArg (s,t) -> s
