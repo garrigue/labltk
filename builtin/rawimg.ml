@@ -1,14 +1,16 @@
-external rawget : string -> string
+external rawget : string -> bytes
     = "camltk_getimgdata"
-external rawset : string -> string -> int -> int -> int -> int -> unit
+external rawset : string -> bytes -> int -> int -> int -> int -> unit
     = "camltk_setimgdata_bytecode"  (* all int parameters MUST be positive *)
       "camltk_setimgdata_native"
 
 type t = {
   pixmap_width : int;
   pixmap_height: int;
-  pixmap_data: string
+  pixmap_data: bytes
 }
+
+let (.![]<-) = Bytes.set
 
 type pixel = string  (* 3 chars *)
 
@@ -17,28 +19,28 @@ let width pix = pix.pixmap_width
 let height pix = pix.pixmap_height
 
 
-(* note: invalid size would have been caught by String.create, but we put
+(* note: invalid size would have been caught by Bytes.create, but we put
  * it here for documentation purpose *)
 let create w h =
   if w < 0 || h < 0 then invalid_arg "invalid size"
   else {
     pixmap_width = w;
     pixmap_height = h;
-    pixmap_data = String.create (w * h * 3);
+    pixmap_data = Bytes.create (w * h * 3);
   }
 
 (*
  * operations on pixmaps
  *)
 let unsafe_copy pix_from pix_to =
-  String.unsafe_blit pix_from.pixmap_data 0
+  Bytes.unsafe_blit pix_from.pixmap_data 0
                      pix_to.pixmap_data 0
-                     (String.length pix_from.pixmap_data)
+                     (Bytes.length pix_from.pixmap_data)
 
 (* We check only the length. w,h might be different... *)
 let copy pix_from pix_to =
-  let l = String.length pix_from.pixmap_data in
-  if l <> String.length pix_to.pixmap_data then
+  let l = Bytes.length pix_from.pixmap_data in
+  if l <> Bytes.length pix_to.pixmap_data then
     raise (Invalid_argument "copy: incompatible length")
   else unsafe_copy pix_from pix_to
 
@@ -46,13 +48,11 @@ let copy pix_from pix_to =
 (* Pixel operations *)
 let unsafe_get_pixel pixmap x y =
   let pos = (y * pixmap.pixmap_width + x) * 3 in
-  let r = String.create 3 in
-  String.unsafe_blit pixmap.pixmap_data pos r 0 3;
-  r
+  Bytes.sub_string pixmap.pixmap_data pos 3
 
 let unsafe_set_pixel pixmap x y pixel =
   let pos = (y * pixmap.pixmap_width + x) * 3 in
-  String.unsafe_blit pixel 0 pixmap.pixmap_data pos 3
+  Bytes.unsafe_blit (Bytes.unsafe_of_string pixel) 0 pixmap.pixmap_data pos 3
 
 (* To get safe operations, we can either check x,y wrt [0,w[ and [0,h[
    or rely on blit checking. We choose the first for clarity.
@@ -73,11 +73,11 @@ let default_color = "\000\000\000"
 
 (* Char.chr does range checking *)
 let pixel r g b =
-  let s = String.create 3 in
-  s.[0] <- Char.chr r;
-  s.[1] <- Char.chr g;
-  s.[2] <- Char.chr b;
-  s
+  let s = Bytes.create 3 in
+  s.![0] <- Char.chr r;
+  s.![1] <- Char.chr g;
+  s.![2] <- Char.chr b;
+  Bytes.unsafe_to_string s
 
 ##ifdef CAMLTK
 
