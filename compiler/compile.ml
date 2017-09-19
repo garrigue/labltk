@@ -56,7 +56,7 @@ let nicknames =
   [ "class", "clas";
     "type", "typ" ]
 
-let small = String.lowercase
+let small = String.lowercase_ascii
 
 let gettklabel fc =
   match fc.template with

@@ -170,7 +170,7 @@ let extract_size_font_hash tbl =
   let keys = ref [] in
   Hashtbl.iter (fun k _ ->
     if not (List.mem k !keys) then keys := k :: !keys) tbl;
-  Sort.list (fun (k1,_) (k2,_) -> k1 < k2)
+  List.sort (fun (k1,_) (k2,_) -> compare k1 k2)
     (List.map (fun k -> k, Hashtbl.find_all tbl k) !keys)
 
 let available_pixel_size dispname pattern =

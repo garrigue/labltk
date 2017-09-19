@@ -116,7 +116,7 @@ object (self)
       let buf = Bytes.create len in
       let len = Unix.read fd ~buf ~pos:0 ~len in
       if len > 0 then begin
-        self#insert (Bytes.sub_string buf 0 len);
+        self#insert (Bytes.sub_string buf ~pos:0 ~len);
         Text.mark_set textw ~mark:"input" ~index:(`Mark"insert",[`Char(-1)])
       end;
       len

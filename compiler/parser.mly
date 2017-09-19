@@ -63,7 +63,7 @@ open Tables
 
 %%
 TypeName:
-   IDENT { String.uncapitalize $1 }
+   IDENT { String.uncapitalize_ascii $1 }
  | WIDGET { "widget" }
 ;
 
@@ -329,7 +329,7 @@ entry :
 | WIDGET ModuleName LBRACE WidgetComponents RBRACE
     { enter_widget $2 $4 }
 | MODULE ModuleName LBRACE ModuleComponents RBRACE
-    { enter_module (String.uncapitalize $2) $4 }
+    { enter_module (String.uncapitalize_ascii $2) $4 }
 | EOF
     { raise End_of_file }
 ;

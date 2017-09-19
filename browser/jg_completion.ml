@@ -15,7 +15,7 @@
 (* $Id$ *)
 
 let compare_string ?(nocase=false) s1 s2 =
-  if nocase then compare (String.lowercase s1) (String.lowercase s2)
+  if nocase then compare (String.lowercase_ascii s1) (String.lowercase_ascii s2)
   else compare s1 s2
 
 class completion ?nocase texts = object
