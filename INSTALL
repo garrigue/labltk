@@ -40,6 +40,8 @@ The "configure" script accepts the following options:
         Examples:
         for an OSX installation using macports, use just
          ./configure -tklibs -L/opt/local/lib -tkdefs -I/opt/local/include
+        if you prefer to use the system Tcl/Tk,
+         ./configure -tklibs "-framework Tcl -framework Tk" -tk-no-x11 -tkdefs "-I/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Tk.framework/Headers"
         for Japanese Tcl/Tk whose headers are in specific directories
         and libraries in /usr/local/lib, you can use
          ./configure -tklibs "-L/usr/local/lib -ltk8.0jp -ltcl8.0jp"
