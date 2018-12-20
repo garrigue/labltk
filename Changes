@@ -1,3 +1,7 @@
+2018-12-20:
+-----------
+* Fix browser for module aliases and polymorphic variants
+
 2018-07-11:
 -----------
 * Release labltk-8.06.5, for ocaml 4.07

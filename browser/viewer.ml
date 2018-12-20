@@ -235,8 +235,10 @@ let ident_of_decl ~modlid = function
   | Sig_class_type (id, _, _) -> Lident (Ident.name id), Pcltype
 
 let view_defined ~env ?(show_all=false) modlid =
-  try match Typetexp.find_module env Location.none modlid with
-    path, {md_type=Mty_signature sign} ->
+  try
+  let path, modtype = Typetexp.find_module env Location.none modlid in
+  match scrape_alias env modtype.md_type with
+    Mty_signature sign ->
     let rec iter_sign sign idents =
       match sign with
         [] -> List.rev idents

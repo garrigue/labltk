@@ -465,10 +465,11 @@ and view_signature_item sign ~path ~env =
     ?path:(parent_path path) ~env
 
 and view_module path ~env =
-  match find_module path env with
-    {md_type=Mty_signature sign} ->
+  let modtype = find_module path env in
+  match scrape_alias env modtype.md_type with
+    Mty_signature sign ->
       !view_defined_ref (Searchid.longident_of_path path) ~env
-  | modtype ->
+  | _ ->
       let id = ident_of_path path ~default:"M" in
       view_signature_item [Sig_module (id, modtype, Trec_not)] ~path ~env
 
@@ -479,12 +480,17 @@ and view_module_id id ~env =
 and view_type_decl path ~env =
   let td = find_type path env in
   try match td.type_manifest with None -> raise Not_found
-    | Some ty -> match Ctype.repr ty with
-        {desc = Tobject _} ->
+    | Some ty -> match (Ctype.repr ty).desc with
+        Tobject _ ->
           let clt = find_cltype path env in
           view_signature_item ~path ~env
             [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first);
              dummy_item; dummy_item]
+      | Tvariant ({row_name = Some _} as row) ->
+          let td = {td with type_manifest = Some(
+                    Btype.newgenty (Tvariant {row with row_name = None}))} in
+          view_signature_item ~path ~env
+            [Sig_type(ident_of_path path ~default:"t", td, Trec_first)]
       | _ -> raise Not_found
   with Not_found ->
     view_signature_item ~path ~env
