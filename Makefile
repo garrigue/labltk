@@ -21,7 +21,11 @@ SUBDIRS=compiler support lib jpf frx examples_labltk \
 SUBDIRS_GENERATED=camltk labltk
 include config/Makefile
 
-all:
+all: library
+	cd browser; $(MAKE)
+opt: libraryopt
+
+library:
 	cd support; $(MAKE)
 	cd compiler; $(MAKE)
 	cd labltk; $(MAKE) -f Makefile.gen
@@ -31,9 +35,8 @@ all:
 	cd lib; $(MAKE)
 	cd jpf; $(MAKE)
 	cd frx; $(MAKE)
-	cd browser; $(MAKE)
 
-allopt:
+libraryopt:
 	cd support; $(MAKE) opt
 	cd labltk; $(MAKE) -f Makefile.gen
 	cd labltk; $(MAKE) opt
@@ -46,7 +49,7 @@ allopt:
 byte: all
 opt: allopt
 
-.PHONY: all allopt byte opt apiref
+.PHONY: all allopt byte opt apiref library libraryopt
 .PHONY: labltk camltk examples examples_labltk examples_camltk
 .PHONY: install installopt partialclean clean depend
 

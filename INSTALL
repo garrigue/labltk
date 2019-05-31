@@ -3,9 +3,11 @@
 
 PREREQUISITES
 
-* OCaml (>= 4.02) should be installed
+* OCaml (>= 4.08) should be installed
 
 * Tcl/Tk (>= 8.03) should be installed
+
+* ocamlfind is used if available
 
 INSTALLATION INSTRUCTIONS FOR UNIX AND OSX
 
@@ -55,6 +57,11 @@ The "configure" script accepts the following options:
         Verbose output of the configuration tests. Use it if the outcome
         of configure is not what you were expecting.
 
+Additionally, you may set the MAKE environment variable to set the
+command used to read the ocaml configuration Makefile.
+Default is "make". It should be compatible with GNU Make.
+
+
 2- From the top directory do
 
         make all
@@ -62,6 +69,9 @@ The "configure" script accepts the following options:
 and optionally
 
         make opt
+
+You may replace "all" with "library" if you wish to compile only
+the library, without ocamlbrowser.
 
 3- From the top directory do
 

@@ -5,3 +5,6 @@ https://forge.ocamlcore.org/projects/labltk/
 
 You can find documentation here:
 https://forge.ocamlcore.org/docman/?group_id=343&view=listfile&dirid=385
+
+Bug reports go to Github:
+https://github.com/garrigue/labltk/issues
