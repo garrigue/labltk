@@ -150,11 +150,17 @@ fi
 
 inf "Configuring LablTk..."
 
+if test "x$MAKE" = x; then
+  MAKE=make
+fi
+
 if test $tk_x11 = no; then
   has_tk=true
 else
-  tk_x11_include=`cat $where/Makefile.config | grep '^X11_INCLUDES=' | sed -e 's/^X11_INCLUDES=//'`
-  tk_x11_libs=`cat $where/Makefile.config | grep '^X11_LIBS=' | sed -e 's/^X11_LIBS=//'`
+#  tk_x11_include=`cat $where/Makefile.config | grep '^X11_INCLUDES=' | sed -e 's/^X11_INCLUDES=//'`
+#  tk_x11_libs=`cat $where/Makefile.config | grep '^X11_LIBS=' | sed -e 's/^X11_LIBS=//'`
+  tk_x11_include=`$MAKE where=$where includes -f readconf.mk`
+  tk_x11_libs=`$MAKE where=$where libs -f readconf.mk`
   has_tk=true
 fi
 
