@@ -84,6 +84,9 @@ install:
 	cd browser; $(MAKE) install
 	if test -f lib/labltk.cmxa; then $(MAKE) installopt; else :; fi
 
+install-browser:
+	cd browser; $(MAKE) install
+
 installopt:
 	cd support; $(MAKE) installopt
 	cd lib; $(MAKE) installopt
