@@ -51,7 +51,7 @@ let string_of_kind = function
 
 let rec longident_of_path = function
     Pident id -> Lident (Ident.name id)
-  | Pdot (path, s, _) -> Ldot (longident_of_path path, s)
+  | Pdot (path, s) -> Ldot (longident_of_path path, s)
   | Papply (p1, p2) -> Lapply (longident_of_path p1, longident_of_path p2)
 
 let rec remove_prefix lid ~prefix =
@@ -201,8 +201,8 @@ let mklid = function
 let mkpath = function
     [] -> raise (Invalid_argument "Searchid.mklid")
   | x :: l ->
-      List.fold_left l ~init:(Pident (Ident.create x))
-      ~f:(fun acc x -> Pdot (acc, x, 0))
+      List.fold_left l ~init:(Pident (Ident.create_local x))
+      ~f:(fun acc x -> Pdot (acc, x))
 
 let get_fields ~prefix ~sign self =
   (*let env = open_signature Fresh (mkpath prefix) sign !start_env in*)
@@ -223,9 +223,9 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
   in
   List2.flat_map sign ~f:
   begin fun item -> match item with
-        Sig_value (id, vd) ->
+        Sig_value (id, vd, _) ->
           if matches vd.val_type then [lid_of_id id, Pvalue] else []
-      | Sig_type (id, td, _) ->
+      | Sig_type (id, td, _, _) ->
           if
           matches (newconstr (Pident id) td.type_params) ||
           begin match td.type_manifest with
@@ -245,23 +245,23 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
             List.exists l ~f:(fun {Types.ld_type=t} -> matches t)
           end
           then [lid_of_id id, Ptype] else []
-      | Sig_typext (id, l, _) ->
+      | Sig_typext (id, l, _, _) ->
           if constructor_matches l.ext_args
           then [lid_of_id id, Pconstructor]
           else []
-      | Sig_module (id, {md_type=Mty_signature sign}, _) ->
+      | Sig_module (id, _, {md_type=Mty_signature sign}, _, _) ->
           search_type_in_signature t ~sign ~mode
             ~prefix:(prefix @ [Ident.name id])
       | Sig_module _ -> []
       | Sig_modtype _ -> []
-      | Sig_class (id, cl, _) ->
+      | Sig_class (id, cl, _, _) ->
           let self = self_type cl.cty_type in
           if matches self
           || (match cl.cty_new with None -> false | Some ty -> matches ty)
           (* || List.exists (get_fields ~prefix ~sign self)
               ~f:(fun (_,_,ty_field) -> matches ty_field) *)
           then [lid_of_id id, Pclass] else []
-      | Sig_class_type (id, cl, _) ->
+      | Sig_class_type (id, cl, _, _) ->
           let self = self_type cl.clty_type in
           if matches self
           (* || List.exists (get_fields ~prefix ~sign self)
@@ -308,7 +308,7 @@ let search_string_type text ~mode =
           let end_c = l.loc_end.Lexing.pos_cnum in
           raise (Error (start_c - 8, end_c - 8))
     in match sign with
-        [ Sig_value (_, vd) ] ->
+        [ Sig_value (_, vd, _) ] ->
           search_all_types vd.val_type ~mode
       | _ -> []
   with
@@ -366,17 +366,17 @@ let search_pattern_symbol text =
     with {md_type=Mty_signature sign} ->
         List2.flat_map sign ~f:
           begin function
-            Sig_value (i, _) when check i -> [i, Pvalue]
-          | Sig_type (i, _, _) when check i -> [i, Ptype]
-          | Sig_typext (i, _, _) when check i -> [i, Pconstructor]
-          | Sig_module (i, _, _) when check i -> [i, Pmodule]
-          | Sig_modtype (i, _) when check i -> [i, Pmodtype]
-          | Sig_class (i, cl, _) when check i
+            Sig_value (i, _, _) when check i -> [i, Pvalue]
+          | Sig_type (i, _, _, _) when check i -> [i, Ptype]
+          | Sig_typext (i, _, _, _) when check i -> [i, Pconstructor]
+          | Sig_module (i, _, _, _, _) when check i -> [i, Pmodule]
+          | Sig_modtype (i, _, _) when check i -> [i, Pmodtype]
+          | Sig_class (i, cl, _, _) when check i
             || List.exists
                 (get_fields ~prefix:[modname] ~sign (self_type cl.cty_type))
                 ~f:(fun (name,_,_) -> check_match ~pattern (explode name))
             -> [i, Pclass]
-          | Sig_class_type (i, cl, _) when check i
+          | Sig_class_type (i, cl, _, _) when check i
             || List.exists
                 (get_fields ~prefix:[modname] ~sign (self_type cl.clty_type))
                 ~f:(fun (name,_,_) -> check_match ~pattern (explode name))
@@ -484,7 +484,8 @@ let search_structure str ~name ~kind ~prefix =
 	      then loc := td.pext_loc.loc_start.Lexing.pos_cnum
             end;
           false
-      | Pstr_exception pcd when kind = Pconstructor -> name = pcd.pext_name.txt
+      | Pstr_exception pcd when kind = Pconstructor ->
+          name = pcd.ptyexn_constructor.pext_name.txt
       | Pstr_module x when kind = Pmodule -> name = x.pmb_name.txt
       | Pstr_modtype x when kind = Pmodtype -> name = x.pmtd_name.txt
       | Pstr_class l when kind = Pclass || kind = Ptype || kind = Pcltype ->
@@ -545,7 +546,8 @@ let search_signature sign ~name ~kind ~prefix =
 	      then loc := td.pext_loc.loc_start.Lexing.pos_cnum
             end;
           false
-      | Psig_exception pcd when kind = Pconstructor -> name = pcd.pext_name.txt
+      | Psig_exception pcd when kind = Pconstructor ->
+          name = pcd.ptyexn_constructor.pext_name.txt
       | Psig_module pmd when kind = Pmodule -> name = pmd.pmd_name.txt
       | Psig_modtype pmtd when kind = Pmodtype -> name = pmtd.pmtd_name.txt
       | Psig_class l when kind = Pclass || kind = Ptype || kind = Pcltype ->

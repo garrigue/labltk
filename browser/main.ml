@@ -96,10 +96,10 @@ let _ =
   Arg.parse spec
     (fun name -> raise(Arg.Bad("don't know what to do with " ^ name)))
     errmsg;
-  Config.load_path :=
-    Sys.getcwd ()
-    :: List.rev_map ~f:(Misc.expand_directory Config.standard_library) !path
-    @ [Config.standard_library];
+  Load_path.init
+    (Sys.getcwd ()
+     :: List.rev_map ~f:(Misc.expand_directory Config.standard_library) !path
+     @ [Config.standard_library]);
   Warnings.parse_options false !Shell.warnings;
   Unix.putenv "TERM" "noterminal";
   begin

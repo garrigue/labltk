@@ -295,7 +295,7 @@ let f ~prog ~title =
         if Str.string_match ~!"TERM=" s 0 then "TERM=dumb" else s
       end in
   let load_path =
-    List2.flat_map !Config.load_path ~f:(fun dir -> ["-I"; dir]) in
+    List2.flat_map (Load_path.get_paths ()) ~f:(fun dir -> ["-I"; dir]) in
   let load_path =
     if is_win32 then List.map ~f:protect_arg load_path else load_path in
   let labels = if !Clflags.classic then ["-nolabels"] else [] in
@@ -352,7 +352,7 @@ let f ~prog ~title =
     end;
   file_menu#add_command "Import path" ~command:
     begin fun () ->
-      List.iter (List.rev !Config.load_path) ~f:
+      List.iter (List.rev (Load_path.get_paths ())) ~f:
         (fun dir ->
           (!sh)#send ("#directory \"" ^ String.escaped dir ^ "\";;\n"))
     end;

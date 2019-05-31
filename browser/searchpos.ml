@@ -68,22 +68,22 @@ let rec string_of_longident = function
 let string_of_path p = string_of_longident (Searchid.longident_of_path p)
 
 let parent_path = function
-    Pdot (path, _, _) -> Some path
+    Pdot (path, _) -> Some path
   | Pident _ | Papply _ -> None
 
 let ident_of_path ~default = function
     Pident i -> i
-  | Pdot (_, s, _) -> Ident.create s
-  | Papply _ -> Ident.create default
+  | Pdot (_, s) -> Ident.create_local s
+  | Papply _ -> Ident.create_local default
 
 let rec head_id = function
     Pident id -> id
-  | Pdot (path,_,_) -> head_id path
+  | Pdot (path,_) -> head_id path
   | Papply (path,_) -> head_id path (* wrong, but ... *)
 
 let rec list_of_path = function
     Pident id -> [Ident.name id]
-  | Pdot (path, s, _) -> list_of_path path @ [s]
+  | Pdot (path, s) -> list_of_path path @ [s]
   | Papply (path, _) -> list_of_path path (* wrong, but ... *)
 
 (* a simple wrapper *)
@@ -108,8 +108,8 @@ let rec search_pos_type t ~pos ~env =
   | Ptyp_var _ -> ()
   | Ptyp_variant(tl, _, _) ->
       List.iter tl ~f:
-        begin function
-            Rtag (_,_,_,tl) -> List.iter tl ~f:(search_pos_type ~pos ~env)
+        begin fun prf -> match prf.prf_desc with
+            Rtag (_,_,tl) -> List.iter tl ~f:(search_pos_type ~pos ~env)
           | Rinherit st -> search_pos_type ~pos ~env st
         end
   | Ptyp_arrow (_, t1, t2) ->
@@ -122,7 +122,8 @@ let rec search_pos_type t ~pos ~env =
       add_found_sig (`Type, lid.txt) ~env ~loc:t.ptyp_loc
   | Ptyp_object (fl, _) ->
       List.iter fl ~f:
-        (function Oinherit ty | Otag (_, _, ty) -> search_pos_type ty ~pos ~env)
+        (fun pof -> match pof.pof_desc with
+          Oinherit ty | Otag (_, ty) -> search_pos_type ty ~pos ~env)
   | Ptyp_class (lid, tl) ->
       List.iter tl ~f:(search_pos_type ~pos ~env);
       add_found_sig (`Type, lid.txt) ~env ~loc:t.ptyp_loc
@@ -157,7 +158,7 @@ let rec search_pos_class_type cl ~pos ~env =
         search_pos_type ty ~pos ~env;
         search_pos_class_type cty ~pos ~env
     | Pcty_extension _ -> ()
-    | Pcty_open (_, _, cty) ->
+    | Pcty_open (_, cty) ->
         search_pos_class_type cty ~pos ~env
     end
 
@@ -203,7 +204,7 @@ let rec search_pos_signature l ~pos ~env =
   List.fold_left l ~init:env ~f:
   begin fun env pt ->
     let env = match pt.psig_desc with
-      Psig_open {popen_override=ovf; popen_lid=id} ->
+      Psig_open {popen_override=ovf; popen_expr=id} ->
         let path, mt = Typetexp.find_module env Location.none id.txt in
         begin match open_signature ovf path env with
           Some env -> env
@@ -224,7 +225,7 @@ let rec search_pos_signature l ~pos ~env =
 	    ~f:(search_pos_extension ~pos ~env);
 	  add_found_sig (`Type, pty.ptyext_path.txt) ~env ~loc:pt.psig_loc
       | Psig_exception ext ->
-	  search_pos_extension ext ~pos ~env;
+	  search_pos_extension ext.ptyexn_constructor ~pos ~env;
 	  add_found_sig (`Type, Lident "exn") ~env ~loc:pt.psig_loc
       | Psig_module pmd ->
           search_pos_module pmd.pmd_type ~pos ~env
@@ -240,10 +241,11 @@ let rec search_pos_signature l ~pos ~env =
           List.iter l
             ~f:(fun ci -> search_pos_class_type ci.pci_expr ~pos ~env)
       (* The last cases should not happen in generated interfaces *)
-      | Psig_open {popen_lid=lid} ->
+      | Psig_open {popen_expr=lid} ->
         add_found_sig (`Module, lid.txt) ~env ~loc:pt.psig_loc
       | Psig_include {pincl_mod=t} -> search_pos_module t ~pos ~env
       | Psig_attribute _ | Psig_extension _ -> ()
+      | Psig_typesubst _ | Psig_modsubst _ -> ()
       end;
     env
   end)
@@ -317,13 +319,13 @@ let edit_source ~file ~path ~sign =
     [item] ->
       let id, kind =
         match item with
-          Sig_value (id, _) -> id, Pvalue
-        | Sig_type (id, _, _) -> id, Ptype
-        | Sig_typext (id, _, _) -> id, Pconstructor
-        | Sig_module (id, _, _) -> id, Pmodule
-        | Sig_modtype (id, _) -> id, Pmodtype
-        | Sig_class (id, _, _) -> id, Pclass
-        | Sig_class_type (id, _, _) -> id, Pcltype
+          Sig_value (id, _, _) -> id, Pvalue
+        | Sig_type (id, _, _, _) -> id, Ptype
+        | Sig_typext (id, _, _, _) -> id, Pconstructor
+        | Sig_module (id, _, _, _, _) -> id, Pmodule
+        | Sig_modtype (id, _, _) -> id, Pmodtype
+        | Sig_class (id, _, _, _) -> id, Pclass
+        | Sig_class_type (id, _, _, _) -> id, Pcltype
       in
       let prefix = List.tl (list_of_path path) and name = Ident.name id in
       let pos =
@@ -345,8 +347,9 @@ let edit_source ~file ~path ~sign =
 let top_widgets = ref []
 
 let dummy_item =
-  Sig_modtype (Ident.create "dummy",
-               {mtd_type=None; mtd_attributes=[]; mtd_loc=Location.none})
+  Sig_modtype (Ident.create_local "dummy",
+               {mtd_type=None; mtd_attributes=[]; mtd_loc=Location.none},
+               Exported)
 
 let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
   let env =
@@ -394,7 +397,7 @@ let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
             try
               let id = head_id path in
               let file =
-                Misc.find_in_path_uncap !Config.load_path
+                Misc.find_in_path_uncap (Load_path.get_paths ())
                   ((Ident.name id) ^ ext) in
               Button.configure button
                 ~command:(fun () -> edit_source ~file ~path ~sign);
@@ -471,7 +474,8 @@ and view_module path ~env =
       !view_defined_ref (Searchid.longident_of_path path) ~env
   | _ ->
       let id = ident_of_path path ~default:"M" in
-      view_signature_item [Sig_module (id, modtype, Trec_not)] ~path ~env
+      view_signature_item [Sig_module (id, Mp_present, modtype,
+                                       Trec_not, Exported)] ~path ~env
 
 and view_module_id id ~env =
   let path = lookup_module ~load:true id env in
@@ -484,17 +488,19 @@ and view_type_decl path ~env =
         Tobject _ ->
           let clt = find_cltype path env in
           view_signature_item ~path ~env
-            [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first);
+            [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first,
+                            Exported);
              dummy_item; dummy_item]
       | Tvariant ({row_name = Some _} as row) ->
           let td = {td with type_manifest = Some(
                     Btype.newgenty (Tvariant {row with row_name = None}))} in
           view_signature_item ~path ~env
-            [Sig_type(ident_of_path path ~default:"t", td, Trec_first)]
+            [Sig_type(ident_of_path path ~default:"t", td, Trec_first,
+                      Exported)]
       | _ -> raise Not_found
   with Not_found ->
     view_signature_item ~path ~env
-      [Sig_type(ident_of_path path ~default:"t", td, Trec_first)]
+      [Sig_type(ident_of_path path ~default:"t", td, Trec_first, Exported)]
 
 and view_type_id li ~env =
   let path = lookup_type li env in
@@ -503,19 +509,20 @@ and view_type_id li ~env =
 and view_class_id li ~env =
   let path, cl = lookup_class li env in
   view_signature_item ~path ~env
-     [Sig_class(ident_of_path path ~default:"c", cl, Trec_first);
+     [Sig_class(ident_of_path path ~default:"c", cl, Trec_first, Exported);
       dummy_item; dummy_item; dummy_item]
 
 and view_cltype_id li ~env =
   let path, clt = lookup_cltype li env in
   view_signature_item ~path ~env
-     [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first);
+     [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first,
+                     Exported);
       dummy_item; dummy_item]
 
 and view_modtype_id li ~env =
   let path, td = lookup_modtype li env in
   view_signature_item ~path ~env
-    [Sig_modtype(ident_of_path path ~default:"S", td)]
+    [Sig_modtype(ident_of_path path ~default:"S", td, Exported)]
 
 and view_expr_type ?title ?path ?env ?(name="noname") t =
   let title =
@@ -523,12 +530,12 @@ and view_expr_type ?title ?path ?env ?(name="noname") t =
     | None, Some path -> string_of_path path
     | None, None -> "Expression type"
   and path, id =
-    match path with None -> None, Ident.create name
+    match path with None -> None, Ident.create_local name
     | Some path -> parent_path path, ident_of_path path ~default:name
   in
   view_signature ~title ?path ?env
     [Sig_value (id, {val_type = t; val_kind = Val_reg; val_attributes=[];
-                     val_loc = Location.none})]
+                     val_loc = Location.none}, Exported)]
 
 and view_decl lid ~kind ~env =
   match kind with
@@ -610,7 +617,7 @@ let view_type kind ~env =
           begin try
             let vd = find_value path env in
             view_signature_item ~path ~env
-              [Sig_value(ident_of_path path ~default:"v", vd)]
+              [Sig_value(ident_of_path path ~default:"v", vd, Exported)]
           with Not_found ->
             view_expr_type ty ~path ~env
           end
@@ -620,14 +627,16 @@ let view_type kind ~env =
       | `New path ->
           let cl = find_class path env in
           view_signature_item ~path ~env
-            [Sig_class(ident_of_path path ~default:"c", cl, Trec_first)]
+            [Sig_class(ident_of_path path ~default:"c", cl, Trec_first,
+                       Exported)]
       end
   | `Class (path, cty) ->
       let cld = { cty_params = []; cty_variance = []; cty_type = cty;
                   cty_path = path; cty_new = None; cty_loc = Location.none;
                   cty_attributes = []} in
       view_signature_item ~path ~env
-        [Sig_class(ident_of_path path ~default:"c", cld, Trec_first)]
+        [Sig_class(ident_of_path path ~default:"c", cld, Trec_first,
+                   Exported)]
   | `Module (path, mty) ->
       match mty with
         Mty_signature sign -> view_signature sign ~path ~env
@@ -635,7 +644,8 @@ let view_type kind ~env =
           let md =
 	    {md_type = mty; md_attributes = []; md_loc = Location.none} in
           view_signature_item ~path ~env
-            [Sig_module(ident_of_path path ~default:"M", md, Trec_not)]
+            [Sig_module(ident_of_path path ~default:"M", Mp_present,
+                        md, Trec_not, Exported)]
 
 let view_type_menu kind ~env ~parent =
   let title =
@@ -750,7 +760,7 @@ and search_pos_class_expr ~pos cl =
         search_pos_class_structure ~pos cls
     | Tcl_fun (_, pat, iel, cl, _) ->
         search_pos_pat pat ~pos ~env:pat.pat_env;
-        List.iter iel ~f:(fun (_,_, exp) -> search_pos_expr exp ~pos);
+        List.iter iel ~f:(fun (_, exp) -> search_pos_expr exp ~pos);
         search_pos_class_expr cl ~pos
     | Tcl_apply (cl, el) ->
         search_pos_class_expr cl ~pos;
@@ -761,13 +771,13 @@ and search_pos_class_expr ~pos cl =
             search_pos_pat pat ~pos ~env:exp.exp_env;
             search_pos_expr exp ~pos
           end;
-        List.iter iel ~f:(fun (_,_, exp) -> search_pos_expr exp ~pos);
+        List.iter iel ~f:(fun (_, exp) -> search_pos_expr exp ~pos);
         search_pos_class_expr cl ~pos
-    | Tcl_open (_, _, _, _, cl)
+    | Tcl_open (_, cl)
     | Tcl_constraint (cl, _, _, _, _) ->
         search_pos_class_expr cl ~pos
     end;
-    add_found_str (`Class (Pident (Ident.create "c"), cl.cl_type))
+    add_found_str (`Class (Pident (Ident.create_local "c"), cl.cl_type))
       ~env:!start_env ~loc:cl.cl_loc
   end
 
@@ -800,7 +810,7 @@ and search_pos_expr ~pos exp =
   | Texp_apply (exp, l) ->
       List.iter l ~f:(fun (_, x) -> Misc.may (search_pos_expr ~pos) x);
       search_pos_expr exp ~pos
-  | Texp_match (exp, l, _, _) ->
+  | Texp_match (exp, l, _) ->
       search_pos_expr exp ~pos;
       List.iter l ~f:(search_case ~pos)
   | Texp_try (exp, l) ->
@@ -842,7 +852,7 @@ and search_pos_expr ~pos exp =
         ~env:exp.exp_env ~loc:exp.exp_loc
   | Texp_override (_, l) ->
       List.iter l ~f:(fun (_, _, exp) -> search_pos_expr exp ~pos)
-  | Texp_letmodule (id, _, modexp, exp) ->
+  | Texp_letmodule (id, _, _, modexp, exp) ->
       search_pos_module_expr modexp ~pos;
       search_pos_expr exp ~pos
   | Texp_assert exp ->
@@ -859,6 +869,10 @@ and search_pos_expr ~pos exp =
       ()
   | Texp_letexception (_, exp) ->
       search_pos_expr exp ~pos
+  | Texp_letop _ ->
+      ()
+  | Texp_open (_, exp) ->
+      search_pos_expr exp ~pos
   end;
   add_found_str (`Exp(`Expr, exp.exp_type)) ~env:exp.exp_env ~loc:exp.exp_loc
   end
@@ -871,7 +885,8 @@ and search_pos_pat ~pos ~env pat =
       add_found_str (`Exp(`Val (Pident id), pat.pat_type))
         ~env ~loc:pat.pat_loc
   | Tpat_alias (pat, _, _) -> search_pos_pat pat ~pos ~env
-  | Tpat_lazy pat -> search_pos_pat pat ~pos ~env
+  | Tpat_lazy pat
+  | Tpat_exception pat -> search_pos_pat pat ~pos ~env
   | Tpat_constant _ ->
       add_found_str (`Exp(`Const, pat.pat_type)) ~env ~loc:pat.pat_loc
   | Tpat_tuple l ->
@@ -905,7 +920,7 @@ and search_pos_module_expr ~pos (m :module_expr) =
     | Tmod_constraint (m, _, _, _) -> search_pos_module_expr m ~pos
     | Tmod_unpack (e, _) -> search_pos_expr e ~pos
     end;
-    add_found_str (`Module (Pident (Ident.create "M"), m.mod_type))
+    add_found_str (`Module (Pident (Ident.create_local "M"), m.mod_type))
       ~env:m.mod_env ~loc:m.mod_loc
   end
 

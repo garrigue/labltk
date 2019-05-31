@@ -27,7 +27,7 @@ open Searchid
 
 (* Managing the module list *)
 
-let list_modules ~path =
+let list_modules ?(path=Load_path.get_paths ()) () =
   List.fold_left path ~init:[] ~f:
   begin fun modules dir ->
     let l =
@@ -45,7 +45,7 @@ let list_modules ~path =
 let reset_modules box =
   Listbox.delete box ~first:(`Num 0) ~last:`End;
   module_list := List.sort (Jg_completion.compare_string ~nocase:true)
-      (list_modules ~path:!Config.load_path);
+      (list_modules ());
   Listbox.insert box ~index:`End ~texts:!module_list;
   Jg_box.recenter box ~index:(`Num 0)
 
@@ -61,7 +61,8 @@ let view_symbol ~kind ~env ?path id =
   match kind with
     Pvalue ->
       let path, vd = lookup_value id env in
-      view_signature_item ~path ~env [Sig_value (Ident.create name, vd)]
+      view_signature_item ~path ~env
+        [Sig_value (Ident.create_local name, vd, Exported)]
   | Ptype -> view_type_id id ~env
   | Plabel -> let ld = lookup_label id env in
       begin match ld.lbl_res.desc with
@@ -73,7 +74,7 @@ let view_symbol ~kind ~env ?path id =
       begin match cd.cstr_tag, cd.cstr_res.desc with
 	Cstr_extension _, Tconstr (cpath, args, _) ->
           view_signature ~title:(string_of_longident id) ~env ?path
-            [Sig_typext (Ident.create name,
+            [Sig_typext (Ident.create_local name,
 			 {Types.ext_type_path = cpath;
 			  ext_type_params = args;
 			  ext_args = Cstr_tuple cd.cstr_args;
@@ -82,8 +83,10 @@ let view_symbol ~kind ~env ?path id =
 			  ext_private = cd.cstr_private;
 			  ext_loc = cd.cstr_loc;
 			  ext_attributes = cd.cstr_attributes},
-			 if Path.same cpath Predef.path_exn then Text_exception
-			 else Text_first)]
+			 (if Path.same cpath Predef.path_exn
+                         then Text_exception
+			 else Text_first),
+                         Exported)]
       | _, Tconstr (cpath, _, _) ->
           view_type_decl cpath ~env
       | _ -> ()
@@ -194,7 +197,7 @@ let search_which = ref "Name"
 
 let search_symbol () =
   if !module_list = [] then
-  module_list := List.sort ~cmp:compare (list_modules ~path:!Config.load_path);
+  module_list := List.sort ~cmp:compare (list_modules ());
   let tl = Jg_toplevel.titled "Search symbol" in
   Jg_bind.escape_destroy tl;
   let ew = Entry.create tl ~width:30 in
@@ -226,13 +229,13 @@ let search_symbol () =
 (* Display the contents of a module *)
 
 let ident_of_decl ~modlid = function
-    Sig_value (id, _) -> Lident (Ident.name id), Pvalue
-  | Sig_type (id, _, _) -> Lident (Ident.name id), Ptype
-  | Sig_typext (id, _, _) -> Ldot (modlid, Ident.name id), Pconstructor
-  | Sig_module (id, _, _) -> Lident (Ident.name id), Pmodule
-  | Sig_modtype (id, _) -> Lident (Ident.name id), Pmodtype
-  | Sig_class (id, _, _) -> Lident (Ident.name id), Pclass
-  | Sig_class_type (id, _, _) -> Lident (Ident.name id), Pcltype
+    Sig_value (id, _, _) -> Lident (Ident.name id), Pvalue
+  | Sig_type (id, _, _, _) -> Lident (Ident.name id), Ptype
+  | Sig_typext (id, _, _, _) -> Ldot (modlid, Ident.name id), Pconstructor
+  | Sig_module (id, _, _, _, _) -> Lident (Ident.name id), Pmodule
+  | Sig_modtype (id, _, _) -> Lident (Ident.name id), Pmodtype
+  | Sig_class (id, _, _, _) -> Lident (Ident.name id), Pclass
+  | Sig_class_type (id, _, _, _) -> Lident (Ident.name id), Pcltype
 
 let view_defined ~env ?(show_all=false) modlid =
   try
@@ -537,7 +540,7 @@ object (self)
       n
     with Not_found ->
       match path with
-        Path.Pdot (path', _, _) ->
+        Path.Pdot (path', _) ->
           let n = self#get_box ~path:path' in
           shown_paths <- shown_paths @ [path];
           if n + 1 >= List.length boxes then ignore self#create_box;
@@ -550,7 +553,7 @@ object (self)
   method set_path path ~sign =
     let rec path_elems l path =
       match path with
-        Path.Pdot (path, _, _) -> path_elems (path::l) path
+        Path.Pdot (path, _) -> path_elems (path::l) path
       | _ -> []
     in
     let path_elems path =
@@ -568,7 +571,7 @@ object (self)
       try
         let modlid, s =
           match path with
-            Path.Pdot (p, s, _) -> longident_of_path p, s
+            Path.Pdot (p, s) -> longident_of_path p, s
           | Path.Pident i -> Longident.Lident "M", Ident.name i
           | _ -> assert false
         in

@@ -31,10 +31,10 @@ let exec_update_hooks () =
       end
 
 let set_load_path l =
-    Config.load_path := l;
+    Load_path.init l;
     exec_update_hooks ()
 
-let get_load_path () = !Config.load_path
+let get_load_path () = Load_path.get_paths ()
 
 let renew_dirs box ~var ~dir =
   Textvariable.set var dir;
@@ -46,7 +46,7 @@ let renew_dirs box ~var ~dir =
 
 let renew_path box =
   Listbox.delete box ~first:(`Num 0) ~last:`End;
-  Listbox.insert box ~index:`End ~texts:!Config.load_path;
+  Listbox.insert box ~index:`End ~texts:(Load_path.get_paths ());
   Jg_box.recenter box ~index:(`Num 0)
 
 let add_to_path ~dirs ?(base="") box =

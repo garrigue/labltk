@@ -617,7 +617,7 @@ class editor ~top ~menus = object (self)
           let modname = String.capitalize_ascii
               (try Filename.chop_extension basename with _ -> basename) in
           let env =
-            Env.add_module (Ident.create modname)
+            Env.add_module (Ident.create_local modname) Mp_present
               (Types.Mty_signature txt.signature)
               !Searchid.start_env
           in Viewer.view_defined (Longident.Lident modname) ~env ~show_all:true

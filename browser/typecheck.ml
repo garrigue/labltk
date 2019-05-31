@@ -99,6 +99,7 @@ let f txt =
   txt.psignature <- [];
   ignore (Stypes.get_info ());
   Clflags.annotations := true;
+  Clflags.color := Some Misc.Color.Never;
 
   begin try
 
@@ -115,7 +116,8 @@ let f txt =
     List.iter psl ~f:
     begin function
       Ptop_def pstr ->
-        let str, sign, env' = Typemod.type_structure !env pstr Location.none in
+        let str, sign, _names, env' =
+          Typemod.type_structure !env pstr Location.none in
         txt.structure <- txt.structure @ str.str_items;
         txt.signature <- txt.signature @ sign;
         env := env'
@@ -133,34 +135,26 @@ let f txt =
       let et, ew, end_message = Jg_message.formatted ~title:"Error !" () in
       error_messages := et :: !error_messages;
       let range = match exn with
-        Lexer.Error (err, l) ->
-          Lexer.report_error Format.std_formatter err; l
-      | Syntaxerr.Error err ->
-          Syntaxerr.report_error Format.std_formatter err;
-          Syntaxerr.location_of_error err
-      | Typecore.Error (l, env, err) ->
-          Typecore.report_error env Format.std_formatter err; l
-      | Typeclass.Error (l, env, err) ->
-          Typeclass.report_error env Format.std_formatter err; l
-      | Typedecl.Error (l, err) ->
-          Typedecl.report_error Format.std_formatter err; l
-      | Typemod.Error (l, env, err) ->
-          Typemod.report_error env Format.std_formatter err; l
-      | Typetexp.Error (l, env, err) ->
-          Typetexp.report_error env Format.std_formatter err; l
-      | Includemod.Error errl ->
-          Includemod.report_error Format.std_formatter errl; Location.none
-      | Env.Error err ->
-          Env.report_error Format.std_formatter err; Location.none
-      | Cmi_format.Error err ->
-          Cmi_format.report_error Format.std_formatter err; Location.none
-      | Ctype.Tags(l, l') ->
-          Format.printf "In this program,@ variant constructors@ `%s and `%s@ have same hash value.@." l l';
-          Location.none
-      | Failure s ->
-          Format.printf "%s.@." s; Location.none
-      | _ -> assert false
+        Lexer.Error (err, l) -> l
+      | Syntaxerr.Error err -> Syntaxerr.location_of_error err
+      | Typecore.Error (l, env, err) -> l
+      | Typeclass.Error (l, env, err) -> l
+      | Typedecl.Error (l, err) -> l
+      | Typemod.Error (l, env, err) -> l
+      | Typetexp.Error (l, env, err) -> l
+      | _ -> Location.none
       in
+      begin match exn with
+      | Cmi_format.Error err ->
+          Cmi_format.report_error Format.std_formatter err
+      | Ctype.Tags(l, l') ->
+          Format.printf 
+            "In this program,@ variant constructors@ `%s and `%s@ %s.@."
+            l l' "have same hash value"
+      | Failure s ->
+          Format.printf "%s.@." s
+      | _ -> Location.report_exception Format.std_formatter exn
+      end;
       end_message ();
       let s = range.loc_start.Lexing.pos_cnum in
       let e = range.loc_end.Lexing.pos_cnum in
