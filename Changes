@@ -1,9 +1,10 @@
 2019-05-31:
 -----------
-* have configure use (GNU) make rather than grep to read
+* Release labltk-8.06.5 for ocaml 4.08
+* Have configure use (GNU) make rather than grep to read
   ocaml/Makefile.config, due to change in ocaml 4.08
-* add "library" target, to avoid compiling ocamlbrowser
-* update ocamlbrowser for ocaml 4.08
+* Add "library" target, to avoid compiling ocamlbrowser
+* Update ocamlbrowser for ocaml 4.08
 
 2018-12-20:
 -----------
