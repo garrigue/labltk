@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Support.html">
+<link rel="next" href="Textvariable.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Text</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Support.html" title="Support">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Textvariable.html" title="Textvariable">Next</a>
+</div>
+<h1>Module <a href="type_Text.html">Text</a></h1>
+
+<pre><span class="keyword">module</span> Text: <code class="code">sig</code> <a href="Text.html">..</a> <code class="code">end</code></pre><div class="info module top">
+The text widget<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">?name:string -><br>       ?background:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?borderwidth:int -><br>       ?cursor:<a href="Tk.html#TYPEcursor">Tk.cursor</a> -><br>       ?exportselection:bool -><br>       ?font:string -><br>       ?foreground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?height:int -><br>       ?highlightbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?highlightcolor:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?highlightthickness:int -><br>       ?insertbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?insertborderwidth:int -><br>       ?insertofftime:int -><br>       ?insertontime:int -><br>       ?insertwidth:int -><br>       ?padx:int -><br>       ?pady:int -><br>       ?relief:<a href="Tk.html#TYPErelief">Tk.relief</a> -><br>       ?selectbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?selectborderwidth:int -><br>       ?selectforeground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?setgrid:bool -><br>       ?spacing1:int -><br>       ?spacing2:int -><br>       ?spacing3:int -><br>       ?state:<a href="Tk.html#TYPEinputState">Tk.inputState</a> -><br>       ?tabs:<a href="Tk.html#TYPEtabType">Tk.tabType</a> list -><br>       ?takefocus:bool -><br>       ?width:int -><br>       ?wrap:<a href="Tk.html#TYPEwrapMode">Tk.wrapMode</a> -><br>       ?xscrollcommand:(first:float -> last:float -> unit) -><br>       ?yscrollcommand:(first:float -> last:float -> unit) -><br>       'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre><div class="info ">
+<code class="code">create ?name parent options...</code> creates a new widget with
+    parent <code class="code">parent</code> and new patch component <code class="code">name</code>, if specified.<br>
+</div>
+
+<pre><span id="VALbbox"><span class="keyword">val</span> bbox</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> int * int * int * int</code></pre>
+<pre><span id="VALcompare"><span class="keyword">val</span> compare</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> op:<a href="Tk.html#TYPEcomparison">Tk.comparison</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> bool</code></pre>
+<pre><span id="VALconfigure"><span class="keyword">val</span> configure</span> : <code class="type">?background:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?borderwidth:int -><br>       ?cursor:<a href="Tk.html#TYPEcursor">Tk.cursor</a> -><br>       ?exportselection:bool -><br>       ?font:string -><br>       ?foreground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?height:int -><br>       ?highlightbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?highlightcolor:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?highlightthickness:int -><br>       ?insertbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?insertborderwidth:int -><br>       ?insertofftime:int -><br>       ?insertontime:int -><br>       ?insertwidth:int -><br>       ?padx:int -><br>       ?pady:int -><br>       ?relief:<a href="Tk.html#TYPErelief">Tk.relief</a> -><br>       ?selectbackground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?selectborderwidth:int -><br>       ?selectforeground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?setgrid:bool -><br>       ?spacing1:int -><br>       ?spacing2:int -><br>       ?spacing3:int -><br>       ?state:<a href="Tk.html#TYPEinputState">Tk.inputState</a> -><br>       ?tabs:<a href="Tk.html#TYPEtabType">Tk.tabType</a> list -><br>       ?takefocus:bool -><br>       ?width:int -><br>       ?wrap:<a href="Tk.html#TYPEwrapMode">Tk.wrapMode</a> -><br>       ?xscrollcommand:(first:float -> last:float -> unit) -><br>       ?yscrollcommand:(first:float -> last:float -> unit) -><br>       <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALconfigure_get"><span class="keyword">val</span> configure_get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALdebug"><span class="keyword">val</span> debug</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool -> unit</code></pre>
+<pre><span id="VALdelete"><span class="keyword">val</span> delete</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALdelete_char"><span class="keyword">val</span> delete_char</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALdlineinfo"><span class="keyword">val</span> dlineinfo</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> int * int * int * int * int</code></pre>
+<pre><span id="VALdump"><span class="keyword">val</span> dump</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       <a href="Tk.html#TYPEtext_dump">Tk.text_dump</a> list -> start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> string list</code></pre>
+<pre><span id="VALdump_char"><span class="keyword">val</span> dump_char</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       <a href="Tk.html#TYPEtext_dump">Tk.text_dump</a> list -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> string list</code></pre>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> string</code></pre>
+<pre><span id="VALget_char"><span class="keyword">val</span> get_char</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> string</code></pre>
+<pre><span id="VALimage_configure"><span class="keyword">val</span> image_configure</span> : <code class="type">name:string -><br>       ?align:<a href="Tk.html#TYPEalignType">Tk.alignType</a> -><br>       ?image:[< <a href="Tk.html#TYPEimage">Tk.image</a> ] -><br>       ?name:string -> ?padx:int -> ?pady:int -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALimage_configure_get"><span class="keyword">val</span> image_configure_get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> name:string -> string</code></pre>
+<pre><span id="VALimage_create"><span class="keyword">val</span> image_create</span> : <code class="type">index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       ?align:<a href="Tk.html#TYPEalignType">Tk.alignType</a> -><br>       ?image:[< <a href="Tk.html#TYPEimage">Tk.image</a> ] -><br>       ?name:string -> ?padx:int -> ?pady:int -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALimage_names"><span class="keyword">val</span> image_names</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string list</code></pre>
+<pre><span id="VALindex"><span class="keyword">val</span> index</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> [> `Linechar of int * int ]</code></pre>
+<pre><span id="VALinsert"><span class="keyword">val</span> insert</span> : <code class="type">index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       text:string -> ?tags:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> list -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALmark_gravity_get"><span class="keyword">val</span> mark_gravity_get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> mark:<a href="Tk.html#TYPEtextMark">Tk.textMark</a> -> <a href="Tk.html#TYPEmarkDirection">Tk.markDirection</a></code></pre>
+<pre><span id="VALmark_gravity_set"><span class="keyword">val</span> mark_gravity_set</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       mark:<a href="Tk.html#TYPEtextMark">Tk.textMark</a> -> direction:<a href="Tk.html#TYPEmarkDirection">Tk.markDirection</a> -> unit</code></pre>
+<pre><span id="VALmark_names"><span class="keyword">val</span> mark_names</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEtextMark">Tk.textMark</a> list</code></pre>
+<pre><span id="VALmark_next"><span class="keyword">val</span> mark_next</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> <a href="Tk.html#TYPEtextMark">Tk.textMark</a></code></pre>
+<pre><span id="VALmark_previous"><span class="keyword">val</span> mark_previous</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> <a href="Tk.html#TYPEtextMark">Tk.textMark</a></code></pre>
+<pre><span id="VALmark_set"><span class="keyword">val</span> mark_set</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> mark:<a href="Tk.html#TYPEtextMark">Tk.textMark</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALmark_unset"><span class="keyword">val</span> mark_unset</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> marks:<a href="Tk.html#TYPEtextMark">Tk.textMark</a> list -> unit</code></pre>
+<pre><span id="VALscan_dragto"><span class="keyword">val</span> scan_dragto</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> x:int -> y:int -> unit</code></pre>
+<pre><span id="VALscan_mark"><span class="keyword">val</span> scan_mark</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> x:int -> y:int -> unit</code></pre>
+<pre><span id="VALsearch"><span class="keyword">val</span> search</span> : <code class="type">switches:<a href="Tk.html#TYPEtextSearch">Tk.textSearch</a> list -><br>       pattern:string -><br>       start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       ?stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> [> `Linechar of int * int ]</code></pre>
+<pre><span id="VALsee"><span class="keyword">val</span> see</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALtag_add"><span class="keyword">val</span> tag_add</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALtag_add_char"><span class="keyword">val</span> tag_add_char</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALtag_configure"><span class="keyword">val</span> tag_configure</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -><br>       ?background:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?bgstipple:<a href="Tk.html#TYPEbitmap">Tk.bitmap</a> -><br>       ?borderwidth:int -><br>       ?fgstipple:<a href="Tk.html#TYPEbitmap">Tk.bitmap</a> -><br>       ?font:string -><br>       ?foreground:<a href="Tk.html#TYPEcolor">Tk.color</a> -><br>       ?justify:<a href="Tk.html#TYPEjustification">Tk.justification</a> -><br>       ?lmargin1:int -><br>       ?lmargin2:int -><br>       ?offset:int -><br>       ?overstrike:bool -><br>       ?relief:<a href="Tk.html#TYPErelief">Tk.relief</a> -><br>       ?rmargin:int -><br>       ?spacing1:int -><br>       ?spacing2:int -><br>       ?spacing3:int -><br>       ?tabs:<a href="Tk.html#TYPEtabType">Tk.tabType</a> list -><br>       ?underline:bool -> ?wrap:<a href="Tk.html#TYPEwrapMode">Tk.wrapMode</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALtag_delete"><span class="keyword">val</span> tag_delete</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEtextTag">Tk.textTag</a> list -> unit</code></pre>
+<pre><span id="VALtag_lower"><span class="keyword">val</span> tag_lower</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> ?below:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALtag_names"><span class="keyword">val</span> tag_names</span> : <code class="type">?index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEtextTag">Tk.textTag</a> list</code></pre>
+<pre><span id="VALtag_nextrange"><span class="keyword">val</span> tag_nextrange</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -><br>       start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       ?stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       [> `Linechar of int * int ] * [> `Linechar of int * int ]</code></pre>
+<pre><span id="VALtag_prevrange"><span class="keyword">val</span> tag_prevrange</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -><br>       start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       ?stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       [> `Linechar of int * int ] * [> `Linechar of int * int ]</code></pre>
+<pre><span id="VALtag_raise"><span class="keyword">val</span> tag_raise</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> ?above:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALtag_ranges"><span class="keyword">val</span> tag_ranges</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> [> `Linechar of int * int ] list</code></pre>
+<pre><span id="VALtag_remove"><span class="keyword">val</span> tag_remove</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> start:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> stop:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALtag_remove_char"><span class="keyword">val</span> tag_remove_char</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALwindow_configure"><span class="keyword">val</span> window_configure</span> : <code class="type">tag:<a href="Tk.html#TYPEtextTag">Tk.textTag</a> -><br>       ?align:<a href="Tk.html#TYPEalignType">Tk.alignType</a> -><br>       ?padx:int -><br>       ?pady:int -><br>       ?stretch:bool -><br>       ?window:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALwindow_create"><span class="keyword">val</span> window_create</span> : <code class="type">index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -><br>       ?align:<a href="Tk.html#TYPEalignType">Tk.alignType</a> -><br>       ?padx:int -><br>       ?pady:int -><br>       ?stretch:bool -><br>       ?window:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALwindow_names"><span class="keyword">val</span> window_names</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> list</code></pre>
+<pre><span id="VALxview"><span class="keyword">val</span> xview</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> scroll:<a href="Tk.html#TYPEscrollValue">Tk.scrollValue</a> -> unit</code></pre>
+<pre><span id="VALxview_get"><span class="keyword">val</span> xview_get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> float * float</code></pre>
+<pre><span id="VALyview"><span class="keyword">val</span> yview</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> scroll:<a href="Tk.html#TYPEscrollValue">Tk.scrollValue</a> -> unit</code></pre>
+<pre><span id="VALyview_get"><span class="keyword">val</span> yview_get</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> float * float</code></pre>
+<pre><span id="VALyview_index"><span class="keyword">val</span> yview_index</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALyview_index_pickplace"><span class="keyword">val</span> yview_index_pickplace</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> index:<a href="Tk.html#TYPEtextIndex">Tk.textIndex</a> -> unit</code></pre>
+<pre><span id="VALyview_line"><span class="keyword">val</span> yview_line</span> : <code class="type"><a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> line:int -> unit</code></pre>
+<pre><span id="VALtag_bind"><span class="keyword">val</span> tag_bind</span> : <code class="type">tag:string -><br>       events:<a href="Tk.html#TYPEevent">Tk.event</a> list -><br>       ?extend:bool -><br>       ?breakable:bool -><br>       ?fields:<a href="Tk.html#TYPEeventField">Tk.eventField</a> list -><br>       ?action:(<a href="Tk.html#TYPEeventInfo">Tk.eventInfo</a> -> unit) -> <a href="Widget.html#TYPEtext">Widget.text</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre></body></html>

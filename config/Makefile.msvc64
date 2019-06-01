@@ -1,6 +1,0 @@
-# Configuration for Windows, Visual C++ compiler -- NOT SUPPORTED
-include C:/ocamlms64/lib/ocaml/Makefile.config
-INSTALLDIR=$(LIBDIR)/labltk
-INSTALLBINDIR=$(BINDIR)
-TK_DEFS=
-TK_LINK=

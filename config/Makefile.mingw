@@ -1,7 +1,0 @@
-# Configuration for Windows, Mingw compiler
-include C:/ocamlmgw/lib/ocaml/Makefile.config
-INSTALLDIR=$(LIBDIR)/labltk
-INSTALLBINDIR=$(BINDIR)
-TK_ROOT=c:/tcl
-TK_DEFS=-I$(TK_ROOT)/include
-TK_LINK=$(TK_ROOT)/bin/tk85.dll $(TK_ROOT)/bin/tcl85.dll -lws2_32

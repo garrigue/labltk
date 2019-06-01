@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Palette.html">
+<link rel="next" href="Place.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Pixmap</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Palette.html" title="Palette">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Place.html" title="Place">Next</a>
+</div>
+<h1>Module <a href="type_Pixmap.html">Pixmap</a></h1>
+
+<pre><span class="keyword">module</span> Pixmap: <code class="code">sig</code> <a href="Pixmap.html">..</a> <code class="code">end</code></pre><div class="info module top">
+The pixmap commands<br>
+</div>
+<hr width="100%">
+
+<pre><span id="TYPEt"><span class="keyword">type</span> <code class="type"></code>t</span> </pre>
+
+
+<pre><span id="TYPEpixel"><span class="keyword">type</span> <code class="type"></code>pixel</span> </pre>
+
+
+<pre><span id="VALwidth"><span class="keyword">val</span> width</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int</code></pre>
+<pre><span id="VALheight"><span class="keyword">val</span> height</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int</code></pre>
+<pre><span id="VALcreate"><span class="keyword">val</span> create</span> : <code class="type">int -> int -> <a href="Pixmap.html#TYPEt">t</a></code></pre>
+<pre><span id="VALget"><span class="keyword">val</span> get</span> : <code class="type"><a href="Tk.html#TYPEimagePhoto">Tk.imagePhoto</a> -> <a href="Pixmap.html#TYPEt">t</a></code></pre>
+<pre><span id="VALset"><span class="keyword">val</span> set</span> : <code class="type"><a href="Tk.html#TYPEimagePhoto">Tk.imagePhoto</a> -> <a href="Pixmap.html#TYPEt">t</a> -> unit</code></pre>
+<pre><span id="VALblit"><span class="keyword">val</span> blit</span> : <code class="type"><a href="Tk.html#TYPEimagePhoto">Tk.imagePhoto</a> -> <a href="Pixmap.html#TYPEt">t</a> -> int -> int -> int -> int -> unit</code></pre>
+<pre><span id="VALfrom_file"><span class="keyword">val</span> from_file</span> : <code class="type">string -> <a href="Pixmap.html#TYPEt">t</a></code></pre>
+<pre><span id="VALcopy"><span class="keyword">val</span> copy</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> <a href="Pixmap.html#TYPEt">t</a> -> unit</code></pre>
+<pre><span id="VALget_pixel"><span class="keyword">val</span> get_pixel</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int -> int -> <a href="Pixmap.html#TYPEpixel">pixel</a></code></pre>
+<pre><span id="VALset_pixel"><span class="keyword">val</span> set_pixel</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int -> int -> <a href="Pixmap.html#TYPEpixel">pixel</a> -> unit</code></pre>
+<pre><span id="VALdefault_color"><span class="keyword">val</span> default_color</span> : <code class="type"><a href="Pixmap.html#TYPEpixel">pixel</a></code></pre>
+<pre><span id="VALpixel"><span class="keyword">val</span> pixel</span> : <code class="type">int -> int -> int -> <a href="Pixmap.html#TYPEpixel">pixel</a></code></pre>
+<pre><span id="VALunsafe_copy"><span class="keyword">val</span> unsafe_copy</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> <a href="Pixmap.html#TYPEt">t</a> -> unit</code></pre>
+<pre><span id="VALunsafe_get_pixel"><span class="keyword">val</span> unsafe_get_pixel</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int -> int -> <a href="Pixmap.html#TYPEpixel">pixel</a></code></pre>
+<pre><span id="VALunsafe_set_pixel"><span class="keyword">val</span> unsafe_set_pixel</span> : <code class="type"><a href="Pixmap.html#TYPEt">t</a> -> int -> int -> <a href="Pixmap.html#TYPEpixel">pixel</a> -> unit</code></pre></body></html>

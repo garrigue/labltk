@@ -1,0 +1,534 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Timer.html">
+<link rel="next" href="Tkthread.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Tk</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Timer.html" title="Timer">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Tkthread.html" title="Tkthread">Next</a>
+</div>
+<h1>Module <a href="type_Tk.html">Tk</a></h1>
+
+<pre><span class="keyword">module</span> Tk: <code class="code">sig</code> <a href="Tk.html">..</a> <code class="code">end</code></pre><hr width="100%">
+
+<pre><span id="VALopentk"><span class="keyword">val</span> opentk</span> : <code class="type">unit -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALkeywords"><span class="keyword">val</span> keywords</span> : <code class="type">(string * Arg.spec * string) list</code></pre>
+<pre><span id="VALopentk_with_args"><span class="keyword">val</span> opentk_with_args</span> : <code class="type">string list -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALopenTk"><span class="keyword">val</span> openTk</span> : <code class="type">?display:string -> ?clas:string -> unit -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALopenTkClass"><span class="keyword">val</span> openTkClass</span> : <code class="type">string -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALopenTkDisplayClass"><span class="keyword">val</span> openTkDisplayClass</span> : <code class="type">string -> string -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALcloseTk"><span class="keyword">val</span> closeTk</span> : <code class="type">unit -> unit</code></pre>
+<pre><span id="VALmainLoop"><span class="keyword">val</span> mainLoop</span> : <code class="type">unit -> unit</code></pre>
+<pre><span id="VALregister"><span class="keyword">val</span> register</span> : <code class="type">string -> callback:(Protocol.callback_buffer -> unit) -> unit</code></pre>
+<pre><span id="VALmay"><span class="keyword">val</span> may</span> : <code class="type">('a -> 'b) -> 'a option -> 'b option</code></pre>
+<pre><span id="VALmaycons"><span class="keyword">val</span> maycons</span> : <code class="type">('a -> 'b) -> 'a option -> 'b list -> 'b list</code></pre>
+<pre><span id="VALcoe"><span class="keyword">val</span> coe</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><code><span id="TYPEfilePattern"><span class="keyword">type</span> <code class="type"></code>filePattern</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfilePattern.typename">typename</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfilePattern.extensions">extensions</span>&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span id="TYPEELTfilePattern.mactypes">mactypes</span>&nbsp;: <code class="type">string list</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="VALcCAMLtoTKfilePattern"><span class="keyword">val</span> cCAMLtoTKfilePattern</span> : <code class="type"><a href="Tk.html#TYPEfilePattern">filePattern</a> -> Protocol.tkArgs</code></pre>
+<pre><span id="TYPEbitmap"><span class="keyword">type</span> <code class="type"></code>bitmap</span> = <code class="type">[ `File of string | `Predefined of string ]</code> </pre>
+
+
+<pre><span id="TYPEcolor"><span class="keyword">type</span> <code class="type"></code>color</span> = <code class="type">[ `Black | `Blue | `Color of string | `Green | `Red | `White | `Yellow ]</code> </pre>
+
+
+<pre><span id="TYPEcursor"><span class="keyword">type</span> <code class="type"></code>cursor</span> = <code class="type">[ `Cursorfilefg of string * <a href="Tk.html#TYPEcolor">color</a><br>       | `Cursormaskfile of string * string * <a href="Tk.html#TYPEcolor">color</a> * <a href="Tk.html#TYPEcolor">color</a><br>       | `Xcursor of string<br>       | `Xcursorfg of string * <a href="Tk.html#TYPEcolor">color</a><br>       | `Xcursorfgbg of string * <a href="Tk.html#TYPEcolor">color</a> * <a href="Tk.html#TYPEcolor">color</a> ]</code> </pre>
+
+
+<pre><span id="TYPEunits"><span class="keyword">type</span> <code class="type"></code>units</span> = <code class="type">[ `Cm of float | `In of float | `Mm of float | `Pix of int | `Pt of float ]</code> </pre>
+
+
+<pre><span id="TYPEscrollValue"><span class="keyword">type</span> <code class="type"></code>scrollValue</span> = <code class="type">[ `Moveto of float | `Page of int | `Unit of int ]</code> </pre>
+
+
+<pre><span id="TYPEevent"><span class="keyword">type</span> <code class="type"></code>event</span> = <code class="type">[ `Activate<br>       | `ButtonPress<br>       | `ButtonPressDetail of int<br>       | `ButtonRelease<br>       | `ButtonReleaseDetail of int<br>       | `Circulate<br>       | `Colormap<br>       | `Configure<br>       | `Deactivate<br>       | `Destroy<br>       | `Enter<br>       | `Expose<br>       | `FocusIn<br>       | `FocusOut<br>       | `Gravity<br>       | `KeyPress<br>       | `KeyPressDetail of string<br>       | `KeyRelease<br>       | `KeyReleaseDetail of string<br>       | `Leave<br>       | `Map<br>       | `Modified of <a href="Tk.html#TYPEmodifier">modifier</a> list * <a href="Tk.html#TYPEevent">event</a><br>       | `Motion<br>       | `Property<br>       | `Reparent<br>       | `Unmap<br>       | `Virtual of string<br>       | `Visibility ]</code> </pre>
+
+
+<pre><span id="TYPEmodifier"><span class="keyword">type</span> <code class="type"></code>modifier</span> = <code class="type">[ `Alt<br>       | `Button1<br>       | `Button2<br>       | `Button3<br>       | `Button4<br>       | `Button5<br>       | `Control<br>       | `Double<br>       | `Lock<br>       | `Meta<br>       | `Mod1<br>       | `Mod2<br>       | `Mod3<br>       | `Mod4<br>       | `Mod5<br>       | `Shift<br>       | `Triple ]</code> </pre>
+
+
+<pre><code><span id="TYPEeventInfo"><span class="keyword">type</span> <code class="type"></code>eventInfo</span> = {</code></pre><table class="typetable">
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Above">ev_Above</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_ButtonNumber">ev_ButtonNumber</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Count">ev_Count</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Detail">ev_Detail</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Focus">ev_Focus</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Height">ev_Height</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_KeyCode">ev_KeyCode</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Mode">ev_Mode</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_OverrideRedirect">ev_OverrideRedirect</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Place">ev_Place</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_State">ev_State</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Time">ev_Time</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Width">ev_Width</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_MouseX">ev_MouseX</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_MouseY">ev_MouseY</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Char">ev_Char</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_BorderWidth">ev_BorderWidth</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_SendEvent">ev_SendEvent</span>&nbsp;: <code class="type">bool</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_KeySymString">ev_KeySymString</span>&nbsp;: <code class="type">string</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_KeySymInt">ev_KeySymInt</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_RootWindow">ev_RootWindow</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_SubWindow">ev_SubWindow</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Type">ev_Type</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_Widget">ev_Widget</span>&nbsp;: <code class="type"><a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_RootX">ev_RootX</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr>
+<tr>
+<td align="left" valign="top" >
+<code>&nbsp;&nbsp;</code></td>
+<td align="left" valign="top" >
+<code><span class="keyword">mutable&nbsp;</span><span id="TYPEELTeventInfo.ev_RootY">ev_RootY</span>&nbsp;: <code class="type">int</code>;</code></td>
+
+</tr></table>
+}
+
+
+
+<pre><span id="TYPEeventField"><span class="keyword">type</span> <code class="type"></code>eventField</span> = <code class="type">[ `Above<br>       | `BorderWidth<br>       | `ButtonNumber<br>       | `Char<br>       | `Count<br>       | `Detail<br>       | `Focus<br>       | `Height<br>       | `KeyCode<br>       | `KeySymInt<br>       | `KeySymString<br>       | `Mode<br>       | `MouseX<br>       | `MouseY<br>       | `OverrideRedirect<br>       | `Place<br>       | `RootWindow<br>       | `RootX<br>       | `RootY<br>       | `SendEvent<br>       | `State<br>       | `SubWindow<br>       | `Time<br>       | `Type<br>       | `Widget<br>       | `Width ]</code> </pre>
+
+
+<pre><span id="VALfilleventInfo"><span class="keyword">val</span> filleventInfo</span> : <code class="type"><a href="Tk.html#TYPEeventInfo">eventInfo</a> -> string -> <a href="Tk.html#TYPEeventField">eventField</a> -> unit</code></pre>
+<pre><span id="VALwrapeventInfo"><span class="keyword">val</span> wrapeventInfo</span> : <code class="type">(<a href="Tk.html#TYPEeventInfo">eventInfo</a> -> 'a) -> <a href="Tk.html#TYPEeventField">eventField</a> list -> string list -> 'a</code></pre>
+<pre><span id="VALwriteeventField"><span class="keyword">val</span> writeeventField</span> : <code class="type"><a href="Tk.html#TYPEeventField">eventField</a> list -> string</code></pre>
+<pre><span id="TYPEbindings"><span class="keyword">type</span> <code class="type"></code>bindings</span> = <code class="type">[ `Tag of string | `Widget of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ]</code> </pre>
+
+
+<pre><span id="TYPEfont"><span class="keyword">type</span> <code class="type"></code>font</span> = <code class="type">string</code> </pre>
+
+
+<pre><span id="TYPEgrabGlobal"><span class="keyword">type</span> <code class="type"></code>grabGlobal</span> = <code class="type">bool</code> </pre>
+
+
+<pre><span id="TYPEcanvas_index"><span class="keyword">type</span> <code class="type"></code>canvas_index</span> = <code class="type">[ `Atxy of int * int | `End | `Insert | `Num of int | `Selfirst | `Sellast ]</code> </pre>
+
+
+<pre><span id="TYPEentry_index"><span class="keyword">type</span> <code class="type"></code>entry_index</span> = <code class="type">[ `Anchor | `At of int | `End | `Insert | `Num of int | `Selfirst | `Sellast ]</code> </pre>
+
+
+<pre><span id="TYPElistbox_index"><span class="keyword">type</span> <code class="type"></code>listbox_index</span> = <code class="type">[ `Active | `Anchor | `Atxy of int * int | `End | `Num of int ]</code> </pre>
+
+
+<pre><span id="TYPEmenu_index"><span class="keyword">type</span> <code class="type"></code>menu_index</span> = <code class="type">[ `Active<br>       | `At of int<br>       | `End<br>       | `Last<br>       | `None<br>       | `Num of int<br>       | `Pattern of string ]</code> </pre>
+
+
+<pre><span id="TYPEtext_index"><span class="keyword">type</span> <code class="type"></code>text_index</span> = <code class="type">[ `Atxy of int * int<br>       | `End<br>       | `Image of string<br>       | `Linechar of int * int<br>       | `Mark of string<br>       | `Tagfirst of string<br>       | `Taglast of string<br>       | `Window of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ]</code> </pre>
+
+
+<pre><span id="TYPElinechar_index"><span class="keyword">type</span> <code class="type"></code>linechar_index</span> = <code class="type">int * int</code> </pre>
+
+
+<pre><span id="TYPEnum_index"><span class="keyword">type</span> <code class="type"></code>num_index</span> = <code class="type">int</code> </pre>
+
+
+<pre><span id="TYPEpaletteType"><span class="keyword">type</span> <code class="type"></code>paletteType</span> = <code class="type">[ `Gray of int | `Rgb of int * int * int ]</code> </pre>
+
+
+<pre><span id="TYPEtextMark"><span class="keyword">type</span> <code class="type"></code>textMark</span> = <code class="type">string</code> </pre>
+
+
+<pre><span id="TYPEtextTag"><span class="keyword">type</span> <code class="type"></code>textTag</span> = <code class="type">string</code> </pre>
+
+
+<pre><span id="TYPEtextModifier"><span class="keyword">type</span> <code class="type"></code>textModifier</span> = <code class="type">[ `Char of int | `Line of int | `Lineend | `Linestart | `Wordend | `Wordstart ]</code> </pre>
+
+
+<pre><span id="TYPEtextIndex"><span class="keyword">type</span> <code class="type"></code>textIndex</span> = <code class="type"><a href="Tk.html#TYPEtext_index">text_index</a> * <a href="Tk.html#TYPEtextModifier">textModifier</a> list</code> </pre>
+
+
+<pre><span id="TYPEanchor"><span class="keyword">type</span> <code class="type"></code>anchor</span> = <code class="type">[ `Center | `E | `N | `Ne | `Nw | `S | `Se | `Sw | `W ]</code> </pre>
+
+
+<pre><span id="TYPEimage"><span class="keyword">type</span> <code class="type"></code>image</span> = <code class="type">[ `Bitmap of string | `Photo of string ]</code> </pre>
+
+
+<pre><span id="TYPEjustification"><span class="keyword">type</span> <code class="type"></code>justification</span> = <code class="type">[ `Center | `Left | `Right ]</code> </pre>
+
+
+<pre><span id="TYPEorientation"><span class="keyword">type</span> <code class="type"></code>orientation</span> = <code class="type">[ `Horizontal | `Vertical ]</code> </pre>
+
+
+<pre><span id="TYPErelief"><span class="keyword">type</span> <code class="type"></code>relief</span> = <code class="type">[ `Flat | `Groove | `Raised | `Ridge | `Solid | `Sunken ]</code> </pre>
+
+
+<pre><span id="TYPEstate"><span class="keyword">type</span> <code class="type"></code>state</span> = <code class="type">[ `Active | `Disabled | `Hidden | `Normal ]</code> </pre>
+
+
+<pre><span id="TYPEcolorMode"><span class="keyword">type</span> <code class="type"></code>colorMode</span> = <code class="type">[ `Color | `Gray | `Mono ]</code> </pre>
+
+
+<pre><span id="TYPEarcStyle"><span class="keyword">type</span> <code class="type"></code>arcStyle</span> = <code class="type">[ `Arc | `Chord | `Pieslice ]</code> </pre>
+
+
+<pre><span id="TYPEarrowStyle"><span class="keyword">type</span> <code class="type"></code>arrowStyle</span> = <code class="type">[ `Both | `First | `Last | `None ]</code> </pre>
+
+
+<pre><span id="TYPEcapStyle"><span class="keyword">type</span> <code class="type"></code>capStyle</span> = <code class="type">[ `Butt | `Projecting | `Round ]</code> </pre>
+
+
+<pre><span id="TYPEjoinStyle"><span class="keyword">type</span> <code class="type"></code>joinStyle</span> = <code class="type">[ `Bevel | `Miter | `Round ]</code> </pre>
+
+
+<pre><span id="TYPEcanvasTextState"><span class="keyword">type</span> <code class="type"></code>canvasTextState</span> = <code class="type">[ `Disabled | `Hidden | `Normal ]</code> </pre>
+
+
+<pre><span id="TYPEinputState"><span class="keyword">type</span> <code class="type"></code>inputState</span> = <code class="type">[ `Disabled | `Normal ]</code> </pre>
+
+
+<pre><span id="TYPEweight"><span class="keyword">type</span> <code class="type"></code>weight</span> = <code class="type">[ `Bold | `Normal ]</code> </pre>
+
+
+<pre><span id="TYPEslant"><span class="keyword">type</span> <code class="type"></code>slant</span> = <code class="type">[ `Italic | `Roman ]</code> </pre>
+
+
+<pre><span id="TYPEvisual"><span class="keyword">type</span> <code class="type"></code>visual</span> = <code class="type">[ `Best<br>       | `Bestdepth of int<br>       | `Clas of string * int<br>       | `Default<br>       | `Widget of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ]</code> </pre>
+
+
+<pre><span id="TYPEcolormap"><span class="keyword">type</span> <code class="type"></code>colormap</span> = <code class="type">[ `New | `Widget of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ]</code> </pre>
+
+
+<pre><span id="TYPEselectModeType"><span class="keyword">type</span> <code class="type"></code>selectModeType</span> = <code class="type">[ `Browse | `Extended | `Multiple | `Single ]</code> </pre>
+
+
+<pre><span id="TYPEmenuType"><span class="keyword">type</span> <code class="type"></code>menuType</span> = <code class="type">[ `Menubar | `Normal | `Tearoff ]</code> </pre>
+
+
+<pre><span id="TYPEmenubuttonDirection"><span class="keyword">type</span> <code class="type"></code>menubuttonDirection</span> = <code class="type">[ `Above | `Below | `Left | `Right ]</code> </pre>
+
+
+<pre><span id="TYPEfillMode"><span class="keyword">type</span> <code class="type"></code>fillMode</span> = <code class="type">[ `Both | `None | `X | `Y ]</code> </pre>
+
+
+<pre><span id="TYPEside"><span class="keyword">type</span> <code class="type"></code>side</span> = <code class="type">[ `Bottom | `Left | `Right | `Top ]</code> </pre>
+
+
+<pre><span id="TYPEborderMode"><span class="keyword">type</span> <code class="type"></code>borderMode</span> = <code class="type">[ `Ignore | `Inside | `Outside ]</code> </pre>
+
+
+<pre><span id="TYPEalignType"><span class="keyword">type</span> <code class="type"></code>alignType</span> = <code class="type">[ `Baseline | `Bottom | `Center | `Top ]</code> </pre>
+
+
+<pre><span id="TYPEwrapMode"><span class="keyword">type</span> <code class="type"></code>wrapMode</span> = <code class="type">[ `Char | `None | `Word ]</code> </pre>
+
+
+<pre><span id="TYPEtabType"><span class="keyword">type</span> <code class="type"></code>tabType</span> = <code class="type">[ `TabCenter of int | `TabLeft of int | `TabNumeric of int | `TabRight of int ]</code> </pre>
+
+
+<pre><span id="TYPEmessageIcon"><span class="keyword">type</span> <code class="type"></code>messageIcon</span> = <code class="type">[ `Error | `Info | `Question | `Warning ]</code> </pre>
+
+
+<pre><span id="TYPEmessageType"><span class="keyword">type</span> <code class="type"></code>messageType</span> = <code class="type">[ `Abortretryignore | `Ok | `Okcancel | `Retrycancel | `Yesno | `Yesnocancel ]</code> </pre>
+
+
+<pre><span id="TYPEtagOrId"><span class="keyword">type</span> <code class="type"></code>tagOrId</span> = <code class="type">[ `Id of int | `Tag of string ]</code> </pre>
+
+
+<pre><span id="TYPEimageBitmap"><span class="keyword">type</span> <code class="type"></code>imageBitmap</span> = <code class="type">[ `Bitmap of string ]</code> </pre>
+
+
+<pre><span id="TYPEimagePhoto"><span class="keyword">type</span> <code class="type"></code>imagePhoto</span> = <code class="type">[ `Photo of string ]</code> </pre>
+
+
+<pre><span id="TYPEsearchSpec"><span class="keyword">type</span> <code class="type"></code>searchSpec</span> = <code class="type">[ `Above of <a href="Tk.html#TYPEtagOrId">tagOrId</a><br>       | `All<br>       | `Below of <a href="Tk.html#TYPEtagOrId">tagOrId</a><br>       | `Closest of int * int<br>       | `Closesthalo of int * int * int<br>       | `Closesthalostart of int * int * int * <a href="Tk.html#TYPEtagOrId">tagOrId</a><br>       | `Enclosed of int * int * int * int<br>       | `Overlapping of int * int * int * int<br>       | `Withtag of <a href="Tk.html#TYPEtagOrId">tagOrId</a> ]</code> </pre>
+
+
+<pre><span id="TYPEcanvasItem"><span class="keyword">type</span> <code class="type"></code>canvasItem</span> = <code class="type">[ `Arc<br>       | `Bitmap<br>       | `Image<br>       | `Line<br>       | `Oval<br>       | `Polygon<br>       | `Rectangle<br>       | `Text<br>       | `User_item of string<br>       | `Window ]</code> </pre>
+
+
+<pre><span id="TYPEfontMetrics"><span class="keyword">type</span> <code class="type"></code>fontMetrics</span> = <code class="type">[ `Ascent | `Descent | `Fixed | `Linespace ]</code> </pre>
+
+
+<pre><span id="TYPEgrabStatus"><span class="keyword">type</span> <code class="type"></code>grabStatus</span> = <code class="type">[ `Global | `Local | `None ]</code> </pre>
+
+
+<pre><span id="TYPEmenuItem"><span class="keyword">type</span> <code class="type"></code>menuItem</span> = <code class="type">[ `Cascade | `Checkbutton | `Command | `Radiobutton | `Separator | `Tearoff ]</code> </pre>
+
+
+<pre><span id="TYPEoptionPriority"><span class="keyword">type</span> <code class="type"></code>optionPriority</span> = <code class="type">[ `Interactive<br>       | `Priority of int<br>       | `StartupFile<br>       | `UserDefault<br>       | `WidgetDefault ]</code> </pre>
+
+
+<pre><span id="TYPEscaleElement"><span class="keyword">type</span> <code class="type"></code>scaleElement</span> = <code class="type">[ `Beyond | `Slider | `Trough1 | `Trough2 ]</code> </pre>
+
+
+<pre><span id="TYPEscrollbarElement"><span class="keyword">type</span> <code class="type"></code>scrollbarElement</span> = <code class="type">[ `Arrow1 | `Arrow2 | `Beyond | `Slider | `Through1 | `Through2 ]</code> </pre>
+
+
+<pre><span id="TYPEsendOption"><span class="keyword">type</span> <code class="type"></code>sendOption</span> = <code class="type">[ `Async | `Displayof of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ]</code> </pre>
+
+
+<pre><span id="TYPEcomparison"><span class="keyword">type</span> <code class="type"></code>comparison</span> = <code class="type">[ `Eq | `Ge | `Gt | `Le | `Lt | `Neq ]</code> </pre>
+
+
+<pre><span id="TYPEmarkDirection"><span class="keyword">type</span> <code class="type"></code>markDirection</span> = <code class="type">[ `Left | `Right ]</code> </pre>
+
+
+<pre><span id="TYPEtextSearch"><span class="keyword">type</span> <code class="type"></code>textSearch</span> = <code class="type">[ `Backwards<br>       | `Count of <a href="Textvariable.html#TYPEtextVariable">Textvariable.textVariable</a><br>       | `Exact<br>       | `Forwards<br>       | `Nocase<br>       | `Regexp ]</code> </pre>
+
+
+<pre><span id="TYPEtext_dump"><span class="keyword">type</span> <code class="type"></code>text_dump</span> = <code class="type">[ `All<br>       | `Command of key:string -> value:string -> index:string -> unit<br>       | `Mark<br>       | `Tag<br>       | `Text<br>       | `Window ]</code> </pre>
+
+
+<pre><span id="TYPEatomId"><span class="keyword">type</span> <code class="type"></code>atomId</span> = <code class="type">[ `AtomId of int ]</code> </pre>
+
+
+<pre><span id="TYPEfocusModel"><span class="keyword">type</span> <code class="type"></code>focusModel</span> = <code class="type">[ `Active | `Passive ]</code> </pre>
+
+
+<pre><span id="TYPEwmFrom"><span class="keyword">type</span> <code class="type"></code>wmFrom</span> = <code class="type">[ `Program | `User ]</code> </pre>
+
+
+<pre><span class="keyword">module</span> <a href="Tk.Tkintf.html">Tkintf</a>: <code class="code">sig</code> <a href="Tk.Tkintf.html">..</a> <code class="code">end</code></pre>
+<pre><span id="VALpixels"><span class="keyword">val</span> pixels</span> : <code class="type"><a href="Tk.html#TYPEunits">units</a> -> int</code></pre>
+<pre><span id="VALbind_class"><span class="keyword">val</span> bind_class</span> : <code class="type">events:<a href="Tk.html#TYPEevent">event</a> list -><br>       ?extend:bool -><br>       ?breakable:bool -><br>       ?fields:<a href="Tk.html#TYPEeventField">eventField</a> list -><br>       ?action:(<a href="Tk.html#TYPEeventInfo">eventInfo</a> -> unit) -> ?on:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> unit</code></pre>
+<pre><span id="VALbind"><span class="keyword">val</span> bind</span> : <code class="type">events:<a href="Tk.html#TYPEevent">event</a> list -><br>       ?extend:bool -><br>       ?breakable:bool -><br>       ?fields:<a href="Tk.html#TYPEeventField">eventField</a> list -><br>       ?action:(<a href="Tk.html#TYPEeventInfo">eventInfo</a> -> unit) -> 'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALbind_tag"><span class="keyword">val</span> bind_tag</span> : <code class="type">events:<a href="Tk.html#TYPEevent">event</a> list -><br>       ?extend:bool -><br>       ?breakable:bool -><br>       ?fields:<a href="Tk.html#TYPEeventField">eventField</a> list -><br>       ?action:(<a href="Tk.html#TYPEeventInfo">eventInfo</a> -> unit) -> ?on:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> unit</code></pre>
+<pre><span id="VALbreak"><span class="keyword">val</span> break</span> : <code class="type">unit -> unit</code></pre>
+<pre><span id="VALmessageBox"><span class="keyword">val</span> messageBox</span> : <code class="type">?default:string -><br>       ?icon:<a href="Tk.html#TYPEmessageIcon">messageIcon</a> -><br>       ?message:string -><br>       ?parent:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?title:string -> ?typ:<a href="Tk.html#TYPEmessageType">messageType</a> -> unit -> string</code></pre>
+<pre><span id="VALgetSaveFile"><span class="keyword">val</span> getSaveFile</span> : <code class="type">?defaultextension:string -><br>       ?filetypes:<a href="Tk.html#TYPEfilePattern">filePattern</a> list -><br>       ?initialdir:string -><br>       ?initialfile:string -><br>       ?parent:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> ?title:string -> unit -> string</code></pre>
+<pre><span id="VALgetOpenFile"><span class="keyword">val</span> getOpenFile</span> : <code class="type">?defaultextension:string -><br>       ?filetypes:<a href="Tk.html#TYPEfilePattern">filePattern</a> list -><br>       ?initialdir:string -><br>       ?initialfile:string -><br>       ?parent:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> ?title:string -> unit -> string</code></pre>
+<pre><span id="VALupdate_idletasks"><span class="keyword">val</span> update_idletasks</span> : <code class="type">unit -> unit</code></pre>
+<pre><span id="VALupdate"><span class="keyword">val</span> update</span> : <code class="type">unit -> unit</code></pre>
+<pre><span id="VALchooseColor"><span class="keyword">val</span> chooseColor</span> : <code class="type">?initialcolor:<a href="Tk.html#TYPEcolor">color</a> -><br>       ?parent:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> ?title:string -> unit -> [> `Color of string ]</code></pre>
+<pre><span id="VALscaling_set"><span class="keyword">val</span> scaling_set</span> : <code class="type">?displayof:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> float -> unit</code></pre>
+<pre><span id="VALscaling_get"><span class="keyword">val</span> scaling_get</span> : <code class="type">?displayof:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit -> float</code></pre>
+<pre><span id="VALappname_get"><span class="keyword">val</span> appname_get</span> : <code class="type">unit -> string</code></pre>
+<pre><span id="VALappname_set"><span class="keyword">val</span> appname_set</span> : <code class="type">string -> unit</code></pre>
+<pre><span id="VALsend"><span class="keyword">val</span> send</span> : <code class="type"><a href="Tk.html#TYPEsendOption">sendOption</a> list -> app:string -> command:string list -> unit</code></pre>
+<pre><span id="VALraise_window"><span class="keyword">val</span> raise_window</span> : <code class="type">?above:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> 'b <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALplace"><span class="keyword">val</span> place</span> : <code class="type">?anchor:<a href="Tk.html#TYPEanchor">anchor</a> -><br>       ?bordermode:<a href="Tk.html#TYPEborderMode">borderMode</a> -><br>       ?height:int -><br>       ?inside:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?relheight:float -><br>       ?relwidth:float -><br>       ?relx:float -><br>       ?rely:float -> ?width:int -> ?x:int -> ?y:int -> 'b <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALpack"><span class="keyword">val</span> pack</span> : <code class="type">?after:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?anchor:<a href="Tk.html#TYPEanchor">anchor</a> -><br>       ?before:'b <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?expand:bool -><br>       ?fill:<a href="Tk.html#TYPEfillMode">fillMode</a> -><br>       ?inside:'c <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?ipadx:int -><br>       ?ipady:int -><br>       ?padx:int -> ?pady:int -> ?side:<a href="Tk.html#TYPEside">side</a> -> 'd <a href="Widget.html#TYPEwidget">Widget.widget</a> list -> unit</code></pre>
+<pre><span id="VALlower_window"><span class="keyword">val</span> lower_window</span> : <code class="type">?below:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> 'b <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALgrid"><span class="keyword">val</span> grid</span> : <code class="type">?column:int -><br>       ?columnspan:int -><br>       ?inside:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?ipadx:int -><br>       ?ipady:int -><br>       ?padx:int -><br>       ?pady:int -><br>       ?row:int -> ?rowspan:int -> ?sticky:string -> 'b <a href="Widget.html#TYPEwidget">Widget.widget</a> list -> unit</code></pre>
+<pre><span id="VALdestroy"><span class="keyword">val</span> destroy</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALbindtags_get"><span class="keyword">val</span> bindtags_get</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       [> `Tag of string | `Widget of <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> ] list</code></pre>
+<pre><span id="VALbindtags"><span class="keyword">val</span> bindtags</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       bindings:[< `Tag of string | `Widget of 'b <a href="Widget.html#TYPEwidget">Widget.widget</a> ] list -> unit</code></pre>
+<pre><span id="VALcget"><span class="keyword">val</span> cget</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       [< `Accelerator<br>        | `Activebackground<br>        | `Activeborderwidth<br>        | `Activeforeground<br>        | `Activerelief<br>        | `After<br>        | `Align<br>        | `Anchor<br>        | `Arrow<br>        | `Arrowshape<br>        | `Aspect<br>        | `Background<br>        | `Before<br>        | `Bgstipple<br>        | `Bigincrement<br>        | `Bitmap<br>        | `Bordermode<br>        | `Borderwidth<br>        | `Capstyle<br>        | `Class<br>        | `Closeenough<br>        | `Colormap<br>        | `Colormode<br>        | `Column<br>        | `Columnbreak<br>        | `Columnspan<br>        | `Command<br>        | `Confine<br>        | `Container<br>        | `Cursor<br>        | `Dash<br>        | `Data<br>        | `Default<br>        | `Defaultextension<br>        | `Digits<br>        | `Direction<br>        | `Disabledforeground<br>        | `Elementborderwidth<br>        | `Expand<br>        | `Exportselection<br>        | `Extent<br>        | `Family<br>        | `Fgstipple<br>        | `File<br>        | `Filetypes<br>        | `Fill<br>        | `Font<br>        | `Foreground<br>        | `Format<br>        | `Gamma<br>        | `Geometry<br>        | `Height<br>        | `Hidemargin<br>        | `Highlightbackground<br>        | `Highlightcolor<br>        | `Highlightthickness<br>        | `Icon<br>        | `Image<br>        | `Indicatoron<br>        | `Initialcolor<br>        | `Initialdir<br>        | `Initialfile<br>        | `Insertbackground<br>        | `Insertborderwidth<br>        | `Insertofftime<br>        | `Insertontime<br>        | `Insertwidth<br>        | `Inside<br>        | `Ipadx<br>        | `Ipady<br>        | `Joinstyle<br>        | `Jump<br>        | `Justify<br>        | `Label<br>        | `Length<br>        | `Lmargin1<br>        | `Lmargin2<br>        | `Maskdata<br>        | `Maskfile<br>        | `Max<br>        | `Menu<br>        | `Message<br>        | `Min<br>        | `Minsize<br>        | `Name<br>        | `Offset<br>        | `Offvalue<br>        | `Onvalue<br>        | `Orient<br>        | `Outline<br>        | `Outlinestipple<br>        | `Overstrike<br>        | `Pad<br>        | `Padx<br>        | `Pady<br>        | `Pageanchor<br>        | `Pageheight<br>        | `Pagewidth<br>        | `Pagex<br>        | `Pagey<br>        | `Palette<br>        | `Parent<br>        | `Postcommand<br>        | `Relheight<br>        | `Relief<br>        | `Relwidth<br>        | `Relx<br>        | `Rely<br>        | `Repeatdelay<br>        | `Repeatinterval<br>        | `Resolution<br>        | `Rmargin<br>        | `Rotate<br>        | `Row<br>        | `Rowspan<br>        | `Screen<br>        | `Scrollregion<br>        | `Selectbackground<br>        | `Selectborderwidth<br>        | `Selectcolor<br>        | `Selectforeground<br>        | `Selectimage<br>        | `Selectmode<br>        | `Setgrid<br>        | `Show<br>        | `Showvalue<br>        | `Side<br>        | `Size<br>        | `Slant<br>        | `Sliderlength<br>        | `Smooth<br>        | `Spacing1<br>        | `Spacing2<br>        | `Spacing3<br>        | `Splinesteps<br>        | `Start<br>        | `State<br>        | `Sticky<br>        | `Stipple<br>        | `Stretch<br>        | `Style<br>        | `Tabs<br>        | `Tags<br>        | `Takefocus<br>        | `Tearoff<br>        | `Tearoffcommand<br>        | `Text<br>        | `Textvariable<br>        | `Textwidth<br>        | `Tickinterval<br>        | `Title<br>        | `Troughcolor<br>        | `Type<br>        | `Underline<br>        | `Use<br>        | `Value<br>        | `Variable<br>        | `Visual<br>        | `Weight<br>        | `Width<br>        | `Window<br>        | `Wrap<br>        | `Wraplength<br>        | `X<br>        | `Xscrollcommand<br>        | `Xscrollincrement<br>        | `Y<br>        | `Yscrollcommand<br>        | `Yscrollincrement ] -><br>       string</code></pre>
+<pre><span id="VALcgets"><span class="keyword">val</span> cgets</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> string</code></pre></body></html>

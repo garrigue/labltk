@@ -1,9 +1,0 @@
-# Specifications for the "labltk" library:
-requires = ""
-version = "8.06.6"
-description = "The Tk windowing toolkit"
-browse_interfaces = " Frx_after Frx_color Frx_ctext Frx_dialog Frx_entry Frx_fillbox Frx_fit Frx_focus Frx_font Frx_listbox Frx_mem Frx_misc Frx_req Frx_rpc Frx_selection Frx_synth Frx_text Frx_widget  Balloon Fileselect Jpf_font Shell  Bell Button Camltk Camltkwrap Canvas CBell CButton CCanvas CCheckbutton CClipboard CDialog CEncoding CEntry CFocus CFont CFrame CGrab CGrid Checkbutton CImage CImagebitmap CImagephoto CLabel Clipboard CListbox CMenu CMenubutton CMessage COption COptionmenu CPack CPalette CPixmap CPlace CRadiobutton CResource CScale CScrollbar CSelection CText CTk CTkvars CTkwait CToplevel CWinfo CWm Dialog Encoding Entry Fileevent Focus Font Frame Grab Grid Image Imagebitmap Imagephoto Label Labltk Listbox Menu Menubutton Message Option Optionmenu Pack Palette Pixmap Place Protocol Radiobutton Rawwidget Scale Scrollbar Selection Support Text Textvariable Timer Tk Tkvars Tkwait Toplevel Widget Winfo Wm  Tkanim "
-archive(byte) = "labltk.cma"
-archive(native) = "labltk.cmxa"
-linkopts = ""
-

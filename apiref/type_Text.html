@@ -1,0 +1,279 @@
+<html><head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Text</title>
+</head>
+<body>
+<code class="code"><span class="keyword">sig</span><br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;create&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?name:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?background:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?borderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?cursor:<span class="constructor">Tk</span>.cursor&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?exportselection:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?font:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?foreground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?height:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightcolor:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightthickness:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertborderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertofftime:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertontime:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?relief:<span class="constructor">Tk</span>.relief&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectborderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectforeground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?setgrid:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing1:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing2:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing3:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?state:<span class="constructor">Tk</span>.inputState&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?tabs:<span class="constructor">Tk</span>.tabType&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?takefocus:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?width:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?wrap:<span class="constructor">Tk</span>.wrapMode&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?xscrollcommand:(first:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;last:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?yscrollcommand:(first:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;last:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="keywordsign">'</span>a&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;bbox&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;*&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;compare&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;op:<span class="constructor">Tk</span>.comparison&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;configure&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?background:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?borderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?cursor:<span class="constructor">Tk</span>.cursor&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?exportselection:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?font:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?foreground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?height:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightcolor:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?highlightthickness:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertborderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertofftime:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertontime:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?insertwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?relief:<span class="constructor">Tk</span>.relief&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectbackground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectborderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?selectforeground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?setgrid:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing1:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing2:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing3:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?state:<span class="constructor">Tk</span>.inputState&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?tabs:<span class="constructor">Tk</span>.tabType&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?takefocus:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?width:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?wrap:<span class="constructor">Tk</span>.wrapMode&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?xscrollcommand:(first:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;last:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?yscrollcommand:(first:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;last:float&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;configure_get&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;debug&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;delete&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;delete_char&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dlineinfo&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;*&nbsp;int&nbsp;*&nbsp;int<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dump&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Tk</span>.text_dump&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;dump_char&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Tk</span>.text_dump&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;get_char&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image_configure&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;name:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?align:<span class="constructor">Tk</span>.alignType&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?image:[&lt;&nbsp;<span class="constructor">Tk</span>.image&nbsp;]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?name:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image_configure_get&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;name:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image_create&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?align:<span class="constructor">Tk</span>.alignType&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?image:[&lt;&nbsp;<span class="constructor">Tk</span>.image&nbsp;]&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?name:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;image_names&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;string&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;index&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;insert&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;text:string&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?tags:<span class="constructor">Tk</span>.textTag&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_gravity_get&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;mark:<span class="constructor">Tk</span>.textMark&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.markDirection<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_gravity_set&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;mark:<span class="constructor">Tk</span>.textMark&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;direction:<span class="constructor">Tk</span>.markDirection&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_names&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.textMark&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_next&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.textMark<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_previous&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.textMark<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_set&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;mark:<span class="constructor">Tk</span>.textMark&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;mark_unset&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;marks:<span class="constructor">Tk</span>.textMark&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;scan_dragto&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;y:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;scan_mark&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;x:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;y:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;search&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;switches:<span class="constructor">Tk</span>.textSearch&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;pattern:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;see&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_add&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_add_char&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_configure&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?background:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?bgstipple:<span class="constructor">Tk</span>.bitmap&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?borderwidth:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?fgstipple:<span class="constructor">Tk</span>.bitmap&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?font:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?foreground:<span class="constructor">Tk</span>.color&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?justify:<span class="constructor">Tk</span>.justification&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?lmargin1:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?lmargin2:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?offset:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?overstrike:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?relief:<span class="constructor">Tk</span>.relief&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?rmargin:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing1:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing2:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?spacing3:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?tabs:<span class="constructor">Tk</span>.tabType&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?underline:bool&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?wrap:<span class="constructor">Tk</span>.wrapMode&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_delete&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.textTag&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_lower&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?below:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_names&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;?index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Tk</span>.textTag&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_nextrange&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]&nbsp;*&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_prevrange&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]&nbsp;*&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_raise&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;?above:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_ranges&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;[&gt;&nbsp;<span class="keywordsign">`</span><span class="constructor">Linechar</span>&nbsp;<span class="keyword">of</span>&nbsp;int&nbsp;*&nbsp;int&nbsp;]&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_remove&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;start:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;stop:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_remove_char&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;window_configure&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:<span class="constructor">Tk</span>.textTag&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?align:<span class="constructor">Tk</span>.alignType&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?stretch:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?window:<span class="keywordsign">'</span>a&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;window_create&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?align:<span class="constructor">Tk</span>.alignType&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?padx:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?pady:int&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?stretch:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?window:<span class="keywordsign">'</span>a&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;window_names&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.any&nbsp;<span class="constructor">Widget</span>.widget&nbsp;list<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;xview&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;scroll:<span class="constructor">Tk</span>.scrollValue&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;xview_get&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;*&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;yview&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;scroll:<span class="constructor">Tk</span>.scrollValue&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;yview_get&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;float&nbsp;*&nbsp;float<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;yview_index&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;yview_index_pickplace&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;index:<span class="constructor">Tk</span>.textIndex&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;yview_line&nbsp;:&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;line:int&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+&nbsp;&nbsp;<span class="keyword">val</span>&nbsp;tag_bind&nbsp;:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tag:string&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;events:<span class="constructor">Tk</span>.event&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?extend:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?breakable:bool&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?fields:<span class="constructor">Tk</span>.eventField&nbsp;list&nbsp;<span class="keywordsign">-&gt;</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;?action:(<span class="constructor">Tk</span>.eventInfo&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit)&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;<span class="constructor">Widget</span>.text&nbsp;<span class="constructor">Widget</span>.widget&nbsp;<span class="keywordsign">-&gt;</span>&nbsp;unit<br>
+<span class="keyword">end</span></code></body></html>

@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Optionmenu.html">
+<link rel="next" href="Palette.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Pack</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Optionmenu.html" title="Optionmenu">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;<a class="post" href="Palette.html" title="Palette">Next</a>
+</div>
+<h1>Module <a href="type_Pack.html">Pack</a></h1>
+
+<pre><span class="keyword">module</span> Pack: <code class="code">sig</code> <a href="Pack.html">..</a> <code class="code">end</code></pre><div class="info module top">
+The pack commands<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALconfigure"><span class="keyword">val</span> configure</span> : <code class="type">?after:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?anchor:<a href="Tk.html#TYPEanchor">Tk.anchor</a> -><br>       ?before:'b <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?expand:bool -><br>       ?fill:<a href="Tk.html#TYPEfillMode">Tk.fillMode</a> -><br>       ?inside:'c <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       ?ipadx:int -><br>       ?ipady:int -><br>       ?padx:int -> ?pady:int -> ?side:<a href="Tk.html#TYPEside">Tk.side</a> -> 'd <a href="Widget.html#TYPEwidget">Widget.widget</a> list -> unit</code></pre>
+<pre><span id="VALforget"><span class="keyword">val</span> forget</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> list -> unit</code></pre>
+<pre><span id="VALinfo"><span class="keyword">val</span> info</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALpropagate_get"><span class="keyword">val</span> propagate_get</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool</code></pre>
+<pre><span id="VALpropagate_set"><span class="keyword">val</span> propagate_set</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool -> unit</code></pre>
+<pre><span id="VALslaves"><span class="keyword">val</span> slaves</span> : <code class="type">'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> list</code></pre></body></html>

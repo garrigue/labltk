@@ -1,6 +1,0 @@
-# Configuration for Windows, Mingw compiler -- NOT SUPPORTED
-include C:/ocamlmgw64/lib/ocaml/Makefile.config
-INSTALLDIR=$(LIBDIR)/labltk
-INSTALLBINDIR=$(BINDIR)
-TK_DEFS=
-TK_LINK=

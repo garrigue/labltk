@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<link rel="stylesheet" href="style.css" type="text/css">
+<meta content="text/html; charset=iso-8859-1" http-equiv="Content-Type">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="Start" href="index.html">
+<link rel="previous" href="Winfo.html">
+<link rel="Up" href="index.html">
+<link title="Index of types" rel=Appendix href="index_types.html">
+<link title="Index of exceptions" rel=Appendix href="index_exceptions.html">
+<link title="Index of values" rel=Appendix href="index_values.html">
+<link title="Index of modules" rel=Appendix href="index_modules.html">
+<link title="Bell" rel="Chapter" href="Bell.html">
+<link title="Button" rel="Chapter" href="Button.html">
+<link title="Canvas" rel="Chapter" href="Canvas.html">
+<link title="Checkbutton" rel="Chapter" href="Checkbutton.html">
+<link title="Clipboard" rel="Chapter" href="Clipboard.html">
+<link title="Dialog" rel="Chapter" href="Dialog.html">
+<link title="Encoding" rel="Chapter" href="Encoding.html">
+<link title="Entry" rel="Chapter" href="Entry.html">
+<link title="Fileevent" rel="Chapter" href="Fileevent.html">
+<link title="Focus" rel="Chapter" href="Focus.html">
+<link title="Font" rel="Chapter" href="Font.html">
+<link title="Frame" rel="Chapter" href="Frame.html">
+<link title="Grab" rel="Chapter" href="Grab.html">
+<link title="Grid" rel="Chapter" href="Grid.html">
+<link title="Image" rel="Chapter" href="Image.html">
+<link title="Imagebitmap" rel="Chapter" href="Imagebitmap.html">
+<link title="Imagephoto" rel="Chapter" href="Imagephoto.html">
+<link title="Label" rel="Chapter" href="Label.html">
+<link title="Listbox" rel="Chapter" href="Listbox.html">
+<link title="Menu" rel="Chapter" href="Menu.html">
+<link title="Menubutton" rel="Chapter" href="Menubutton.html">
+<link title="Message" rel="Chapter" href="Message.html">
+<link title="Option" rel="Chapter" href="Option.html">
+<link title="Optionmenu" rel="Chapter" href="Optionmenu.html">
+<link title="Pack" rel="Chapter" href="Pack.html">
+<link title="Palette" rel="Chapter" href="Palette.html">
+<link title="Pixmap" rel="Chapter" href="Pixmap.html">
+<link title="Place" rel="Chapter" href="Place.html">
+<link title="Radiobutton" rel="Chapter" href="Radiobutton.html">
+<link title="Scale" rel="Chapter" href="Scale.html">
+<link title="Scrollbar" rel="Chapter" href="Scrollbar.html">
+<link title="Selection" rel="Chapter" href="Selection.html">
+<link title="Support" rel="Chapter" href="Support.html">
+<link title="Text" rel="Chapter" href="Text.html">
+<link title="Textvariable" rel="Chapter" href="Textvariable.html">
+<link title="Timer" rel="Chapter" href="Timer.html">
+<link title="Tk" rel="Chapter" href="Tk.html">
+<link title="Tkthread" rel="Chapter" href="Tkthread.html">
+<link title="Tkvars" rel="Chapter" href="Tkvars.html">
+<link title="Tkwait" rel="Chapter" href="Tkwait.html">
+<link title="Toplevel" rel="Chapter" href="Toplevel.html">
+<link title="Widget" rel="Chapter" href="Widget.html">
+<link title="Winfo" rel="Chapter" href="Winfo.html">
+<link title="Wm" rel="Chapter" href="Wm.html"><title>Wm</title>
+</head>
+<body>
+<div class="navbar"><a class="pre" href="Winfo.html" title="Winfo">Previous</a>
+&nbsp;<a class="up" href="index.html" title="Index">Up</a>
+&nbsp;</div>
+<h1>Module <a href="type_Wm.html">Wm</a></h1>
+
+<pre><span class="keyword">module</span> Wm: <code class="code">sig</code> <a href="Wm.html">..</a> <code class="code">end</code></pre><div class="info module top">
+The wm commands<br>
+</div>
+<hr width="100%">
+
+<pre><span id="VALaspect_get"><span class="keyword">val</span> aspect_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> int * int * int * int</code></pre>
+<pre><span id="VALaspect_set"><span class="keyword">val</span> aspect_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       minnum:int -> mindenom:int -> maxnum:int -> maxdenom:int -> unit</code></pre>
+<pre><span id="VALclient_get"><span class="keyword">val</span> client_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALclient_set"><span class="keyword">val</span> client_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> name:string -> unit</code></pre>
+<pre><span id="VALcolormapwindows_get"><span class="keyword">val</span> colormapwindows_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> list</code></pre>
+<pre><span id="VALcolormapwindows_set"><span class="keyword">val</span> colormapwindows_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> windows:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> list -> unit</code></pre>
+<pre><span id="VALcommand_clear"><span class="keyword">val</span> command_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALcommand_get"><span class="keyword">val</span> command_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string list</code></pre>
+<pre><span id="VALcommand_set"><span class="keyword">val</span> command_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string list -> unit</code></pre>
+<pre><span id="VALdeiconify"><span class="keyword">val</span> deiconify</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALfocusmodel_get"><span class="keyword">val</span> focusmodel_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEfocusModel">Tk.focusModel</a></code></pre>
+<pre><span id="VALfocusmodel_set"><span class="keyword">val</span> focusmodel_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEfocusModel">Tk.focusModel</a> -> unit</code></pre>
+<pre><span id="VALframe"><span class="keyword">val</span> frame</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALgeometry_get"><span class="keyword">val</span> geometry_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALgeometry_set"><span class="keyword">val</span> geometry_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> unit</code></pre>
+<pre><span id="VALgrid_clear"><span class="keyword">val</span> grid_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALgrid_get"><span class="keyword">val</span> grid_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> int * int * int * int</code></pre>
+<pre><span id="VALgrid_set"><span class="keyword">val</span> grid_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       basewidth:int -> baseheight:int -> widthinc:int -> heightinc:int -> unit</code></pre>
+<pre><span id="VALgroup_clear"><span class="keyword">val</span> group_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALgroup_get"><span class="keyword">val</span> group_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALgroup_set"><span class="keyword">val</span> group_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> leader:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconbitmap_clear"><span class="keyword">val</span> iconbitmap_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconbitmap_get"><span class="keyword">val</span> iconbitmap_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEbitmap">Tk.bitmap</a></code></pre>
+<pre><span id="VALiconbitmap_set"><span class="keyword">val</span> iconbitmap_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEbitmap">Tk.bitmap</a> -> unit</code></pre>
+<pre><span id="VALiconify"><span class="keyword">val</span> iconify</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconmask_clear"><span class="keyword">val</span> iconmask_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconmask_get"><span class="keyword">val</span> iconmask_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEbitmap">Tk.bitmap</a></code></pre>
+<pre><span id="VALiconmask_set"><span class="keyword">val</span> iconmask_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEbitmap">Tk.bitmap</a> -> unit</code></pre>
+<pre><span id="VALiconname_get"><span class="keyword">val</span> iconname_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALiconname_set"><span class="keyword">val</span> iconname_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> unit</code></pre>
+<pre><span id="VALiconposition_clear"><span class="keyword">val</span> iconposition_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconposition_get"><span class="keyword">val</span> iconposition_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> int * int</code></pre>
+<pre><span id="VALiconposition_set"><span class="keyword">val</span> iconposition_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> x:int -> y:int -> unit</code></pre>
+<pre><span id="VALiconwindow_clear"><span class="keyword">val</span> iconwindow_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALiconwindow_get"><span class="keyword">val</span> iconwindow_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALiconwindow_set"><span class="keyword">val</span> iconwindow_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> icon:<a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALmaxsize_get"><span class="keyword">val</span> maxsize_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> int * int</code></pre>
+<pre><span id="VALmaxsize_set"><span class="keyword">val</span> maxsize_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> width:int -> height:int -> unit</code></pre>
+<pre><span id="VALminsize_get"><span class="keyword">val</span> minsize_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> int * int</code></pre>
+<pre><span id="VALminsize_set"><span class="keyword">val</span> minsize_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> width:int -> height:int -> unit</code></pre>
+<pre><span id="VALoverrideredirect_get"><span class="keyword">val</span> overrideredirect_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool</code></pre>
+<pre><span id="VALoverrideredirect_set"><span class="keyword">val</span> overrideredirect_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool -> unit</code></pre>
+<pre><span id="VALpositionfrom_clear"><span class="keyword">val</span> positionfrom_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALpositionfrom_get"><span class="keyword">val</span> positionfrom_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEwmFrom">Tk.wmFrom</a></code></pre>
+<pre><span id="VALpositionfrom_set"><span class="keyword">val</span> positionfrom_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEwmFrom">Tk.wmFrom</a> -> unit</code></pre>
+<pre><span id="VALprotocol_clear"><span class="keyword">val</span> protocol_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> name:string -> unit</code></pre>
+<pre><span id="VALprotocol_set"><span class="keyword">val</span> protocol_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -><br>       name:string -> command:(unit -> unit) -> unit</code></pre>
+<pre><span id="VALprotocols"><span class="keyword">val</span> protocols</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string list</code></pre>
+<pre><span id="VALresizable_get"><span class="keyword">val</span> resizable_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> bool * bool</code></pre>
+<pre><span id="VALresizable_set"><span class="keyword">val</span> resizable_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> width:bool -> height:bool -> unit</code></pre>
+<pre><span id="VALsizefrom_clear"><span class="keyword">val</span> sizefrom_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALsizefrom_get"><span class="keyword">val</span> sizefrom_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEwmFrom">Tk.wmFrom</a></code></pre>
+<pre><span id="VALsizefrom_set"><span class="keyword">val</span> sizefrom_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Tk.html#TYPEwmFrom">Tk.wmFrom</a> -> unit</code></pre>
+<pre><span id="VALstate"><span class="keyword">val</span> state</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALtitle_get"><span class="keyword">val</span> title_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string</code></pre>
+<pre><span id="VALtitle_set"><span class="keyword">val</span> title_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> string -> unit</code></pre>
+<pre><span id="VALtransient_clear"><span class="keyword">val</span> transient_clear</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALtransient_get"><span class="keyword">val</span> transient_get</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> <a href="Widget.html#TYPEany">Widget.any</a> <a href="Widget.html#TYPEwidget">Widget.widget</a></code></pre>
+<pre><span id="VALtransient_set"><span class="keyword">val</span> transient_set</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> master:'a <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre>
+<pre><span id="VALwithdraw"><span class="keyword">val</span> withdraw</span> : <code class="type"><a href="Widget.html#TYPEtoplevel">Widget.toplevel</a> <a href="Widget.html#TYPEwidget">Widget.widget</a> -> unit</code></pre></body></html>
