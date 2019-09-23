@@ -177,6 +177,7 @@ if test $has_tk = true; then
     "-I/sw/include" \
     "-I/usr/pkg/include" \
     "-I/usr/include" \
+    "-I/usr/X11/include" \
     "-I/usr/local/include/tcl8.6 -I/usr/local/include/tk8.6" \
     "-I/usr/include/tcl8.6 -I/usr/include/tk8.6" \
     "-I/usr/local/include/tcl8.5 -I/usr/local/include/tk8.5" \
