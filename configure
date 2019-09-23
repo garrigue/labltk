@@ -19,7 +19,7 @@ installbindir=''
 installdir=''
 tk_defs=''
 tk_libs=''
-tk_x11=yes
+tk_x11=no
 use_findlib=no
 verbose=no
 optcomps=no
@@ -63,6 +63,8 @@ while : ; do
         tk_libs=$2; shift;;
     -tk-no-x11|--tk-no-x11)
         tk_x11=no;;
+    -tk-x11|--tk-x11)
+        tk_x11=yes;;
     -use-findlib|--use-findlib)
         use_findlib=yes;;
     -verbose|--verbose)

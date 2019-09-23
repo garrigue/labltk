@@ -50,8 +50,12 @@ The "configure" script accepts the following options:
           -tkdefs "-I/usr/local/include/tcl8.0jp -I/usr/local/include/tk8.0jp"
 
 -tk-no-x11
-        Build LablTk without using X11. This option is needed on
-        Cygwin, or if you want to use the Quartz version on Tk on OSX.
+        Build LablTk without explicitly linking to X11.
+        This is now the default.
+
+-tk-x11
+        Build LablTk using X11 libraries detected by ocaml.
+        Only works with old versions ocaml (before 4.09)
 
 -verbose
         Verbose output of the configuration tests. Use it if the outcome
