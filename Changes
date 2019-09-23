@@ -3,6 +3,7 @@
 * Release labltk-8.06.7 for ocaml 4.09
 * ocaml 4.08/4.09 compatibility: use OCAMLC_CFLAGS and Stdlib
 * include auxlib-in-META
+* add fallback on -I/usr/X11/include in configure
 
 2019-05-31:
 -----------
