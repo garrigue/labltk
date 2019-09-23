@@ -84,7 +84,7 @@ clean:
 	$(CAMLOPT) -c $(COMPFLAGS) $<
 
 .c.$(O):
-	$(CC) $(BYTECCCOMPOPTS) $(CCFLAGS) -c $<
+	$(CC) $(BYTECCCOMPOPTS) $(OCAMLC_CFLAGS) $(CCFLAGS) -c $<
 
 tkthread.cmi: tkthread.mli
 	$(CAMLCOMP) $(COMPFLAGS) $(THFLAGS) $<

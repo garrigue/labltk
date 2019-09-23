@@ -337,7 +337,7 @@ let rec converterTKtoCAML ~arg = function
   | Bool -> "(match " ^ arg ^ " with\n\
             | \"1\" -> true\n\
             | \"0\" -> false\n\
-            | s -> Pervasives.raise (Invalid_argument (\"cTKtoCAMLbool\" ^ s)))"
+            | s -> Stdlib.raise (Invalid_argument (\"cTKtoCAMLbool\" ^ s)))"
   | Char -> "String.get " ^ arg ^ " 0"
   | String -> arg
   | UserDefined s -> "cTKtoCAML" ^ s ^ " " ^ arg
@@ -498,7 +498,7 @@ let labltk_write_TKtoCAML ~w name ~def:typdef =
           end;
         let final = if pp.stringpar <> [] then
               "n -> `" ^ List.hd pp.stringpar ^ " n"
-           else "s -> Pervasives.raise (Invalid_argument (\"cTKtoCAML"
+           else "s -> Stdlib.raise (Invalid_argument (\"cTKtoCAML"
                 ^ name ^ ": \" ^ s))"
         in
         w "    | ";
@@ -537,7 +537,7 @@ let camltk_write_TKtoCAML ~w name ~def:typdef =
           end;
         let final = if pp.stringpar <> [] then
               "n -> " ^ List.hd pp.stringpar ^ " n"
-           else "s -> Pervasives.raise (Invalid_argument (\"cTKtoCAML"
+           else "s -> Stdlib.raise (Invalid_argument (\"cTKtoCAML"
                 ^ name ^ ": \" ^ s))"
         in
         w "    | ";
@@ -830,7 +830,7 @@ let rec write_result_parsing ~w = function
       let rnames = varnames ~prefix:"r" (List.length tyl) in
       w "    let l = splitlist res in";
       w ("\n      if List.length l <> " ^ string_of_int (List.length tyl));
-      w ("\n      then Pervasives.raise (TkError (\"unexpected result: \" ^ res))");
+      w ("\n      then Stdlib.raise (TkError (\"unexpected result: \" ^ res))");
       w ("\n      else ");
       List.iter2 rnames tyl ~f:
         begin fun r (l, ty) ->

@@ -219,7 +219,7 @@ if test $has_tk = true && test -z "$tk_libs"; then
     tkinclude="$tk_defs"
   else
     tkinclude="$tk_x11_include"
-  fi  
+  fi
   case "$tkinclude" in
   -I/opt/local/include*) tklibdir="/opt/local/lib" ;;
   -I/usr/local/include*) tklibdir="/usr/local/lib" ;;
@@ -232,7 +232,7 @@ if test $has_tk = true && test -z "$tk_libs"; then
     *) tk_libs="-L$tklibdir" ;;
     esac
   else
-    tk
+    tk_libs=""
   fi
 fi
 
