@@ -226,6 +226,7 @@ if test $has_tk = true && test -z "$tk_libs"; then
   -I/usr/local/include*) tklibdir="/usr/local/lib" ;;
   -I/sw/include*) tklibdir="/sw/lib" ;;
   -I/usr/pkg/include*) tklibdir="/usr/pkg/lib" ;;
+  -I/usr/X11/include*) tklibdir="/usr/X11/lib" ;;
   esac
   if test -n "$tklibdir"; then
     case "$system" in
@@ -266,9 +267,10 @@ if test $has_tk = true; then
     inf "Tcl/Tk libraries found."
   else
     has_tk=false
-    for tklibdir in "/usr/local/lib" "/opt/local/lib" "/sw/lib" "/usr/pkg/lib";
+    for tklibdir in \
+      "/usr/local/lib" "/opt/local/lib" "/sw/lib" "/usr/pkg/lib"  "/usr/lib";
     do
-      if test $found = no &&
+      if test $has_tk = false &&
          sh ./hasgot -L$tklibdir $tk_libs $tk_x11_libs $tkauxlibs Tk_SetGrid
       then
         has_tk=true
