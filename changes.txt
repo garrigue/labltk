@@ -1,9 +1,18 @@
+2019-09-23:
+-----------
+* Release labltk-8.06.7 for ocaml 4.09
+* ocaml 4.08/4.09 compatibility: use OCAMLC_CFLAGS and Stdlib
+* include auxlib-in-META
+* default to -tk-no-x11 in configure (new -tk-x11 option available)
+* add fallback to -I/usr/X11/include and -L/usr/X11/lib
+
 2019-05-31:
 -----------
-* have configure use (GNU) make rather than grep to read
+* Release labltk-8.06.6 for ocaml 4.08
+* Have configure use (GNU) make rather than grep to read
   ocaml/Makefile.config, due to change in ocaml 4.08
-* add "library" target, to avoid compiling ocamlbrowser
-* update ocamlbrowser for ocaml 4.08
+* Add "library" target, to avoid compiling ocamlbrowser
+* Update ocamlbrowser for ocaml 4.08
 
 2018-12-20:
 -----------
