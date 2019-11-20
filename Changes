@@ -1,3 +1,8 @@
+2019-11-20:
+-----------
+* fix filtering in file selection (OCamlBrowser)
+* lookup source files for Stdlib__* (OCamlBrowser)
+
 2019-09-23:
 -----------
 * Release labltk-8.06.7 for ocaml 4.09

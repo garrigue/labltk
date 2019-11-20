@@ -66,9 +66,10 @@ let unix_regexp s =
   let s = Str.global_replace ~!"\\?" ".?" s in
   let s =
     fixpoint s
-      ~f:(Str.replace_first ~!"\\({.*\\),\\(.*}\\)" "\\1\\|\\2") in
+      ~f:(Str.replace_first ~!"\\({[^,}]*\\)," "\\1\\|") in
   let s =
-    Str.global_replace ~!"{\\(.*\\)}" "\\(\\1\\)" s in
+    Str.global_replace ~!"{\\([^}]*\\)}" "\\(\\1\\)" s in
+  let s = s ^ "$" in
   Str.regexp s
 
 let exact_match ~pat s =
@@ -119,7 +120,7 @@ let f ~title ~action:proc ?(dir = Unix.getcwd ())
     let filter = may_prefix filter in
     let dir, pattern = parse_filter filter in
     let dir = if !load_in_path && usepath then "" else
-              (current_dir := Filename.dirname dir; dir)
+              (current_dir := dir; dir)
     and pattern = if pattern = "" then "*" else pattern in
       current_pattern := pattern;
     let filter =

@@ -351,6 +351,12 @@ let dummy_item =
                {mtd_type=None; mtd_attributes=[]; mtd_loc=Location.none},
                Exported)
 
+let remove_prefix ~prefix s =
+  let len1 = String.length prefix and len2 = String.length s in
+  if len1 > len2 then None else
+  if String.sub s ~pos:0 ~len:len1 <> prefix then None else
+  Some (String.sub s ~pos:len1 ~len:(len2-len1))
+
 let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
   let env =
     match path with None -> env
@@ -395,10 +401,17 @@ let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
         List.iter2 [mw.mw_edit; mw.mw_intf] [".ml"; ".mli"] ~f:
           begin fun button ext ->
             try
+              let path = Env.normalize_module_path None env path in
               let id = head_id path in
+              let name = Ident.name id in
+              let name =
+                match remove_prefix ~prefix:"Stdlib__" name with
+                | None -> name
+                | Some suff -> suff
+              in
               let file =
                 Misc.find_in_path_uncap (Load_path.get_paths ())
-                  ((Ident.name id) ^ ext) in
+                  (name ^ ext) in
               Button.configure button
                 ~command:(fun () -> edit_source ~file ~path ~sign);
               if !repack then Pack.forget [button] else
