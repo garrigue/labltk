@@ -274,12 +274,13 @@ let search_all_types t ~mode =
       `Exact, _ -> [t]
     | `Included, Tarrow _ -> [t]
     | `Included, _ ->
-      [t; newty(Tarrow(Nolabel,t,newvar(),Cok)); newty(Tarrow(Nolabel,newvar(),t,Cok))]
+      [t; newty(Tarrow(Nolabel,t,newvar(),Cok));
+          newty(Tarrow(Nolabel,newvar(),t,Cok))]
   in List2.flat_map !module_list ~f:
     begin fun modname ->
     let mlid = Lident modname in
-    try match find_module (lookup_module ~load:true mlid !start_env) !start_env
-    with {md_type=Mty_signature sign} ->
+    try match Env.find_module_by_name mlid !start_env
+    with _, {md_type=Mty_signature sign} ->
         List2.flat_map tl
           ~f:(search_type_in_signature ~sign ~prefix:[modname] ~mode)
     | _ -> []
@@ -360,10 +361,8 @@ let search_pattern_symbol text =
   let check i = check_match ~pattern (explode (Ident.name i)) in
   let l = List.map !module_list ~f:
     begin fun modname -> Lident modname,
-    try match
-      find_module (lookup_module ~load:true (Lident modname) !start_env)
-	!start_env
-    with {md_type=Mty_signature sign} ->
+    try match find_module_by_name (Lident modname) !start_env with
+    | _, {md_type=Mty_signature sign} ->
         List2.flat_map sign ~f:
           begin function
             Sig_value (i, _, _) when check i -> [i, Pvalue]
@@ -407,13 +406,13 @@ let search_string_symbol text =
     try let _ = f lid !start_env in [lid, k]
     with Not_found | Env.Error _ -> []
   in
-  try_lookup lookup_constructor Pconstructor @
-  try_lookup (lookup_module ~load:true) Pmodule @
-  try_lookup lookup_modtype Pmodtype @
-  try_lookup lookup_value Pvalue @
-  try_lookup lookup_type Ptype @
-  try_lookup lookup_label Plabel @
-  try_lookup lookup_class Pclass
+  try_lookup find_constructor_by_name Pconstructor @
+  try_lookup find_module_by_name Pmodule @
+  try_lookup find_modtype_by_name Pmodtype @
+  try_lookup find_value_by_name Pvalue @
+  try_lookup find_type_by_name Ptype @
+  try_lookup find_label_by_name Plabel @
+  try_lookup find_class_by_name Pclass
 
 open Parsetree
 
@@ -449,7 +448,7 @@ let search_structure str ~name ~kind ~prefix =
           List.fold_left ~init:[] str ~f:
             begin fun acc item ->
               match item.pstr_desc with
-                Pstr_module x when x.pmb_name.txt = modu ->
+                Pstr_module x when x.pmb_name.txt = Some modu ->
                   loc := x.pmb_expr.pmod_loc.loc_start.Lexing.pos_cnum;
                   begin match x.pmb_expr.pmod_desc with
                     Pmod_structure str -> str
@@ -486,7 +485,7 @@ let search_structure str ~name ~kind ~prefix =
           false
       | Pstr_exception pcd when kind = Pconstructor ->
           name = pcd.ptyexn_constructor.pext_name.txt
-      | Pstr_module x when kind = Pmodule -> name = x.pmb_name.txt
+      | Pstr_module x when kind = Pmodule -> Some name = x.pmb_name.txt
       | Pstr_modtype x when kind = Pmodtype -> name = x.pmtd_name.txt
       | Pstr_class l when kind = Pclass || kind = Ptype || kind = Pcltype ->
           List.iter l ~f:
@@ -511,14 +510,14 @@ let search_signature sign ~name ~kind ~prefix =
   ignore (name = "");
   ignore (prefix = [""]);
   let loc = ref 0 in
-  let rec search_module_type  sign ~prefix =
+  let rec search_module_type sign ~prefix =
     match prefix with [] -> sign
     | modu::prefix ->
         let sign =
           List.fold_left ~init:[] sign ~f:
             begin fun acc item ->
               match item.psig_desc with
-                Psig_module pmd when pmd.pmd_name.txt = modu ->
+                Psig_module pmd when pmd.pmd_name.txt = Some modu ->
                   loc := pmd.pmd_type.pmty_loc.loc_start.Lexing.pos_cnum;
                   begin match pmd.pmd_type.pmty_desc with
                     Pmty_signature sign -> sign
@@ -548,7 +547,7 @@ let search_signature sign ~name ~kind ~prefix =
           false
       | Psig_exception pcd when kind = Pconstructor ->
           name = pcd.ptyexn_constructor.pext_name.txt
-      | Psig_module pmd when kind = Pmodule -> name = pmd.pmd_name.txt
+      | Psig_module pmd when kind = Pmodule -> Some name = pmd.pmd_name.txt
       | Psig_modtype pmtd when kind = Pmodtype -> name = pmtd.pmtd_name.txt
       | Psig_class l when kind = Pclass || kind = Ptype || kind = Pcltype ->
           List.iter l ~f:

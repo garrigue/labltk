@@ -168,7 +168,7 @@ let search_pos_arguments ~pos ~env = function
 
 let search_pos_constructor pcd ~pos ~env =
   if in_loc ~pos pcd.pcd_loc then begin
-    Misc.may (search_pos_type ~pos ~env) pcd.pcd_res;
+    Stdlib.Option.iter (search_pos_type ~pos ~env) pcd.pcd_res;
     search_pos_arguments ~pos ~env pcd.pcd_args
   end
 
@@ -205,7 +205,7 @@ let rec search_pos_signature l ~pos ~env =
   begin fun env pt ->
     let env = match pt.psig_desc with
       Psig_open {popen_override=ovf; popen_expr=id} ->
-        let path, mt = Typetexp.find_module env Location.none id.txt in
+        let path, mt = lookup_module ~loc:Location.none id.txt env in
         begin match open_signature ovf path env with
           Some env -> env
         | None -> env
@@ -256,8 +256,11 @@ and search_pos_module m ~pos ~env =
       Pmty_ident lid -> add_found_sig (`Modtype, lid.txt) ~env ~loc:m.pmty_loc
     | Pmty_alias lid -> add_found_sig (`Module, lid.txt) ~env ~loc:m.pmty_loc
     | Pmty_signature sg -> search_pos_signature sg ~pos ~env
-    | Pmty_functor (_ , m1, m2) ->
-        Misc.may (search_pos_module ~pos ~env) m1;
+    | Pmty_functor (pm1, m2) ->
+        begin match pm1 with
+        | Unit -> ()
+        | Named (_, m1) -> search_pos_module ~pos ~env m1
+        end;
         search_pos_module m2 ~pos ~env
     | Pmty_with (m, l) ->
         search_pos_module m ~pos ~env;
@@ -491,7 +494,7 @@ and view_module path ~env =
                                        Trec_not, Exported)] ~path ~env
 
 and view_module_id id ~env =
-  let path = lookup_module ~load:true id env in
+  let path, _ = find_module_by_name id env in
   view_module path ~env
 
 and view_type_decl path ~env =
@@ -516,24 +519,24 @@ and view_type_decl path ~env =
       [Sig_type(ident_of_path path ~default:"t", td, Trec_first, Exported)]
 
 and view_type_id li ~env =
-  let path = lookup_type li env in
+  let path, _ = find_type_by_name li env in
   view_type_decl path ~env
 
 and view_class_id li ~env =
-  let path, cl = lookup_class li env in
+  let path, cl = find_class_by_name li env in
   view_signature_item ~path ~env
      [Sig_class(ident_of_path path ~default:"c", cl, Trec_first, Exported);
       dummy_item; dummy_item; dummy_item]
 
 and view_cltype_id li ~env =
-  let path, clt = lookup_cltype li env in
+  let path, clt = find_cltype_by_name li env in
   view_signature_item ~path ~env
      [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first,
                      Exported);
       dummy_item; dummy_item]
 
 and view_modtype_id li ~env =
-  let path, td = lookup_modtype li env in
+  let path, td = find_modtype_by_name li env in
   view_signature_item ~path ~env
     [Sig_modtype(ident_of_path path ~default:"S", td, Exported)]
 
@@ -560,10 +563,10 @@ and view_decl lid ~kind ~env =
 and view_decl_menu lid ~kind ~env ~parent =
   let path, kname =
     try match kind with
-      `Type -> lookup_type lid env, "Type"
-    | `Class -> fst (lookup_class lid env), "Class"
-    | `Module -> lookup_module ~load:true lid env, "Module"
-    | `Modtype -> fst (lookup_modtype lid env), "Module type"
+      `Type -> fst (find_type_by_name lid env), "Type"
+    | `Class -> fst (find_class_by_name lid env), "Class"
+    | `Module -> fst (find_module_by_name lid env), "Module"
+    | `Modtype -> fst (find_modtype_by_name lid env), "Module type"
     with Env.Error _ -> raise Not_found
   in
   let menu = Menu.create parent ~tearoff:false in
@@ -777,7 +780,8 @@ and search_pos_class_expr ~pos cl =
         search_pos_class_expr cl ~pos
     | Tcl_apply (cl, el) ->
         search_pos_class_expr cl ~pos;
-        List.iter el ~f:(fun (_, x) -> Misc.may (search_pos_expr ~pos) x)
+        List.iter el
+          ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x)
     | Tcl_let (_, pel, iel, cl) ->
         List.iter pel ~f:
           begin fun {vb_pat=pat; vb_expr=exp} ->
@@ -821,7 +825,8 @@ and search_pos_expr ~pos exp =
   | Texp_function {cases=l; _} ->
       List.iter l ~f:(search_case ~pos)
   | Texp_apply (exp, l) ->
-      List.iter l ~f:(fun (_, x) -> Misc.may (search_pos_expr ~pos) x);
+      List.iter l
+        ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x);
       search_pos_expr exp ~pos
   | Texp_match (exp, l, _) ->
       search_pos_expr exp ~pos;
@@ -927,7 +932,7 @@ and search_pos_module_expr ~pos (m :module_expr) =
         add_found_str (`Module (path, m.mod_type))
           ~env:m.mod_env ~loc:m.mod_loc
     | Tmod_structure str -> search_pos_structure str.str_items ~pos
-    | Tmod_functor (_, _, _, m) -> search_pos_module_expr m ~pos
+    | Tmod_functor (_, m) -> search_pos_module_expr m ~pos
     | Tmod_apply (a, b, _) ->
         search_pos_module_expr a ~pos; search_pos_module_expr b ~pos
     | Tmod_constraint (m, _, _, _) -> search_pos_module_expr m ~pos

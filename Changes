@@ -1,3 +1,8 @@
+2020-01-13:
+-----------
+* update ocamlbrowser to ocaml 4.10
+* fix again file selection
+
 2019-11-20:
 -----------
 * fix filtering in file selection (OCamlBrowser)

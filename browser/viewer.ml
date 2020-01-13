@@ -60,17 +60,17 @@ let view_symbol ~kind ~env ?path id =
   in
   match kind with
     Pvalue ->
-      let path, vd = lookup_value id env in
+      let path, vd = find_value_by_name id env in
       view_signature_item ~path ~env
         [Sig_value (Ident.create_local name, vd, Exported)]
   | Ptype -> view_type_id id ~env
-  | Plabel -> let ld = lookup_label id env in
+  | Plabel -> let ld = find_label_by_name id env in
       begin match ld.lbl_res.desc with
         Tconstr (path, _, _) -> view_type_decl path ~env
       | _ -> ()
       end
   | Pconstructor ->
-      let cd = lookup_constructor id env in
+      let cd = find_constructor_by_name id env in
       begin match cd.cstr_tag, cd.cstr_res.desc with
 	Cstr_extension _, Tconstr (cpath, args, _) ->
           view_signature ~title:(string_of_longident id) ~env ?path
@@ -132,7 +132,7 @@ let choose_symbol ~title ~env ?signature ?path l =
         match path, li with
           None, Ldot (lip, _) ->
             begin try
-              Some (lookup_module ~load:true lip env)
+              Some (fst (find_module_by_name lip env))
             with Not_found -> None
             end
         | _ -> path
@@ -239,7 +239,7 @@ let ident_of_decl ~modlid = function
 
 let view_defined ~env ?(show_all=false) modlid =
   try
-  let path, modtype = Typetexp.find_module env Location.none modlid in
+  let path, modtype = lookup_module modlid env ~loc:Location.none in
   match scrape_alias env modtype.md_type with
     Mty_signature sign ->
     let rec iter_sign sign idents =
@@ -624,7 +624,7 @@ object (self)
           match path, li with
             None, Ldot (lip, _) ->
               begin try
-                Some (lookup_module ~load:true lip env)
+                Some (fst (find_module_by_name lip env))
               with Not_found -> None
               end
           | _ -> path

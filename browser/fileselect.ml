@@ -208,6 +208,7 @@ let f ~title ~action:proc ?(dir = Unix.getcwd ())
   and okb = Button.create cfrm ~text:"Ok" ~command:
     begin fun () ->
       let files =
+        if not multi then [] else
         List.map (Listbox.curselection filter_listbox) ~f:
         begin fun x ->
           !current_dir ^ Listbox.get filter_listbox ~index:x
