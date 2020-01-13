@@ -1,5 +1,6 @@
 2020-01-13:
 -----------
+* Release labltk-8.06.8 for ocaml 4.10
 * update ocamlbrowser to ocaml 4.10
 * fix again file selection
 
