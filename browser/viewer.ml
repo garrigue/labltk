@@ -82,7 +82,8 @@ let view_symbol ~kind ~env ?path id =
 			                  then Some cd.cstr_res else None);
 			  ext_private = cd.cstr_private;
 			  ext_loc = cd.cstr_loc;
-			  ext_attributes = cd.cstr_attributes},
+			  ext_attributes = cd.cstr_attributes;
+                          ext_uid = Uid.internal_not_actually_unique},
 			 (if Path.same cpath Predef.path_exn
                          then Text_exception
 			 else Text_first),
@@ -255,8 +256,9 @@ let view_defined ~env ?(show_all=false) modlid =
     let l = iter_sign sign [] in
     let title = string_of_path path in
     let env =
-      match open_signature Asttypes.Fresh path env with None -> env
-      | Some env -> env
+      match open_signature Asttypes.Fresh path env with
+        Error _ -> env
+      | Ok env -> env
     in
     !choose_symbol_ref l ~title ~signature:sign ~env ~path;
     if show_all then view_signature sign ~title ~env ~path

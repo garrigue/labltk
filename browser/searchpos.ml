@@ -207,8 +207,8 @@ let rec search_pos_signature l ~pos ~env =
       Psig_open {popen_override=ovf; popen_expr=id} ->
         let path, mt = lookup_module ~loc:Location.none id.txt env in
         begin match open_signature ovf path env with
-          Some env -> env
-        | None -> env
+          Ok env -> env
+        | Error _ -> env
         end
     | sign_item ->
         try add_signature (Typemod.transl_signature env [pt]).sig_type env
@@ -351,7 +351,8 @@ let top_widgets = ref []
 
 let dummy_item =
   Sig_modtype (Ident.create_local "dummy",
-               {mtd_type=None; mtd_attributes=[]; mtd_loc=Location.none},
+               {mtd_type=None; mtd_attributes=[]; mtd_loc=Location.none;
+                mtd_uid=Uid.internal_not_actually_unique},
                Exported)
 
 let remove_prefix ~prefix s =
@@ -364,8 +365,9 @@ let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
   let env =
     match path with None -> env
     | Some path ->
-        match Env.open_signature Fresh path env with None -> env
-        | Some env -> env
+        match Env.open_signature Fresh path env with
+          Ok env -> env
+        | Error _ -> env
   in
   let title =
     match title, path with Some title, _ -> title
@@ -551,7 +553,9 @@ and view_expr_type ?title ?path ?env ?(name="noname") t =
   in
   view_signature ~title ?path ?env
     [Sig_value (id, {val_type = t; val_kind = Val_reg; val_attributes=[];
-                     val_loc = Location.none}, Exported)]
+                     val_loc = Location.none;
+                     val_uid = Uid.internal_not_actually_unique},
+                Exported)]
 
 and view_decl lid ~kind ~env =
   match kind with
@@ -649,7 +653,8 @@ let view_type kind ~env =
   | `Class (path, cty) ->
       let cld = { cty_params = []; cty_variance = []; cty_type = cty;
                   cty_path = path; cty_new = None; cty_loc = Location.none;
-                  cty_attributes = []} in
+                  cty_attributes = [];
+                  cty_uid = Uid.internal_not_actually_unique } in
       view_signature_item ~path ~env
         [Sig_class(ident_of_path path ~default:"c", cld, Trec_first,
                    Exported)]
@@ -658,7 +663,8 @@ let view_type kind ~env =
         Mty_signature sign -> view_signature sign ~path ~env
       | modtype ->
           let md =
-	    {md_type = mty; md_attributes = []; md_loc = Location.none} in
+	    {md_type = mty; md_attributes = []; md_loc = Location.none;
+             md_uid = Uid.internal_not_actually_unique} in
           view_signature_item ~path ~env
             [Sig_module(ident_of_path path ~default:"M", Mp_present,
                         md, Trec_not, Exported)]
@@ -798,7 +804,8 @@ and search_pos_class_expr ~pos cl =
       ~env:!start_env ~loc:cl.cl_loc
   end
 
-and search_case ~pos {c_lhs; c_guard; c_rhs} =
+and search_case : 'a. pos:_ -> 'a case -> unit =
+  fun ~pos {c_lhs; c_guard; c_rhs} ->
   search_pos_pat c_lhs ~pos ~env:c_rhs.exp_env;
   begin match c_guard with
   | None -> ()
@@ -895,16 +902,18 @@ and search_pos_expr ~pos exp =
   add_found_str (`Exp(`Expr, exp.exp_type)) ~env:exp.exp_env ~loc:exp.exp_loc
   end
 
-and search_pos_pat ~pos ~env pat =
+and search_pos_pat : type a. pos:_ -> env:_ -> a general_pattern -> unit =
+  fun ~pos ~env pat ->
   if in_loc pat.pat_loc ~pos then begin
   begin match pat.pat_desc with
     Tpat_any -> ()
   | Tpat_var (id, _) ->
       add_found_str (`Exp(`Val (Pident id), pat.pat_type))
         ~env ~loc:pat.pat_loc
-  | Tpat_alias (pat, _, _) -> search_pos_pat pat ~pos ~env
+  | Tpat_alias (pat, _, _)
   | Tpat_lazy pat
   | Tpat_exception pat -> search_pos_pat pat ~pos ~env
+  | Tpat_value pat -> search_pos_pat (pat :> pattern) ~pos ~env
   | Tpat_constant _ ->
       add_found_str (`Exp(`Const, pat.pat_type)) ~env ~loc:pat.pat_loc
   | Tpat_tuple l ->
@@ -948,7 +957,7 @@ let search_pos_structure ~pos str =
 open Stypes
 
 let search_pos_ti ~pos = function
-    Ti_pat p   -> search_pos_pat ~pos ~env:p.pat_env p
+    Ti_pat (_, p)   -> search_pos_pat ~pos ~env:p.pat_env p
   | Ti_expr e  -> search_pos_expr ~pos e
   | Ti_class c -> search_pos_class_expr ~pos c
   | Ti_mod m   -> search_pos_module_expr ~pos m

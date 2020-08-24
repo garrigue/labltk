@@ -1,6 +1,8 @@
 2020-08-24:
 -----------
-* Fix config/auto-aux/hasgot for clang 12 (MacOS)
+* Release labltk-8.06.9 for ocaml 4.11
+* fix config/auto-aux/hasgot for clang 12 (MacOS)
+* update ocamlbrowser to ocaml 4.11
 
 2020-01-13:
 -----------

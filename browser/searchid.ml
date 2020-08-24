@@ -296,7 +296,9 @@ let search_string_type text ~mode =
       try (Typemod.transl_signature !start_env sexp).sig_type with _ ->
       let env = List.fold_left !module_list ~init:!start_env ~f:
         begin fun acc m ->
-          try open_pers_signature m acc with Env.Error _ -> acc
+          match open_pers_signature m acc with
+            Ok env -> env
+          | Error _ -> acc
         end in
       try (Typemod.transl_signature env sexp).sig_type
       with Env.Error err -> []
