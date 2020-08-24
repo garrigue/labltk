@@ -1,3 +1,7 @@
+2020-08-24:
+-----------
+* Fix config/auto-aux/hasgot for clang 12 (MacOS)
+
 2020-01-13:
 -----------
 * Release labltk-8.06.8 for ocaml 4.10
