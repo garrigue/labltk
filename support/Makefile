@@ -39,7 +39,9 @@ lib$(LIBNAME).$(A): $(COBJS)
 
 PUBMLI=fileevent.mli protocol.mli textvariable.mli timer.mli \
     rawwidget.mli widget.mli
-PUB= $(PUBMLI) $(PUBMLI:.mli=.cmi) tkthread.mli tkthread.cmi tkthread.cmo
+PUB= $(PUBMLI) $(PUBMLI:.mli=.cmi) tkthread.mli tkthread.cmi tkthread.cmo \
+	camltkwrap.cmi
+PUBX= $(PUBMLI:.mli=.cmx) camltkwrap.cmx
 
 ifeq ($(USE_FINDLIB),yes)
 install:
@@ -48,8 +50,8 @@ install:
 	$(RANLIB) lib$(LIBNAME).$(A)
 
 installopt:
-	ocamlfind install labltk -add \
-	  $(PUBMLI:.mli=.cmx) -optional tkthread.cmx tkthread.$(O)
+	ocamlfind install labltk -add $(PUBX) \
+	  -optional tkthread.cmx tkthread.$(O)
 else
 install:
 	if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
@@ -61,7 +63,7 @@ install:
 
 installopt:
 	@if test -d $(INSTALLDIR); then : ; else mkdir $(INSTALLDIR); fi
-	cp $(PUBMLI:.mli=.cmx) $(INSTALLDIR)
+	cp $(PUBX) $(INSTALLDIR)
 	if test -f tkthread.$(O); then \
 	  cp tkthread.cmx tkthread.$(O) $(INSTALLDIR); \
 	  chmod 644 $(INSTALLDIR)/tkthread.cmx $(INSTALLDIR)/tkthread.$(O); \
