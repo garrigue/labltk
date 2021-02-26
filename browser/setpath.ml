@@ -31,8 +31,9 @@ let exec_update_hooks () =
       end
 
 let set_load_path l =
-    Load_path.init l;
-    exec_update_hooks ()
+  Load_path.init l;
+  exec_update_hooks ();
+  Env.reset_cache ()
 
 let get_load_path () = Load_path.get_paths ()
 

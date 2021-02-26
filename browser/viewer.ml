@@ -238,6 +238,11 @@ let ident_of_decl ~modlid = function
   | Sig_class (id, _, _, _) -> Lident (Ident.name id), Pclass
   | Sig_class_type (id, _, _, _) -> Lident (Ident.name id), Pcltype
 
+let show_error report_error err =
+  let tl, tw, finish = Jg_message.formatted ~title:"Error!" () in
+  report_error Format.std_formatter err;
+  finish ()
+
 let view_defined ~env ?(show_all=false) modlid =
   try
   let path, modtype = lookup_module modlid env ~loc:Location.none in
@@ -264,14 +269,9 @@ let view_defined ~env ?(show_all=false) modlid =
     if show_all then view_signature sign ~title ~env ~path
   | _ -> ()
   with Not_found -> ()
-  | Env.Error err ->
-      let tl, tw, finish = Jg_message.formatted ~title:"Error!" () in
-      Env.report_error Format.std_formatter err;
-      finish ()
-  | Cmi_format.Error err ->
-      let tl, tw, finish = Jg_message.formatted ~title:"Error!" () in
-      Cmi_format.report_error Format.std_formatter err;
-      finish ()
+  | Env.Error err -> show_error Env.report_error err
+  | Persistent_env.Error err -> show_error Persistent_env.report_error err
+  | Cmi_format.Error err -> show_error Cmi_format.report_error err
 
 
 (* Manage toplevel windows *)

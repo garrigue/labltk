@@ -284,7 +284,7 @@ let search_all_types t ~mode =
         List2.flat_map tl
           ~f:(search_type_in_signature ~sign ~prefix:[modname] ~mode)
     | _ -> []
-    with Not_found | Env.Error _ -> []
+    with Not_found | Env.Error _ | Persistent_env.Error _ -> []
     end
 
 exception Error of int * int
@@ -301,7 +301,8 @@ let search_string_type text ~mode =
           | Error _ -> acc
         end in
       try (Typemod.transl_signature env sexp).sig_type
-      with Env.Error err -> []
+      with
+        Env.Error _ | Persistent_env.Error _ -> []
       | Typemod.Error (l,_,_) ->
           let start_c = l.loc_start.Lexing.pos_cnum in
           let end_c = l.loc_end.Lexing.pos_cnum in
@@ -385,7 +386,7 @@ let search_pattern_symbol text =
           | _ -> []
           end
     | _ -> []
-    with Env.Error _ -> []
+    with Env.Error _ | Persistent_env.Error _ -> []
     end
   in
   List2.flat_map l ~f:
@@ -406,7 +407,7 @@ let search_string_symbol text =
   let lid = snd (longident_of_string text) [] in
   let try_lookup f k =
     try let _ = f lid !start_env in [lid, k]
-    with Not_found | Env.Error _ -> []
+    with Not_found | Env.Error _ | Persistent_env.Error _ -> []
   in
   try_lookup find_constructor_by_name Pconstructor @
   try_lookup find_module_by_name Pmodule @

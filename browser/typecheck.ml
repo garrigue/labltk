@@ -116,13 +116,15 @@ let f txt =
     List.iter psl ~f:
     begin function
       Ptop_def pstr ->
-        let str, sign, _names, env' =
-          Typemod.type_structure !env pstr Location.none in
+        let str, sign, _names, env' = Typemod.type_structure !env pstr in
         txt.structure <- txt.structure @ str.str_items;
         txt.signature <- txt.signature @ sign;
         env := env'
     | Ptop_dir _ -> ()
     end;
+    let open Cmt2annot in
+    let iter = iterator true ~scope:(Location.in_file txt.name) in
+    List.iter (binary_part iter) (Cmt_format.get_saved_types ());
     txt.type_info <- Stypes.get_info ();
 
   with
@@ -130,7 +132,8 @@ let f txt =
   | Typecore.Error _ | Typemod.Error _
   | Typeclass.Error _ | Typedecl.Error _
   | Typetexp.Error _ | Includemod.Error _
-  | Env.Error _ | Ctype.Tags _ | Failure _ as exn ->
+  | Persistent_env.Error _ | Env.Error _
+  | Ctype.Tags _ | Failure _ as exn ->
       txt.type_info <- Stypes.get_info ();
       let et, ew, end_message = Jg_message.formatted ~title:"Error !" () in
       error_messages := et :: !error_messages;
@@ -142,6 +145,8 @@ let f txt =
       | Typedecl.Error (l, err) -> l
       | Typemod.Error (l, env, err) -> l
       | Typetexp.Error (l, env, err) -> l
+      | Env.Error (Missing_module (l, _, _) | Illegal_value_name (l, _) |
+                   Lookup_error (l, _, _)) -> l
       | _ -> Location.none
       in
       begin match exn with

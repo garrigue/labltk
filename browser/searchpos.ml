@@ -465,7 +465,7 @@ let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
         match search_pos_signature pt ~pos:(lines_to_chars l ~text + c) ~env
         with [] -> break ()
         | ((kind, lid), env, loc) :: _ -> view_decl lid ~kind ~env
-      with Not_found | Env.Error _ -> ());
+      with Not_found | Env.Error _ | Persistent_env.Error _ -> ());
   bind tw ~events:[`ButtonPressDetail 3] ~breakable:true
     ~fields:[`MouseX;`MouseY]
     ~action:(fun ev ->
@@ -571,7 +571,7 @@ and view_decl_menu lid ~kind ~env ~parent =
     | `Class -> fst (find_class_by_name lid env), "Class"
     | `Module -> fst (find_module_by_name lid env), "Module"
     | `Modtype -> fst (find_modtype_by_name lid env), "Module type"
-    with Env.Error _ -> raise Not_found
+    with Env.Error _ | Persistent_env.Error _ -> raise Not_found
   in
   let menu = Menu.create parent ~tearoff:false in
   let label = kname ^ " " ^ string_of_path path in
@@ -962,6 +962,16 @@ let search_pos_ti ~pos = function
   | Ti_class c -> search_pos_class_expr ~pos c
   | Ti_mod m   -> search_pos_module_expr ~pos m
   | _ -> ()
+(*
+  | Partial_structure st -> search_pos_structure ~pos st
+  | Partial_structure_item it -> search_pos_structure ~pos [it]
+  | Partial_expression e -> search_pos_expr ~pos e
+  | Partial_pattern (k, p) -> search_pos_pat ~pos ~env:p.pat_env p
+  | Partial_class_expr c -> search_pos_class_expr ~pos c
+  | Partial_signature sg -> search_pos_signature ~pos sg
+  | Partial_signature_item si -> search_pos_signature ~pos [si]
+  | Partial_module_type mt -> ()
+*)
 
 let rec search_pos_info ~pos = function
     [] -> []
