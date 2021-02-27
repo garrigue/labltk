@@ -1,6 +1,19 @@
-2020-08-24:
+2021-02-26:
+-----------
+* Release labltk-8.06.10 for ocaml 4.12
+* Fix bugs in ocamlbrowser that prevented exploring types in source files
+
+2021-02-14:
+-----------
+* Install camltkwrap.{cmi,cmx} (report by Pascal Raymond)
+
+2020-08-25:
 -----------
 * Release labltk-8.06.9 for ocaml 4.11
+* search for X11 headers in /usr/local/include if needed (freebsd)
+
+2020-08-24:
+-----------
 * fix config/auto-aux/hasgot for clang 12 (MacOS)
 * update ocamlbrowser to ocaml 4.11
 
