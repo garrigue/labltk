@@ -349,7 +349,7 @@ class editor ~top ~menus = object (self)
         if ev.ev_Char <> "" &&
           (ev.ev_Char.[0] >= ' ' ||
            List.mem ev.ev_Char.[0]
-             (List.map ~f:control ['d'; 'h'; 'i'; 'k'; 'o'; 't'; 'w'; 'y']))
+            ~set:(List.map ~f:control ['d'; 'h'; 'i'; 'k'; 'o'; 't'; 'w'; 'y']))
         then Textvariable.set txt.modified "modified");
     bind tw ~events:[`KeyPressDetail"Tab"] ~breakable:true
       ~action:(fun _ ->

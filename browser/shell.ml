@@ -301,7 +301,7 @@ let f ~prog ~title =
   let labels = if !Clflags.classic then ["-nolabels"] else [] in
   let rectypes = if !Clflags.recursive_types then ["-rectypes"] else [] in
   let warnings =
-    if List.mem "-w" progargs || !warnings = "Al" then []
+    if List.mem "-w" ~set:progargs || !warnings = "Al" then []
     else ["-w"; !warnings]
   in
   let args =

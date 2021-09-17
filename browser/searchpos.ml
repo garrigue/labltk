@@ -245,7 +245,7 @@ let rec search_pos_signature l ~pos ~env =
         add_found_sig (`Module, lid.txt) ~env ~loc:pt.psig_loc
       | Psig_include {pincl_mod=t} -> search_pos_module t ~pos ~env
       | Psig_attribute _ | Psig_extension _ -> ()
-      | Psig_typesubst _ | Psig_modsubst _ -> ()
+      | Psig_typesubst _ | Psig_modsubst _ | Psig_modtypesubst _ -> ()
       end;
     env
   end)
@@ -918,7 +918,7 @@ and search_pos_pat : type a. pos:_ -> env:_ -> a general_pattern -> unit =
       add_found_str (`Exp(`Const, pat.pat_type)) ~env ~loc:pat.pat_loc
   | Tpat_tuple l ->
       List.iter l ~f:(search_pos_pat ~pos ~env)
-  | Tpat_construct (_, _, l) ->
+  | Tpat_construct (_, _, l, _) ->
       List.iter l ~f:(search_pos_pat ~pos ~env)
   | Tpat_variant (_, None, _) -> ()
   | Tpat_variant (_, Some pat, _) -> search_pos_pat pat ~pos ~env

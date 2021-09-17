@@ -169,7 +169,7 @@ let rec included ~prefix t1 t2 =
       let l2 = if arr len1 ~card:len2 < 100 then l2 else
           let ll1 = get_options (fst (List.split l1)) in
           List.filter l2
-          ~f:(fun (l,_) -> not (is_optional l) || List.mem l ll1)
+          ~f:(fun (l,_) -> not (is_optional l) || List.mem l ~set:ll1)
       in
       len1 <= len2 &&
       List.exists (List2.flat_map ~f:permutations (choose len1 ~card:l2)) ~f:
@@ -235,7 +235,7 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
           begin match td.type_kind with
             Type_abstract
 	  | Type_open -> false
-          | Type_variant l ->
+          | Type_variant (l, _) ->
             List.exists l ~f:
             begin fun {Types.cd_args=args; cd_res=r} ->
               constructor_matches args  ||
@@ -427,7 +427,7 @@ let rec bound_variables pat =
   | Ppat_alias (pat,s) -> s.txt :: bound_variables pat
   | Ppat_tuple l -> List2.flat_map l ~f:bound_variables
   | Ppat_construct (_,None) -> []
-  | Ppat_construct (_,Some pat) -> bound_variables pat
+  | Ppat_construct (_,Some (_, pat)) -> bound_variables pat
   | Ppat_variant (_,None) -> []
   | Ppat_variant (_,Some pat) -> bound_variables pat
   | Ppat_record (l, _) ->
@@ -467,7 +467,7 @@ let search_structure str ~name ~kind ~prefix =
         Pstr_value (_, l) when kind = Pvalue ->
           List.iter l ~f:
             begin fun {pvb_pat=pat} ->
-              if List.mem name (bound_variables pat)
+              if List.mem name ~set:(bound_variables pat)
               then loc := pat.ppat_loc.loc_start.Lexing.pos_cnum
             end;
           false

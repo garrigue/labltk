@@ -61,7 +61,7 @@ let print_version_num () =
 let usage ~spec errmsg =
   let b = Buffer.create 1024 in
   bprintf b "%s\n" errmsg;
-  List.iter (function (key, _, doc) -> bprintf b "  %s %s\n" key doc) spec;
+  List.iter spec ~f:(function (key, _, doc) -> bprintf b "  %s %s\n" key doc);
   Buffer.contents b
 
 let _ =
@@ -100,7 +100,7 @@ let _ =
     (Sys.getcwd ()
      :: List.rev_map ~f:(Misc.expand_directory Config.standard_library) !path
      @ [Config.standard_library]);
-  Warnings.parse_options false !Shell.warnings;
+  ignore (Warnings.parse_options false !Shell.warnings);
   Unix.putenv "TERM" "noterminal";
   begin
     try Searchid.start_env := Compmisc.initial_env ()

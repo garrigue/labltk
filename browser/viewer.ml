@@ -39,13 +39,13 @@ let list_modules ?(path=Load_path.get_paths ()) () =
     end in
     List.fold_left l ~init:modules
      ~f:(fun modules item ->
-          if List.mem item modules then modules else item :: modules)
+          if List.mem item ~set:modules then modules else item :: modules)
   end
 
 let reset_modules box =
   Listbox.delete box ~first:(`Num 0) ~last:`End;
-  module_list := List.sort (Jg_completion.compare_string ~nocase:true)
-      (list_modules ());
+  module_list := List.sort (list_modules ())
+      ~cmp:(Jg_completion.compare_string ~nocase:true);
   Listbox.insert box ~index:`End ~texts:!module_list;
   Jg_box.recenter box ~index:(`Num 0)
 
@@ -305,12 +305,12 @@ let start_shell master =
   and names = List.map ~f:fst (Shell.get_all ()) in
   Entry.insert e1 ~index:`End ~text:!default_shell;
   let shell_name () = "Shell #" ^ string_of_int !shell_counter in
-  while List.mem (shell_name ()) names do
+  while List.mem (shell_name ()) ~set:names do
     incr shell_counter
   done;
   Entry.insert e2 ~index:`End ~text:(shell_name ());
   Button.configure ok ~command:(fun () ->
-      if not (List.mem (Entry.get e2) names) then begin
+      if not (List.mem (Entry.get e2) ~set:names) then begin
         default_shell := Entry.get e1;
         Shell.f ~prog:!default_shell ~title:(Entry.get e2);
         destroy tl
@@ -584,21 +584,21 @@ object (self)
           if n = 0 then string_of_longident li else
           string_of_longident li ^ " (" ^ string_of_kind k ^ ")" in
         let n = index s texts in
-        Listbox.see box (`Num n);
-        Listbox.activate box (`Num n)
+        Listbox.see box ~index:(`Num n);
+        Listbox.activate box ~index:(`Num n)
       with Not_found -> ()
     in
     let l = path_elems path in
     if l <> [] then begin
       List.iter l ~f:
         begin fun path ->
-          if not (List.mem path shown_paths) then
+          if not (List.mem path ~set:shown_paths) then
             view_symbol (longident_of_path path) ~kind:Pmodule
               ~env:!start_env ~path;
-          let n = self#get_box path - 1 in
+          let n = self#get_box ~path - 1 in
           see_path path ~box:n
         end;
-      see_path path ~box:(self#get_box path) ~sign
+      see_path path ~box:(self#get_box ~path) ~sign
     end
 
   method choose_symbol ~title ~env ?signature ?path l =

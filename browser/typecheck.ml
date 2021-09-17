@@ -65,10 +65,10 @@ let parse_pp ~parse ~wrap ~ext text =
           if buffer = ast_magic then begin
             ignore (input_value ic);
             wrap (input_value ic)
-          end else if String.sub buffer 0 9 = String.sub ast_magic 0 9 then
-            raise Outdated_version
-          else
-            raise Exit
+          end else if String.sub buffer ~pos:0 ~len:9
+                    = String.sub ast_magic ~pos:0 ~len:9
+          then raise Outdated_version
+          else raise Exit
         with
           Outdated_version ->
             close_in ic;
@@ -124,7 +124,7 @@ let f txt =
     end;
     let open Cmt2annot in
     let iter = iterator true ~scope:(Location.in_file txt.name) in
-    List.iter (binary_part iter) (Cmt_format.get_saved_types ());
+    List.iter ~f:(binary_part iter) (Cmt_format.get_saved_types ());
     txt.type_info <- Stypes.get_info ();
 
   with
