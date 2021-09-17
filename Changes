@@ -1,5 +1,7 @@
 2021-09-17:
 -----------
+* Release labltk-8.06.11 for ocaml 4.13
+* Disable -warn-error for users, add all-devel target for developers
 * Add ommitted labels
 * Update ocamlbrowser for ocaml 4.13
 

@@ -19,8 +19,11 @@
 SUBDIRS=compiler support lib jpf frx examples_labltk \
 	examples_camltk browser
 SUBDIRS_GENERATED=camltk labltk
+WARNERR=-warn-error A-3
 include config/Makefile
 
+all-devel:
+	$(MAKE) all opt WARNERR="$(WARNERR)"
 all: library
 	cd browser; $(MAKE)
 opt: libraryopt

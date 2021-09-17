@@ -22,10 +22,10 @@ include ../config/Makefile
 
 CAMLRUN=$(BINDIR)/ocamlrun
 CAMLC=$(BINDIR)/ocamlc$(OPT)
-CAMLOPT=$(BINDIR)/ocamlopt$(OPT)
+CAMLOPT=$(BINDIR)/ocamlopt$(OPT) $(WARNERR)
 CAMLCB=$(BINDIR)/ocamlc
 CAMLOPTB=$(BINDIR)/ocamlopt
-CAMLCOMP=$(CAMLC) -c -warn-error A-3
+CAMLCOMP=$(CAMLC) -c $(WARNERR)
 CAMLYACC=$(BINDIR)/ocamlyacc -v
 CAMLLEX=$(BINDIR)/ocamllex
 CAMLLIBR=$(CAMLC) -a
