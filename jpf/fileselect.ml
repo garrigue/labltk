@@ -55,7 +55,7 @@ let myentry_create p ~variable =
 let subshell cmd =
   let r,w = pipe () in
     match fork () with
-      0 -> close r; dup2 w stdout;
+      0 -> close r; Unix.dup2 w stdout;
            execv ~prog:"/bin/sh" ~args:[| "/bin/sh"; "-c"; cmd |]
     | id ->
         close w;

@@ -10,7 +10,7 @@ let handle_set opts w cmd =
          (function x -> cCAMLtoTKicccm w icccm_selection_handle_table x)
          opts);
     cCAMLtoTKwidget widget_any_table w;
-    let id = register_callback w (function args ->
+    let id = register_callback w ~callback:(function args ->
       let (a1,args) = int_of_string (List.hd args), List.tl args in
       let (a2,args) = int_of_string (List.hd args), List.tl args in
       cmd a1 a2) in

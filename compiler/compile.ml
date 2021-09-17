@@ -68,7 +68,7 @@ let gettklabel fc =
         then String.sub s ~pos:1 ~len:(String.length s - 1)
         else s
       in begin
-        if List.mem s forbidden then
+        if List.mem s ~set:forbidden then
           try List.assoc s nicknames
           with Not_found -> small fc.var_name
         else s
@@ -353,7 +353,8 @@ let rec converterTKtoCAML ~arg = function
      begin match type_parser_arity ty with
        OneToken ->
          String.concat ~sep:" "
-           ["(List.map (function x ->";
+           [(if !Flags.camltk then "(List.map (function x ->"
+             else "(List.map ~f:(function x ->");
             converterTKtoCAML ~arg:"x" ty; ")"; arg; ")"]
      | MultipleToken ->
          String.concat ~sep:" "
@@ -561,14 +562,14 @@ let write_TKtoCAML ~w name ~def:typdef =
 
 (* Produce an in-lined converter OCaml -> Tk for simple types *)
 (* the converter is a function of type:  <type> -> string  *)
-let rec converterCAMLtoTK ~context_widget argname ty =
+let rec converterCAMLtoTK context_widget argname ty =
  match ty with
     Int -> "TkToken (string_of_int " ^ argname ^ ")"
  |  Float -> "TkToken (Printf.sprintf \"%g\" " ^ argname ^ ")"
  |  Bool -> "if " ^ argname ^ " then TkToken \"1\" else TkToken \"0\""
  |  Char -> "TkToken (Char.escaped " ^ argname ^ ")"
  |  String -> "TkToken " ^ argname
- |  As (ty, _) -> converterCAMLtoTK ~context_widget argname ty
+ |  As (ty, _) -> converterCAMLtoTK context_widget argname ty
  |  UserDefined s ->
        let name = "cCAMLtoTK" ^ s ^ " " in
        let args = argname in
@@ -622,7 +623,7 @@ let rec converterCAMLtoTK ~context_widget argname ty =
        ("let" :: String.concat ~sep:"," vars :: "=" :: argname ::
         "in TkTokenList [" ::
         String.concat ~sep:"; "
-          (List.map2 vars tyl ~f:(converterCAMLtoTK ~context_widget)) ::
+          (List.map2 vars tyl ~f:(converterCAMLtoTK context_widget)) ::
         ["]"])
  | List ty -> (* Just added for Imagephoto.put *)
      String.concat ~sep:" "
@@ -630,7 +631,7 @@ let rec converterCAMLtoTK ~context_widget argname ty =
            "TkQuote (TkTokenList (List.map (fun y -> "
          else
            "TkQuote (TkTokenList (List.map ~f:(fun y -> ");
-        converterCAMLtoTK ~context_widget "y" ty;
+        converterCAMLtoTK context_widget "y" ty;
         ")";
         argname;
         "))"]
@@ -683,13 +684,13 @@ let code_of_template ~context_widget ?func:(funtemplate=false) template =
          "TkTokenList (List.map (function x -> "
        else
          "TkTokenList (List.map ~f:(function x -> ")
-      ^ converterCAMLtoTK ~context_widget "x" ty
+      ^ converterCAMLtoTK context_widget "x" ty
       ^ ") " ^ !newvar l ^ ")"
   | TypeArg (l, Function tyarg) ->
      "let id = register_callback " ^ context_widget
      ^ " ~callback: " ^ wrapper_code ~name:(!newvar l) tyarg
      ^ " in TkToken (\"camlcb \" ^ id)"
-  | TypeArg (l, ty) -> converterCAMLtoTK ~context_widget (!newvar l) ty
+  | TypeArg (l, ty) -> converterCAMLtoTK context_widget (!newvar l) ty
   | ListArg l ->
       "TkQuote (TkTokenList ["
       ^ String.concat ~sep:";\n    " (List.map ~f:coderec l) ^ "])"
@@ -1040,7 +1041,7 @@ let write_external ~w def =
         try
           let code_list = Ppparse.parse_channel ic in
           close_in ic;
-          List.iter (Ppexec.exec (fun _ -> ()) w)
+          List.iter ~f:(Ppexec.exec (fun _ -> ()) w)
             (if !Flags.camltk then
               Code.Define "CAMLTK" :: code_list else code_list );
         with

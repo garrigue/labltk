@@ -39,7 +39,8 @@ let cTKtoCAMLscrollValue = function
      `Unit (int_of_string n), l
  | "moveto" :: f :: l ->
      `Moveto (float_of_string f), l
- | l -> raise (Invalid_argument (String.concat " " ("TKtoCAMLscrollValue"::l)))
+ | l -> raise (Invalid_argument
+                 (String.concat ~sep:" " ("TKtoCAMLscrollValue"::l)))
 ;;
 
 ##endif

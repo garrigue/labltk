@@ -74,7 +74,7 @@ let store_string_char c =
   incr string_index
 
 let get_stored_string () =
-  let s = Bytes.sub_string (!string_buff) 0 (!string_index) in
+  let s = Bytes.sub_string (!string_buff) ~pos:0 ~len:(!string_index) in
     string_buff := initial_string_buffer;
     s
 (* To translate escape sequences *)

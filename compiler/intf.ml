@@ -175,7 +175,7 @@ let write_external_type ~w def =
           let code_list = Ppparse.parse_channel ic in
           close_in ic;
           if not def.safe then w "(* unsafe *)\n";
-          List.iter (Ppexec.exec (fun _ -> ()) w)
+          List.iter ~f:(Ppexec.exec (fun _ -> ()) w)
             (if !Flags.camltk then
               Code.Define "CAMLTK" :: code_list else code_list );
           if def.safe then w "\n\n"

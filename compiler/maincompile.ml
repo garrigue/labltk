@@ -52,10 +52,10 @@ let parse_file filename =
       let code_list = Ppparse.parse_channel ic in
       close_in ic;
       let buf = Buffer.create 50000 in
-      List.iter (Ppexec.exec
-                   (fun l -> Buffer.add_string buf
-                       (Printf.sprintf "##line %d\n" l))
-                   (Buffer.add_string buf))
+      List.iter ~f:(Ppexec.exec
+                      (fun l -> Buffer.add_string buf
+                          (Printf.sprintf "##line %d\n" l))
+                      (Buffer.add_string buf))
         (if !Flags.camltk then Code.Define "CAMLTK" :: code_list
         else code_list);
       Lexing.from_string (Buffer.contents buf)
@@ -191,14 +191,14 @@ let compile () =
     verbose_string "C2T ";
     write_CAMLtoTK ~w:(output_string oc') typname ~def:typdef;
     verbose_string "T2C ";
-    if List.mem typname !types_returned then
+    if List.mem typname ~set:!types_returned then
     write_TKtoCAML ~w:(output_string oc') typname ~def:typdef;
     verbose_string "CO ";
     if not !Flags.camltk then (* only for LablTk *)
       write_catch_optionals ~w:(output_string oc') typname ~def:typdef;
     verbose_endline "."
   with Not_found ->
-    if not (List.mem_assoc typname !types_external) then
+    if not (List.mem_assoc typname ~map:!types_external) then
     begin
       verbose_string "Type ";
       verbose_string typname;

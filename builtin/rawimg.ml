@@ -32,10 +32,17 @@ let create w h =
 (*
  * operations on pixmaps
  *)
+##ifdef CAMLTK
 let unsafe_copy pix_from pix_to =
   Bytes.unsafe_blit pix_from.pixmap_data 0
                      pix_to.pixmap_data 0
                      (Bytes.length pix_from.pixmap_data)
+##else
+let unsafe_copy pix_from pix_to =
+  Bytes.unsafe_blit ~src:pix_from.pixmap_data ~src_pos:0
+                    ~dst:pix_to.pixmap_data ~dst_pos:0
+                    ~len:(Bytes.length pix_from.pixmap_data)
+##endif
 
 (* We check only the length. w,h might be different... *)
 let copy pix_from pix_to =
@@ -46,6 +53,7 @@ let copy pix_from pix_to =
 
 
 (* Pixel operations *)
+##ifdef CAMLTK
 let unsafe_get_pixel pixmap x y =
   let pos = (y * pixmap.pixmap_width + x) * 3 in
   Bytes.sub_string pixmap.pixmap_data pos 3
@@ -53,6 +61,16 @@ let unsafe_get_pixel pixmap x y =
 let unsafe_set_pixel pixmap x y pixel =
   let pos = (y * pixmap.pixmap_width + x) * 3 in
   Bytes.unsafe_blit (Bytes.unsafe_of_string pixel) 0 pixmap.pixmap_data pos 3
+##else
+let unsafe_get_pixel pixmap x y =
+  let pos = (y * pixmap.pixmap_width + x) * 3 in
+  Bytes.sub_string pixmap.pixmap_data ~pos ~len:3
+
+let unsafe_set_pixel pixmap x y pixel =
+  let pos = (y * pixmap.pixmap_width + x) * 3 in
+  Bytes.unsafe_blit ~src:(Bytes.unsafe_of_string pixel) ~src_pos:0
+                    ~dst:pixmap.pixmap_data ~dst_pos:pos ~len:3
+##endif
 
 (* To get safe operations, we can either check x,y wrt [0,w[ and [0,h[
    or rely on blit checking. We choose the first for clarity.

@@ -8,18 +8,20 @@ let tag_bind widget tag eventsequence action =
     TkToken "bind";
     cCAMLtoTKtextTag tag;
     cCAMLtoTKeventSequence eventsequence;
+    let register f what =
+      register_callback widget ~callback:(wrapeventInfo f what) in
     begin match action with
     | BindRemove -> TkToken ""
     | BindSet (what, f) ->
-        let cbId = register_callback widget (wrapeventInfo f what) in
+        let cbId = register f what in
         TkToken ("camlcb " ^ cbId ^ (writeeventField what))
     | BindSetBreakable (what, f) ->
-        let cbId = register_callback widget (wrapeventInfo f what) in
+        let cbId = register f what in
         TkToken ("camlcb " ^ cbId ^ (writeeventField what) ^
                  " ; if { $BreakBindingsSequence == 1 } then { break ;} ; \
                    set BreakBindingsSequence 0")
     | BindExtend (what, f) ->
-        let cbId = register_callback widget (wrapeventInfo f what) in
+        let cbId = register f what in
         TkToken ("+camlcb " ^ cbId ^ (writeeventField what))
     end
   |]

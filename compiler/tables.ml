@@ -242,7 +242,7 @@ let rec has_callback = function
 
 (*** Returned types ***)
 let really_add ty =
-  if List.mem ty !types_returned then ()
+  if List.mem ty ~set:!types_returned then ()
   else types_returned := ty :: !types_returned
 
 let rec add_return_type = function
@@ -315,7 +315,7 @@ let enter_subtype typ arity subtyp constructors =
     try Hashtbl.find types_table typ
     with Not_found -> new_type typ arity
   in
-    if List.mem_assoc subtyp typdef.subtypes
+    if List.mem_assoc subtyp ~map:typdef.subtypes
     then raise (Duplicate_Definition ("subtype", typ ^" "^subtyp))
     else begin
       let real_constructors =

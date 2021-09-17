@@ -27,7 +27,7 @@ let cTKtoCAMLimage s =
 let names () =
   let res = tkEval [|TkToken "image"; TkToken "names"|] in
   let names = splitlist res in
-  List.map cTKtoCAMLimage names
+  List.map ~f:cTKtoCAMLimage names
 ;;
 
 ##endif
