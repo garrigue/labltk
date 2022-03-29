@@ -35,11 +35,11 @@ calc: calc.cmo
 	$(CAMLC) $(COMPFLAGS) -o calc $(LIBNAME).cma calc.cmo
 
 clock: clock.cmo
-	$(CAMLC) $(COMPFLAGS) -o clock $(LIBNAME).cma unix.cma clock.cmo
+	$(CAMLC) $(COMPFLAGS) -o clock $(LIBNAME).cma -I +unix unix.cma clock.cmo
 
 clock.opt: clock.cmx
 	$(CAMLOPT) $(COMPFLAGS) -o clock.opt \
-	      $(LIBNAME).cmxa unix.cmxa clock.cmx
+	      $(LIBNAME).cmxa -I +unix unix.cmxa clock.cmx
 
 tetris: tetris.cmo
 	$(CAMLC) $(COMPFLAGS) -o tetris $(LIBNAME).cma tetris.cmo

@@ -38,7 +38,7 @@ winskel.exe: winskel.cmo
 		-o $@ winskel.cmo
 
 socketinput.exe: socketinput.cmo
-	$(CAMLC) -custom $(LINKFLAGS) $(TKLINKOPT) unix.cma \
+	$(CAMLC) -custom $(LINKFLAGS) $(TKLINKOPT) -I +unix unix.cma \
 		-o $@ socketinput.cmo
 
 clean :

@@ -51,25 +51,25 @@ winskel.bin: winskel.cmx
 	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ $(WITH_BIN_CAMLTK) winskel.cmx
 
 fileinput.bin: fileinput.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ $(WITH_BIN_CAMLTK) unix.cmxa fileinput.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ $(WITH_BIN_CAMLTK) -I +unix unix.cmxa fileinput.cmx
 
 socketinput.bin: socketinput.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) socketinput.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) socketinput.cmx
 
 eyes.bin: eyes.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) eyes.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) eyes.cmx
 
 taquin.bin: taquin.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) taquin.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) taquin.cmx
 
 tetris.bin: tetris.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) tetris.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) tetris.cmx
 
 mytext.bin: mytext.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) mytext.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) mytext.cmx
 
 fileopen.bin: fileopen.cmx
-	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ unix.cmxa $(WITH_BIN_CAMLTK) fileopen.cmx
+	$(CAMLOPT) $(BIN_COMPFLAGS) -o $@ -I +unix unix.cmxa $(WITH_BIN_CAMLTK) fileopen.cmx
 
 
 addition.byt: addition.cmo
@@ -82,22 +82,22 @@ winskel.byt: winskel.cmo
 	$(CAMLC) $(BYT_COMPFLAGS) -o $@ $(LIBNAME).cma winskel.cmo
 
 fileinput.byt: fileinput.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma fileinput.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma fileinput.cmo
 
 socketinput.byt: socketinput.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma socketinput.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma socketinput.cmo
 
 eyes.byt: eyes.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma eyes.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma eyes.cmo
 
 taquin.byt: taquin.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma taquin.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma taquin.cmo
 
 tetris.byt: tetris.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma tetris.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma tetris.cmo
 
 mytext.byt: mytext.cmo
-	$(CAMLC) $(BYT_COMPFLAGS) -o $@ unix.cma $(LIBNAME).cma mytext.cmo
+	$(CAMLC) $(BYT_COMPFLAGS) -o $@ -I +unix unix.cma $(LIBNAME).cma mytext.cmo
 
 fileopen.byt: fileopen.cmo
 	$(CAMLC) $(BYT_COMPFLAGS) -o $@ $(LIBNAME).cma fileopen.cmo

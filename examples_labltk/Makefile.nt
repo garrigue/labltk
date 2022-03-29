@@ -42,7 +42,7 @@ calc.exe: calc.cmo
 		-o $@ calc.cmo
 
 clock.exe: clock.cmo
-	$(CAMLC) -custom $(LINKFLAGS) $(TKLINKOPT) unix.cma \
+	$(CAMLC) -custom $(LINKFLAGS) $(TKLINKOPT) -I +unix unix.cma \
 		-o $@ clock.cmo
 
 tetris.exe: tetris.cmo

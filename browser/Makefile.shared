@@ -44,7 +44,7 @@ all: ocamlbrowser$(EXE)
 
 ocamlbrowser$(EXE): jglib.cma $(OBJ) ../support/lib$(LIBNAME).$(A) $(XTRAOBJ)
 	$(CAMLC) -o ocamlbrowser$(EXE) $(INCLUDES) \
-		ocamlcommon.cma \
+		ocamlcommon.cma -I +unix -I +str \
 		unix.cma str.cma $(XTRALIBS) $(LIBNAME).cma jglib.cma \
 	        $(OBJ) $(XTRAOBJ)
 
