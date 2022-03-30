@@ -195,7 +195,7 @@ let search_pos_type_decl td ~pos ~env =
 
 let search_pos_extension ext ~pos ~env =
   begin match ext.pext_kind with
-    Pext_decl (l, _) -> search_pos_arguments l ~pos ~env
+    Pext_decl (_, l, _) -> search_pos_arguments l ~pos ~env
   | Pext_rebind _ -> ()
   end
   
@@ -502,16 +502,18 @@ and view_module_id id ~env =
 and view_type_decl path ~env =
   let td = find_type path env in
   try match td.type_manifest with None -> raise Not_found
-    | Some ty -> match (Ctype.repr ty).desc with
+    | Some ty -> match get_desc ty with
         Tobject _ ->
           let clt = find_cltype path env in
           view_signature_item ~path ~env
             [Sig_class_type(ident_of_path path ~default:"ct", clt, Trec_first,
                             Exported);
              dummy_item; dummy_item]
-      | Tvariant ({row_name = Some _} as row) ->
-          let td = {td with type_manifest = Some(
-                    Btype.newgenty (Tvariant {row with row_name = None}))} in
+      | Tvariant row when row_name row <> None ->
+          let Row {fields; more; closed; fixed} = row_repr row in
+          let row = create_row ~fields ~more ~closed ~fixed ~name:None in
+          let td =
+            {td with type_manifest = Some(Btype.newgenty (Tvariant row))} in
           view_signature_item ~path ~env
             [Sig_type(ident_of_path path ~default:"t", td, Trec_first,
                       Exported)]
@@ -697,8 +699,7 @@ let view_type_menu kind ~env ~parent =
       Format.set_formatter_output_functions buf#out ignore;
       Format.set_margin 60;
       Format.open_hbox ();
-      Printtyp.reset ();
-      Printtyp.mark_loops ty;
+      Printtyp.prepare_for_printing [ty];
       Printtyp.wrap_printing_env ~error:false env
         (fun () -> Printtyp.type_expr Format.std_formatter ty);
       Format.close_box (); Format.print_flush ();
@@ -712,11 +713,12 @@ let view_type_menu kind ~env ~parent =
       in
       (* Menu.add_separator menu; *)
       List.iter l ~f:
-        begin fun label -> match (Ctype.repr ty).desc with
+        begin fun label -> match get_desc ty with
           Tconstr (path,_,_) ->
             Menu.add_command menu ~label ~font
               ~command:(fun () -> view_type_decl path ~env)
-        | Tvariant {row_name = Some (path, _)} ->
+        | Tvariant row when row_name row <> None ->
+            let path, _ = Stdlib.Option.get (row_name row) in
             Menu.add_command menu ~label ~font
               ~command:(fun () -> view_type_decl path ~env)
         | _ ->
@@ -864,7 +866,7 @@ and search_pos_expr ~pos exp =
       search_pos_expr a ~pos; search_pos_expr b ~pos
   | Texp_for (_, _, a, b, _, c) ->
       List.iter [a;b;c] ~f:(search_pos_expr ~pos)
-  | Texp_send (exp, _, _) -> search_pos_expr exp ~pos
+  | Texp_send (exp, _) -> search_pos_expr exp ~pos
   | Texp_new (path, _, _) ->
       add_found_str (`Exp(`New path, exp.exp_type))
         ~env:exp.exp_env ~loc:exp.exp_loc

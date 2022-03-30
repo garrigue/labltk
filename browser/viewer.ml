@@ -65,13 +65,13 @@ let view_symbol ~kind ~env ?path id =
         [Sig_value (Ident.create_local name, vd, Exported)]
   | Ptype -> view_type_id id ~env
   | Plabel -> let ld = find_label_by_name id env in
-      begin match ld.lbl_res.desc with
+      begin match get_desc ld.lbl_res with
         Tconstr (path, _, _) -> view_type_decl path ~env
       | _ -> ()
       end
   | Pconstructor ->
       let cd = find_constructor_by_name id env in
-      begin match cd.cstr_tag, cd.cstr_res.desc with
+      begin match cd.cstr_tag, get_desc cd.cstr_res with
 	Cstr_extension _, Tconstr (cpath, args, _) ->
           view_signature ~title:(string_of_longident id) ~env ?path
             [Sig_typext (Ident.create_local name,

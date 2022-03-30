@@ -116,7 +116,7 @@ let f txt =
     List.iter psl ~f:
     begin function
       Ptop_def pstr ->
-        let str, sign, _names, env' = Typemod.type_structure !env pstr in
+        let str, sign, _names, _, env' = Typemod.type_structure !env pstr in
         txt.structure <- txt.structure @ str.str_items;
         txt.signature <- txt.signature @ sign;
         env := env'

@@ -95,27 +95,25 @@ let rec arr p ~card:n =
   if p = 0 then 1 else n * arr (p-1) ~card:(n-1)
 
 let rec all_args ty =
-  let ty = repr ty in
-  match ty.desc with
+  match get_desc ty with
     Tarrow(l, ty1, ty2, _) -> let (tl,ty) = all_args ty2 in ((l,ty1)::tl, ty)
   | _ -> ([], ty)
 
 let rec equal ~prefix t1 t2 =
-  match (repr t1).desc, (repr t2).desc with
+  match get_desc t1, get_desc t2 with
     Tvar _, Tvar _ -> true
   | Tvariant row1, Tvariant row2 ->
-      let row1 = row_repr row1 and row2 = row_repr row2 in
-      let fields1 = filter_row_fields false row1.row_fields
-      and fields2 = filter_row_fields false row1.row_fields
+      let fields1 = filter_row_fields false (row_fields row1)
+      and fields2 = filter_row_fields false (row_fields row1)
       in
       let r1, r2, pairs = merge_row_fields fields1 fields2 in
-      row1.row_closed = row2.row_closed && r1 = [] && r2 = [] &&
+      row_closed row1 = row_closed row2 && r1 = [] && r2 = [] &&
       List.for_all pairs ~f:
            begin fun (_,f1,f2) ->
              match row_field_repr f1, row_field_repr f2 with
                Rpresent None, Rpresent None -> true
              | Rpresent(Some t1), Rpresent (Some t2) -> equal t1 t2 ~prefix
-             | Reither(c1, tl1, _, _), Reither(c2, tl2, _, _) ->
+             | Reither(c1, tl1, _), Reither(c2, tl2, _) ->
                  c1 = c2 && List.length tl1 = List.length tl2 &&
                  List.for_all2 tl1 tl2 ~f:(equal ~prefix)
              | _ -> false
@@ -143,12 +141,11 @@ let rec equal ~prefix t1 t2 =
 let get_options = List.filter ~f:Btype.is_optional
 
 let rec included ~prefix t1 t2 =
-  match (repr t1).desc, (repr t2).desc with
+  match get_desc t1, get_desc t2 with
     Tvar _, _ -> true
   | Tvariant row1, Tvariant row2 ->
-      let row1 = row_repr row1 and row2 = row_repr row2 in
-      let fields1 = filter_row_fields false row1.row_fields
-      and fields2 = filter_row_fields false row2.row_fields
+      let fields1 = filter_row_fields false (row_fields row1)
+      and fields2 = filter_row_fields false (row_fields row2)
       in
       let r1, r2, pairs = merge_row_fields fields1 fields2 in
       r1 = [] &&
@@ -157,7 +154,7 @@ let rec included ~prefix t1 t2 =
              match row_field_repr f1, row_field_repr f2 with
                Rpresent None, Rpresent None -> true
              | Rpresent(Some t1), Rpresent (Some t2) -> included t1 t2 ~prefix
-             | Reither(c1, tl1, _, _), Reither(c2, tl2, _, _) ->
+             | Reither(c1, tl1, _), Reither(c2, tl2, _) ->
                  c1 = c2 && List.length tl1 = List.length tl2 &&
                  List.for_all2 tl1 tl2 ~f:(included ~prefix)
              | _ -> false
@@ -207,7 +204,7 @@ let mkpath = function
 let get_fields ~prefix ~sign self =
   (*let env = open_signature Fresh (mkpath prefix) sign !start_env in*)
   let env = add_signature sign !start_env in
-  match (expand_head env self).desc with
+  match get_desc (expand_head env self) with
     Tobject (ty_obj, _) ->
       let l,_ = flatten_fields ty_obj in l
   | _ -> []
@@ -270,12 +267,12 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
   end
 
 let search_all_types t ~mode =
-  let tl = match mode, t.desc with
+  let tl = match mode, get_desc t with
       `Exact, _ -> [t]
     | `Included, Tarrow _ -> [t]
     | `Included, _ ->
-      [t; newty(Tarrow(Nolabel,t,newvar(),Cok));
-          newty(Tarrow(Nolabel,newvar(),t,Cok))]
+      [t; newty(Tarrow(Nolabel,t,newvar(),commu_ok));
+          newty(Tarrow(Nolabel,newvar(),t,commu_ok))]
   in List2.flat_map !module_list ~f:
     begin fun modname ->
     let mlid = Lident modname in
