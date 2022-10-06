@@ -45,7 +45,7 @@ let dump_handle (h : Unix.file_descr) =
   let obj = Obj.repr h in
   if Obj.is_int obj || Obj.tag obj <> Obj.custom_tag then
     invalid_arg "Shell.dump_handle";
-  Nativeint.format "%x" (Obj.obj obj)
+  Printf.sprintf "%nx" (Obj.obj obj)
 
 (* The shell class. Now encapsulated *)
 

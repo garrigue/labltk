@@ -83,8 +83,6 @@ let _ =
       "<command>  Pipe sources through preprocessor <command>";
       "-rectypes", Arg.Set Clflags.recursive_types,
       " Allow arbitrary recursive types";
-      "-safe-string", Arg.Clear Clflags.unsafe_string,
-      " Make strings immutable";
       "-short-paths", Arg.Clear Clflags.real_paths, " Shorten paths in types";
       "-version", Arg.Unit print_version,
         " Print version and exit";
@@ -96,7 +94,7 @@ let _ =
   Arg.parse spec
     (fun name -> raise(Arg.Bad("don't know what to do with " ^ name)))
     errmsg;
-  Load_path.init
+  Load_path.init ~auto_include:Load_path.no_auto_include
     (Sys.getcwd ()
      :: List.rev_map ~f:(Misc.expand_directory Config.standard_library) !path
      @ [Config.standard_library]);

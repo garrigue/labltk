@@ -1,3 +1,8 @@
+2022-10-06:
+-----------
+* Release labltk-8.06.13 and for OCaml 5.0
+* Update OCamlBrowser
+
 2022-03-30:
 -----------
 * Release labltk-8.06.12 for OCaml 4.14

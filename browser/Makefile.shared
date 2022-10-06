@@ -14,7 +14,7 @@ include ../support/Makefile.common
 #                                                                       #
 #########################################################################
 
-LABLTKLIB=-I ../labltk -I ../lib -I ../support -I +compiler-libs
+LABLTKLIB=-I ../labltk -I ../lib -I ../support -I +compiler-libs -I +str -I +unix
 INCLUDES=$(LABLTKLIB)
 
 OBJ =	list2.cmo	useunix.cmo	setpath.cmo	lexical.cmo	\

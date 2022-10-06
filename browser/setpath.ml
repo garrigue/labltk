@@ -31,7 +31,7 @@ let exec_update_hooks () =
       end
 
 let set_load_path l =
-  Load_path.init l;
+  Load_path.init l ~auto_include:Load_path.no_auto_include;
   exec_update_hooks ();
   Env.reset_cache ()
 
