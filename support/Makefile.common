@@ -35,3 +35,6 @@ LINKFLAGS=
 CAMLOPTLIBR=$(CAMLOPT) -a
 MKLIB=$(BINDIR)/ocamlmklib
 CAMLRUNGEN=$(BINDIR)/ocamlrun
+ifeq (x$(RANLIB),x)
+RANLIB=":"
+endif

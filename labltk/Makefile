@@ -16,7 +16,7 @@
 
 include ../support/Makefile.common
 
-COMPFLAGS= -I ../support -no-alias-deps
+COMPFLAGS= -I ../support -no-alias-deps -I +unix
 
 all: labltkobjs
 

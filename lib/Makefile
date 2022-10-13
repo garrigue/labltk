@@ -67,9 +67,8 @@ $(LIBNAME).cmxa: $(SUPPORT:.cmo=.cmx) ../Widgets.src
 $(LIBNAME)top$(EXE) : $(LIBNAME).cma ../support/lib$(LIBNAME).$(A)
 	$(CAMLC) -verbose -linkall -o $(LIBNAME)top$(EXE) -I ../support \
 	       $(TOPLEVELLIBS) \
-	       -I +compiler-libs unix.cma \
+	       -I +compiler-libs -I +unix -I +str unix.cma str.cma \
 	       -I ../labltk -I ../camltk $(LIBNAME).cma \
-	       str.cma \
 	       $(TOPLEVELSTART)
 
 $(LIBNAME): Makefile

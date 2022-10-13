@@ -30,7 +30,7 @@ COBJS=cltkCaml.$(O) cltkUtf.$(O) cltkEval.$(O) cltkEvent.$(O) \
 
 CCFLAGS=-I$(LIBDIR)/caml $(TK_DEFS) $(SHAREDCCCOMPOPTS)
 
-COMPFLAGS=
+COMPFLAGS=-I +unix
 THFLAGS=-I +threads -I vmthreads
 TKLDOPTS=$(TK_LINK:%=-ldopt "%")
 

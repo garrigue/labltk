@@ -17,8 +17,9 @@
 include ../support/Makefile.common
 
 # We are using the non-installed library !
-BYT_COMPFLAGS=-I ../lib -I ../camltk -I ../support -w s -dllpath ../support
-BIN_COMPFLAGS=-I ../lib -I ../camltk -I ../support -w s
+BYT_COMPFLAGS=-I ../lib -I ../camltk -I ../support -w s -dllpath ../support \
+	  -I +unix
+BIN_COMPFLAGS=-I ../lib -I ../camltk -I ../support -w s -I +unix
 
 WITH_BYT_CAMLTK=labltk.cma camltk.cmo
 WITH_BIN_CAMLTK=labltk.cmxa camltk.cmx

@@ -16,7 +16,7 @@
 
 include ../support/Makefile.common
 
-COMPFLAGS=-I ../labltk -I ../support
+COMPFLAGS=-I ../labltk -I ../support -I +str -I +unix
 
 OBJS= fileselect.cmo balloon.cmo shell.cmo jpf_font.cmo
 
