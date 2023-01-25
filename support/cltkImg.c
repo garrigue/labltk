@@ -111,9 +111,7 @@ ph,&pib,Int_val(x),Int_val(y),Int_val(w),Int_val(h)
   return Val_int(0);
 }
 
-CAMLprim value camltk_setimgdata_bytecode(argv,argn)
-     value *argv;
-     int argn;
+CAMLprim value camltk_setimgdata_bytecode(value *argv, int argn)
 {
   return camltk_setimgdata_native(argv[0], argv[1], argv[2], argv[3],
                                   argv[4], argv[5]);
