@@ -18,3 +18,6 @@ include Makefile.shared
 
 dummy.ml:
 	cp dummyUnix.ml dummy.ml
+
+shell.cmo : dummy.cmo
+shell.cmx : dummy.cmx
