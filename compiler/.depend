@@ -7,9 +7,9 @@ intf.cmx: code.cmi compile.cmx flags.cmx ppexec.cmx ppparse.cmx tables.cmx
 lexer.cmo: parser.cmi
 lexer.cmx: parser.cmx
 maincompile.cmo: code.cmi compile.cmo flags.cmo intf.cmo lexer.cmo parser.cmi \
-    ppexec.cmo ppparse.cmo printer.cmo tables.cmo tsort.cmo
+    ppexec.cmo ppparse.cmo printer.cmo tables.cmo tsort.cmo copyright.cmo
 maincompile.cmx: code.cmi compile.cmx flags.cmx intf.cmx lexer.cmx parser.cmx \
-    ppexec.cmx ppparse.cmx printer.cmx tables.cmx tsort.cmx
+    ppexec.cmx ppparse.cmx printer.cmx tables.cmx tsort.cmx copyright.cmx
 parser.cmo: flags.cmo tables.cmo parser.cmi
 parser.cmx: flags.cmx tables.cmx parser.cmi
 pp.cmo: ppexec.cmo ppparse.cmo

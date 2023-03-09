@@ -117,10 +117,12 @@ setpath.cmx : useunix.cmx ../labltk/tk.cmx ../support/textvariable.cmx \
 shell.cmo : ../labltk/winfo.cmi ../labltk/toplevel.cmi ../labltk/tk.cmo \
     ../support/timer.cmi ../labltk/text.cmi ../labltk/menu.cmi list2.cmo \
     lexical.cmi jg_toplevel.cmo jg_tk.cmo jg_text.cmi jg_message.cmi \
+    dummy.cmo \
     jg_menu.cmo jg_memo.cmi fileselect.cmi ../support/fileevent.cmi shell.cmi
 shell.cmx : ../labltk/winfo.cmx ../labltk/toplevel.cmx ../labltk/tk.cmx \
     ../support/timer.cmx ../labltk/text.cmx ../labltk/menu.cmx list2.cmx \
     lexical.cmx jg_toplevel.cmx jg_tk.cmx jg_text.cmx jg_message.cmx \
+    dummy.cmx \
     jg_menu.cmx jg_memo.cmx fileselect.cmx ../support/fileevent.cmx shell.cmi
 typecheck.cmo : ../labltk/tk.cmo ../labltk/text.cmi mytypes.cmi jg_tk.cmo \
     jg_text.cmi jg_message.cmi typecheck.cmi

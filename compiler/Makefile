@@ -73,6 +73,9 @@ install:
 .ml.cmo:
 	$(CAMLCOMP) $(COMPFLAGS) -I ../support $<
 
+maincompile.cmo: copyright.cmo
+maincompile.cmx: copyright.cmx
+
 depend: parser.ml parser.mli lexer.ml pplex.ml ppyac.ml ppyac.mli
 	$(CAMLDEP) *.mli *.ml > .depend
 
