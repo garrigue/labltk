@@ -18,7 +18,9 @@
 #include <tcl.h>
 #include <tk.h>
 
-main ()
+int
+main (void)
 {
     puts(TCL_VERSION);
+    return 0;
 }
