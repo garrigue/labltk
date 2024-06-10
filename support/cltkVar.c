@@ -75,7 +75,7 @@ typedef char *(Tcl_VarTraceProc) _ANSI_ARGS_((ClientData clientData,
         Tcl_Interp *interp, char *part1, char *part2, int flags));
  */
 static char * tracevar(ClientData clientdata, Tcl_Interp *interp,
-                char *name1, char *name2, int flags)
+                const char *name1, const char *name2, int flags)
      /* interp -> Interpreter containing variable. */
      /* name1  -> Name of variable. */
      /* name2  -> Second part of variable name. */

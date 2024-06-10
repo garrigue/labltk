@@ -71,7 +71,7 @@ CAMLprim value camltk_opentk(value argv)
 {
   CAMLparam1(argv);
   CAMLlocal1(tmp);
-  char *argv0;
+  const char *argv0;
 
   /* argv must contain argv[0], the application command name */
   tmp = Val_unit;
@@ -110,7 +110,7 @@ CAMLprim value camltk_opentk(value argv)
       if( argc != 0 ){
         int i;
         char *args;
-        char **tkargv;
+        const char **tkargv;
         char argcstr[256]; /* string of argc */
 
         tkargv = (char**)caml_stat_alloc(sizeof( char* ) * argc );

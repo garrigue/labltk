@@ -24,8 +24,8 @@
 #include <fail.h>
 #include "camltk.h"
 
-value * tkerror_exn = NULL;
-value * handler_code = NULL;
+const value * tkerror_exn = NULL;
+const value * handler_code = NULL;
 
 /* The Tcl command for evaluating callback in OCaml */
 int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
@@ -58,7 +58,7 @@ CAMLprim value camltk_return (value v)
 {
   CheckInit();
 
-  Tcl_SetResult(cltclinterp, String_val(v), TCL_VOLATILE);
+  Tcl_SetResult(cltclinterp, (char*)String_val(v), TCL_VOLATILE);
   return Val_unit;
 }
 

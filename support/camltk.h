@@ -49,8 +49,8 @@ extern value copy_string_list(int argc, char **argv);
 
 /* cltkCaml.c */
 /* pointers to OCaml values */
-extern value *tkerror_exn;
-extern value *handler_code;
+extern const value *tkerror_exn;
+extern const value *handler_code;
 extern int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
                      int argc, CONST84 char *argv[]);
 CAMLTKextern void tk_error(const char * errmsg) Noreturn;
