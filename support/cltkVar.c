@@ -74,12 +74,12 @@ CAMLprim value camltk_setvar(value var, value contents)
 typedef char *(Tcl_VarTraceProc) _ANSI_ARGS_((ClientData clientData,
         Tcl_Interp *interp, char *part1, char *part2, int flags));
  */
-static char * tracevar(clientdata, interp, name1, name2, flags)
-     ClientData clientdata;
-     Tcl_Interp *interp;        /* Interpreter containing variable. */
-     char *name1;               /* Name of variable. */
-     char *name2;               /* Second part of variable name. */
-     int flags;                 /* Information about what happened. */
+static char * tracevar(ClientData clientdata, Tcl_Interp *interp,
+                char *name1, char *name2, int flags)
+     /* interp -> Interpreter containing variable. */
+     /* name1  -> Name of variable. */
+     /* name2  -> Second part of variable name. */
+     /* flags  -> Information about what happened. */
 {
   Tcl_UntraceVar2(interp, name1, name2,
                 TCL_GLOBAL_ONLY|TCL_TRACE_WRITES|TCL_TRACE_UNSETS,
