@@ -1,0 +1,30 @@
+This library (files in all subdirectories) is made available under the
+GNU Library General Public License (LGPL). You should have got a
+copy of the LGPL with the current package (see file LGPL).
+
+As a special exception to the GNU Library General Public License, you
+may link, statically or dynamically, a "work that uses the Library"
+with a publicly distributed version of the Library to produce an
+executable file containing portions of the Library, and distribute
+that executable file under terms of your choice, without any of the
+additional requirements listed in clause 6 of the GNU Library General
+Public License.  By "a publicly distributed version of the Library",
+we mean either the unmodified Library as distributed by the authors, or
+a modified version of the Library that is distributed under the
+conditions defined in clause 3 of the GNU Library General Public
+License.  This exception does not however invalidate any other reasons
+why the executable file might be covered by the GNU Library General
+Public License.
+
+For the examples directories, the code is in the public domain.
+You may freely copy parts of it in your application.
+
+The authors may choose to remove any of the above restrictions on a
+per request basis.
+
+Authors:
+        Francois Rouaix
+        Francois Pessaux
+        Pierre Weis
+        Jun Furuse
+        Jacques Garrigue <garrigue@math.nagoya-u.ac.jp>
