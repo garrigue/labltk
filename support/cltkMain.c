@@ -89,7 +89,7 @@ CAMLprim value camltk_opentk(value argv)
     cltclinterp = Tcl_CreateInterp();
     {
       /* Register cltclinterp for use in other related extensions */
-      value *interp = caml_named_value("cltclinterp");
+      const value *interp = caml_named_value("cltclinterp");
       if (interp != NULL)
         Store_field(*interp,0,caml_copy_nativeint((intnat)cltclinterp));
     }
@@ -113,7 +113,7 @@ CAMLprim value camltk_opentk(value argv)
         const char **tkargv;
         char argcstr[256]; /* string of argc */
 
-        tkargv = (char**)caml_stat_alloc(sizeof( char* ) * argc );
+        tkargv = (const char**)caml_stat_alloc(sizeof( char* ) * argc );
         tmp = Field(argv, 1); /* starts from argv[1] */
         i = 0;
 
