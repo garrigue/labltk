@@ -94,7 +94,7 @@ let _ =
   Arg.parse spec
     (fun name -> raise(Arg.Bad("don't know what to do with " ^ name)))
     errmsg;
-  Load_path.init ~auto_include:Load_path.no_auto_include
+  Load_path.init ~auto_include:Load_path.no_auto_include ~hidden:[] ~visible:
     (Sys.getcwd ()
      :: List.rev_map ~f:(Misc.expand_directory Config.standard_library) !path
      @ [Config.standard_library]);

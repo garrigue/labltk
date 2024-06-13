@@ -27,7 +27,7 @@ open Searchid
 
 (* Managing the module list *)
 
-let list_modules ?(path=Load_path.get_paths ()) () =
+let list_modules ?(path=Load_path.get_path_list ()) () =
   List.fold_left path ~init:[] ~f:
   begin fun modules dir ->
     let l =

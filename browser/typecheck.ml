@@ -84,6 +84,12 @@ let parse_pp ~parse ~wrap ~ext text =
       Sys.remove tmpfile;
       ast
 
+let update_type_info txt =
+  let open Cmt2annot_raw in
+  let iter = iterator true ~scope:(Location.in_file txt.name) in
+  List.iter ~f:(binary_part iter) (Cmt_format.get_saved_types ());
+  txt.type_info <- Stypes.get_info ()
+
 let nowarnings = ref false
 
 let f txt =
@@ -122,10 +128,7 @@ let f txt =
         env := env'
     | Ptop_dir _ -> ()
     end;
-    let open Cmt2annot in
-    let iter = iterator true ~scope:(Location.in_file txt.name) in
-    List.iter ~f:(binary_part iter) (Cmt_format.get_saved_types ());
-    txt.type_info <- Stypes.get_info ();
+    update_type_info txt
 
   with
     Lexer.Error _ | Syntaxerr.Error _
@@ -134,7 +137,7 @@ let f txt =
   | Typetexp.Error _ | Includemod.Error _
   | Persistent_env.Error _ | Env.Error _
   | Ctype.Tags _ | Failure _ as exn ->
-      txt.type_info <- Stypes.get_info ();
+      update_type_info txt;
       let et, ew, end_message = Jg_message.formatted ~title:"Error !" () in
       error_messages := et :: !error_messages;
       let range = match exn with

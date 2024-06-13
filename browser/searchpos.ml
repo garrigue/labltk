@@ -67,24 +67,28 @@ let rec string_of_longident = function
 
 let string_of_path p = string_of_longident (Searchid.longident_of_path p)
 
-let parent_path = function
+let rec parent_path = function
     Pdot (path, _) -> Some path
   | Pident _ | Papply _ -> None
+  | Pextra_ty (path, Pcstr_ty _) -> Some path
+  | Pextra_ty (path, Pext_ty) -> parent_path path
 
-let ident_of_path ~default = function
+let rec ident_of_path ~default = function
     Pident i -> i
-  | Pdot (_, s) -> Ident.create_local s
+  | Pdot (_, s) | Pextra_ty (_, Pcstr_ty s) -> Ident.create_local s
   | Papply _ -> Ident.create_local default
+  | Pextra_ty (path, Pext_ty) -> ident_of_path ~default path
 
 let rec head_id = function
     Pident id -> id
-  | Pdot (path,_) -> head_id path
+  | Pdot (path,_) | Pextra_ty (path,_) -> head_id path
   | Papply (path,_) -> head_id path (* wrong, but ... *)
 
 let rec list_of_path = function
     Pident id -> [Ident.name id]
-  | Pdot (path, s) -> list_of_path path @ [s]
+  | Pdot (path, s) | Pextra_ty (path, Pcstr_ty s) -> list_of_path path @ [s]
   | Papply (path, _) -> list_of_path path (* wrong, but ... *)
+  | Pextra_ty (path, Pext_ty) -> list_of_path path
 
 (* a simple wrapper *)
 
@@ -131,6 +135,8 @@ let rec search_pos_type t ~pos ~env =
   | Ptyp_poly (_, t) -> search_pos_type ~pos ~env t
   | Ptyp_package (_, stl) ->
      List.iter stl ~f:(fun (_, ty) -> search_pos_type ty ~pos ~env)
+  | Ptyp_open (_, ct) ->
+      search_pos_type ct ~pos ~env
   | Ptyp_extension _ -> ()
   end
 
@@ -414,9 +420,7 @@ let rec view_signature ?title ?path ?(env = !start_env) ?(detach=false) sign =
                 | None -> name
                 | Some suff -> suff
               in
-              let file =
-                Misc.find_in_path_uncap (Load_path.get_paths ())
-                  (name ^ ext) in
+              let file = Load_path.find_normalized (name ^ ext) in
               Button.configure button
                 ~command:(fun () -> edit_source ~file ~path ~sign);
               if !repack then Pack.forget [button] else
@@ -815,6 +819,15 @@ and search_case : 'a. pos:_ -> 'a case -> unit =
   end;
   search_pos_expr c_rhs ~pos
 
+and search_pos_fun_param ~pos ~env fp =
+  if in_loc fp.fp_loc ~pos then begin
+    match fp.fp_kind with
+    | Tparam_pat pat -> search_pos_pat pat ~pos ~env
+    | Tparam_optional_default (pat, exp) ->
+        search_pos_pat pat ~pos ~env;
+        search_pos_expr ~pos exp
+  end
+
 and search_pos_expr ~pos exp =
   if in_loc exp.exp_loc ~pos then begin
   begin match exp.exp_desc with
@@ -831,8 +844,18 @@ and search_pos_expr ~pos exp =
         search_pos_expr exp' ~pos
       end;
       search_pos_expr exp ~pos
-  | Texp_function {cases=l; _} ->
-      List.iter l ~f:(search_case ~pos)
+  | Texp_function (fpl, fb) ->
+      let env =
+        match fb with
+        | Tfunction_body e -> e.exp_env
+        | Tfunction_cases {cases = c :: _} -> c.c_rhs.exp_env
+        | Tfunction_cases {cases = []} -> exp.exp_env
+      in
+      List.iter ~f:(search_pos_fun_param ~pos ~env) fpl;
+      begin match fb with
+      | Tfunction_body e -> search_pos_expr e ~pos
+      | Tfunction_cases {cases=l} -> List.iter l ~f:(search_case ~pos)
+      end
   | Texp_apply (exp, l) ->
       List.iter l
         ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x);
@@ -882,7 +905,7 @@ and search_pos_expr ~pos exp =
   | Texp_letmodule (id, _, _, modexp, exp) ->
       search_pos_module_expr modexp ~pos;
       search_pos_expr exp ~pos
-  | Texp_assert exp ->
+  | Texp_assert (exp, _) ->
       search_pos_expr exp ~pos
   | Texp_lazy exp ->
       search_pos_expr exp ~pos
@@ -909,10 +932,10 @@ and search_pos_pat : type a. pos:_ -> env:_ -> a general_pattern -> unit =
   if in_loc pat.pat_loc ~pos then begin
   begin match pat.pat_desc with
     Tpat_any -> ()
-  | Tpat_var (id, _) ->
+  | Tpat_var (id, _, _) ->
       add_found_str (`Exp(`Val (Pident id), pat.pat_type))
         ~env ~loc:pat.pat_loc
-  | Tpat_alias (pat, _, _)
+  | Tpat_alias (pat, _, _, _)
   | Tpat_lazy pat
   | Tpat_exception pat -> search_pos_pat pat ~pos ~env
   | Tpat_value pat -> search_pos_pat (pat :> pattern) ~pos ~env
@@ -948,6 +971,7 @@ and search_pos_module_expr ~pos (m :module_expr) =
         search_pos_module_expr a ~pos; search_pos_module_expr b ~pos
     | Tmod_constraint (m, _, _, _) -> search_pos_module_expr m ~pos
     | Tmod_unpack (e, _) -> search_pos_expr e ~pos
+    | Tmod_apply_unit m -> search_pos_module_expr m ~pos
     end;
     add_found_str (`Module (Pident (Ident.create_local "M"), m.mod_type))
       ~env:m.mod_env ~loc:m.mod_loc

@@ -83,7 +83,7 @@ let ls ~dir ~pattern =
 (********************************************* Creation *)
 let load_in_path = ref false
 
-let search_in_path ~name = Misc.find_in_path (Load_path.get_paths ()) name
+let search_in_path ~name = Misc.find_in_path (Load_path.get_path_list ()) name
 
 let f ~title ~action:proc ?(dir = Unix.getcwd ())
     ?filter:(deffilter ="*") ?file:(deffile ="")
@@ -129,7 +129,7 @@ let f ~title ~action:proc ?(dir = Unix.getcwd ())
           (get_files_in_directory dir) in
     let matched_files = (* get matched file by subshell call. *)
       if !load_in_path && usepath then
-      List.fold_left (Load_path.get_paths ()) ~init:[] ~f:
+      List.fold_left (Load_path.get_path_list ()) ~init:[] ~f:
       begin fun acc dir ->
         let files = ls ~dir ~pattern in
         List.merge ~cmp:compare files

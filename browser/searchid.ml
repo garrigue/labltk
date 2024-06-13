@@ -53,6 +53,8 @@ let rec longident_of_path = function
     Pident id -> Lident (Ident.name id)
   | Pdot (path, s) -> Ldot (longident_of_path path, s)
   | Papply (p1, p2) -> Lapply (longident_of_path p1, longident_of_path p2)
+  | Pextra_ty (p, Pext_ty) -> longident_of_path p
+  | Pextra_ty (p, Pcstr_ty s) -> Ldot (longident_of_path p, s)
 
 let rec remove_prefix lid ~prefix =
   let rec remove_hd lid ~name =
@@ -230,7 +232,7 @@ let rec search_type_in_signature t ~sign ~prefix ~mode =
           | Some t -> matches t
           end ||
           begin match td.type_kind with
-            Type_abstract
+            Type_abstract _
 	  | Type_open -> false
           | Type_variant (l, _) ->
             List.exists l ~f:
