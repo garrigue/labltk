@@ -1,3 +1,13 @@
+*~
+*.a
+*.cma
+*.cmi
+*.cmo
+*.cmx
+*.cmxa
+*.o
+*.so
+
 labltklink
 labltkopt
 Makefile.config
