@@ -33,10 +33,10 @@
    from inside the callback
 */
 
-static void             WaitVisibilityProc _ANSI_ARGS_((ClientData clientData,
-                            XEvent *eventPtr));
-static void             WaitWindowProc _ANSI_ARGS_((ClientData clientData,
-                            XEvent *eventPtr));
+static void             WaitVisibilityProc (ClientData clientData,
+                            XEvent *eventPtr);
+static void             WaitWindowProc (ClientData clientData,
+                            XEvent *eventPtr);
 
 /* For the other handlers, we need a bit more data */
 struct WinCBData {
