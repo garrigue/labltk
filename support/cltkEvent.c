@@ -31,7 +31,7 @@ CAMLprim value camltk_tk_mainloop(value unit)
   if (!signal_events) {
     /* Initialise signal handling */
     signal_events = 1;
-    Tk_CreateTimerHandler(100, invoke_pending_caml_signals, NULL);
+    Tcl_CreateTimerHandler(100, invoke_pending_caml_signals, NULL);
   }
   Tk_MainLoop();
   return Val_unit;
@@ -39,8 +39,8 @@ CAMLprim value camltk_tk_mainloop(value unit)
 
 /* Note: this HAS to be reported "as-is" in ML source */
 static int event_flag_table[] = {
-  TK_DONT_WAIT, TK_X_EVENTS, TK_FILE_EVENTS, TK_TIMER_EVENTS, TK_IDLE_EVENTS,
-  TK_ALL_EVENTS
+  TCL_DONT_WAIT, /*TCL_X_EVENTS,*/ TCL_FILE_EVENTS, TCL_TIMER_EVENTS,
+  TCL_IDLE_EVENTS, TCL_ALL_EVENTS
 };
 
 CAMLprim value camltk_dooneevent(value flags)
@@ -49,6 +49,6 @@ CAMLprim value camltk_dooneevent(value flags)
 
   CheckInit();
 
-  ret = Tk_DoOneEvent(caml_convert_flag_list(flags, event_flag_table));
+  ret = Tcl_DoOneEvent(caml_convert_flag_list(flags, event_flag_table));
   return Val_int(ret);
 }

@@ -53,7 +53,7 @@ void invoke_pending_caml_signals (ClientData clientdata)
   signal_events = 0;
   caml_enter_blocking_section(); /* triggers signal handling */
   /* Rearm timer */
-  Tk_CreateTimerHandler(SIGNAL_INTERVAL, invoke_pending_caml_signals, NULL);
+  Tcl_CreateTimerHandler(SIGNAL_INTERVAL, invoke_pending_caml_signals, NULL);
   signal_events = 1;
   caml_leave_blocking_section();
 }
