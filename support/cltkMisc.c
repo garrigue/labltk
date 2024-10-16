@@ -26,7 +26,11 @@
 /* Parsing results */
 CAMLprim value camltk_splitlist (value v)
 {
+#ifdef TCL_SIZE_MAX
+  Tcl_Size argc;
+#else
   int argc;
+#endif
   char **argv;
   int result;
   char *utf;
