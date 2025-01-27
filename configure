@@ -17,8 +17,8 @@ configure_options="$*"
 where=''
 installbindir=''
 installdir=''
-tk_defs=''
-tk_libs=''
+tk_defs=${LABLTK_DEFS}
+tk_libs=${LABLTK_LIBS}
 tk_x11=no
 use_findlib=no
 verbose=no
@@ -319,6 +319,7 @@ inf "        use tcl/tk version ....... $tcl_version"
 inf "        options for compiling .... $tk_defs $tk_x11_include"
 inf "        options for linking ...... $tk_libs $tk_x11_libs"
 inf "        use native compilers ..... $optcomps"
+inf "        use ocamlfind ............ $use_findlib"
 else
 inf "The \"labltk\" library: not supported"
 fi

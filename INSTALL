@@ -49,6 +49,9 @@ The "configure" script accepts the following options:
          ./configure -tklibs "-L/usr/local/lib -ltk8.0jp -ltcl8.0jp"
           -tkdefs "-I/usr/local/include/tcl8.0jp -I/usr/local/include/tk8.0jp"
 
+        These options can also be set through the environment variables
+        LABLTK_DEFS and LABLTK_LIBS.
+
 -tk-no-x11
         Build LablTk without explicitly linking to X11.
         This is now the default.
