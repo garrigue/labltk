@@ -184,6 +184,8 @@ if test $has_tk = true; then
     "-I/usr/pkg/include" \
     "-I/usr/include" \
     "-I/usr/X11/include" \
+    "-I/usr/local/include/tcl9.0 -I/usr/local/include/tk9.0" \
+    "-I/usr/include/tcl9.0 -I/usr/include/tk9.0" \
     "-I/usr/local/include/tcl8.6 -I/usr/local/include/tk8.6" \
     "-I/usr/include/tcl8.6 -I/usr/include/tk8.6" \
     "-I/usr/local/include/tcl8.5 -I/usr/local/include/tk8.5" \
@@ -201,6 +203,7 @@ if test $has_tk = true; then
   if test -n "$tcl_version" && test "x$tcl_version" != "xnone"; then
     inf "tcl.h and tk.h version $tcl_version found with \"$tk_defs\"."
     case $tcl_version in
+    9.0) tclmaj=9 tclmin=0 tkmaj=9 tkmin=0 ;;
     8.6) tclmaj=8 tclmin=6 tkmaj=8 tkmin=6 ;;
     8.5) tclmaj=8 tclmin=5 tkmaj=8 tkmin=5 ;;
     8.4) tclmaj=8 tclmin=4 tkmaj=8 tkmin=4 ;;

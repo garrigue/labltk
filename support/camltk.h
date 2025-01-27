@@ -22,11 +22,6 @@
 #define CAMLTKextern CAMLextern
 #endif
 
-/* compatibility with earlier versions of Tcl/Tk */
-#ifndef CONST84
-#define CONST84
-#endif
-
 /*Tcl_GetResult(), Tcl_GetStringResult(), Tcl_SetResult(), */
   /*Tcl_SetStringResult(), Tcl_GetErrorLine() */
 
@@ -52,7 +47,7 @@ extern value copy_string_list(int argc, char **argv);
 extern const value *tkerror_exn;
 extern const value *handler_code;
 extern int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
-                     int argc, CONST84 char *argv[]);
+                     int argc, const char *argv[]);
 CAMLTKextern void tk_error(const char * errmsg) Noreturn;
 
 /* cltkMain.c */

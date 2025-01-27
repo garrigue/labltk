@@ -71,8 +71,8 @@ CAMLprim value camltk_setvar(value var, value contents)
 
 
 /* The appropriate type is
-typedef char *(Tcl_VarTraceProc) _ANSI_ARGS_((ClientData clientData,
-        Tcl_Interp *interp, char *part1, char *part2, int flags));
+typedef char *(Tcl_VarTraceProc) (ClientData clientData,
+        Tcl_Interp *interp, char *part1, char *part2, int flags);
  */
 static char * tracevar(ClientData clientdata, Tcl_Interp *interp,
                 const char *name1, const char *name2, int flags)

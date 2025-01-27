@@ -29,7 +29,7 @@ const value * handler_code = NULL;
 
 /* The Tcl command for evaluating callback in OCaml */
 int CamlCBCmd(ClientData clientdata, Tcl_Interp *interp,
-              int argc, CONST84 char **argv)
+              int argc, const char **argv)
 {
   CheckInit();
 
