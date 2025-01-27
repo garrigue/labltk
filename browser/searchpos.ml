@@ -217,7 +217,7 @@ let rec search_pos_signature l ~pos ~env =
         | Error _ -> env
         end
     | sign_item ->
-        try add_signature (Typemod.transl_signature env [pt]).sig_type env
+        try add_signature (Typemod.type_interface env [pt]).sig_type env
         with Typemod.Error _ | Typeclass.Error _
         | Typetexp.Error _  | Typedecl.Error _ -> env
     in
@@ -703,7 +703,6 @@ let view_type_menu kind ~env ~parent =
       Format.set_formatter_output_functions buf#out ignore;
       Format.set_margin 60;
       Format.open_hbox ();
-      Printtyp.prepare_for_printing [ty];
       Printtyp.wrap_printing_env ~error:false env
         (fun () -> Printtyp.type_expr Format.std_formatter ty);
       Format.close_box (); Format.print_flush ();
@@ -860,12 +859,13 @@ and search_pos_expr ~pos exp =
       List.iter l
         ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x);
       search_pos_expr exp ~pos
-  | Texp_match (exp, l, _) ->
+  | Texp_match (exp, cl, vl, _) ->
       search_pos_expr exp ~pos;
-      List.iter l ~f:(search_case ~pos)
-  | Texp_try (exp, l) ->
+      List.iter cl ~f:(search_case ~pos);
+      List.iter vl ~f:(search_case ~pos);
+  | Texp_try (exp, exl, efl) ->
       search_pos_expr exp ~pos;
-      List.iter l ~f:(search_case ~pos)
+      List.iter (exl @ efl) ~f:(search_case ~pos)
   | Texp_tuple l -> List.iter l ~f:(search_pos_expr ~pos)
   | Texp_construct (_, _, l) -> List.iter l ~f:(search_pos_expr ~pos)
   | Texp_variant (_, None) -> ()

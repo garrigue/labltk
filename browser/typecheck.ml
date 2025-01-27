@@ -113,7 +113,7 @@ let f txt =
     let psign = parse_pp text ~ext:".mli"
         ~parse:Parse.interface ~wrap:(fun x -> x) in
     txt.psignature <- psign;
-    txt.signature <- (Typemod.transl_signature !env psign).sig_type;
+    txt.signature <- (Typemod.type_interface !env psign).sig_type;
 
     else (* others are interpreted as .ml *)
 

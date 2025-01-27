@@ -292,14 +292,14 @@ let search_string_type text ~mode =
   try
     let sexp = Parse.interface (Lexing.from_string ("val z : " ^ text)) in
     let sign =
-      try (Typemod.transl_signature !start_env sexp).sig_type with _ ->
+      try (Typemod.type_interface !start_env sexp).sig_type with _ ->
       let env = List.fold_left !module_list ~init:!start_env ~f:
         begin fun acc m ->
           match open_pers_signature m acc with
             Ok env -> env
           | Error _ -> acc
         end in
-      try (Typemod.transl_signature env sexp).sig_type
+      try (Typemod.type_interface env sexp).sig_type
       with
         Env.Error _ | Persistent_env.Error _ -> []
       | Typemod.Error (l,_,_) ->
@@ -438,6 +438,8 @@ let rec bound_variables pat =
   | Ppat_constraint (pat,_) -> bound_variables pat
   | Ppat_lazy pat -> bound_variables pat
   | Ppat_extension _ -> []
+  | Ppat_effect (pat1, pat2) ->
+      bound_variables pat1 @ bound_variables pat2
   | Ppat_exception pat -> bound_variables pat
   | Ppat_open (_, pat) -> bound_variables pat
 
