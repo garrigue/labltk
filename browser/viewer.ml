@@ -55,7 +55,7 @@ let reset_modules box =
 let view_symbol ~kind ~env ?path id =
   let name = match id with
       Lident x -> x
-    | Ldot (_, x) -> x
+    | Ldot (_, x) -> x.txt
     | _ -> match kind with Pvalue | Ptype | Plabel -> "z" | _ -> "Z"
   in
   match kind with
@@ -133,7 +133,7 @@ let choose_symbol ~title ~env ?signature ?path l =
         match path, li with
           None, Ldot (lip, _) ->
             begin try
-              Some (fst (find_module_by_name lip env))
+              Some (fst (find_module_by_name lip.txt env))
             with Not_found -> None
             end
         | _ -> path
@@ -232,7 +232,8 @@ let search_symbol () =
 let ident_of_decl ~modlid = function
     Sig_value (id, _, _) -> Lident (Ident.name id), Pvalue
   | Sig_type (id, _, _, _) -> Lident (Ident.name id), Ptype
-  | Sig_typext (id, _, _, _) -> Ldot (modlid, Ident.name id), Pconstructor
+  | Sig_typext (id, _, _, _) ->
+      Ldot (mknoloc modlid, mknoloc (Ident.name id)), Pconstructor
   | Sig_module (id, _, _, _, _) -> Lident (Ident.name id), Pmodule
   | Sig_modtype (id, _, _) -> Lident (Ident.name id), Pmodtype
   | Sig_class (id, _, _, _) -> Lident (Ident.name id), Pclass
@@ -269,10 +270,7 @@ let view_defined ~env ?(show_all=false) modlid =
     if show_all then view_signature sign ~title ~env ~path
   | _ -> ()
   with Not_found -> ()
-  | Env.Error err -> show_error Env.report_error err
-  | Persistent_env.Error err -> show_error Persistent_env.report_error err
-  | Cmi_format.Error err -> show_error Cmi_format.report_error err
-
+  | exn -> show_error Location.report_exception exn
 
 (* Manage toplevel windows *)
 
@@ -626,7 +624,7 @@ object (self)
           match path, li with
             None, Ldot (lip, _) ->
               begin try
-                Some (fst (find_module_by_name lip env))
+                Some (fst (find_module_by_name lip.txt env))
               with Not_found -> None
               end
           | _ -> path

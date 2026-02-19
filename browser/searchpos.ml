@@ -61,9 +61,9 @@ let observe ~ref ?init f x =
 
 let rec string_of_longident = function
     Lident s -> s
-  | Ldot (id,s) -> string_of_longident id ^ "." ^ s
+  | Ldot (id,s) -> string_of_longident id.txt ^ "." ^ s.txt
   | Lapply (id1, id2) ->
-      string_of_longident id1 ^ "(" ^ string_of_longident id2 ^ ")"
+      string_of_longident id1.txt ^ "(" ^ string_of_longident id2.txt ^ ")"
 
 let string_of_path p = string_of_longident (Searchid.longident_of_path p)
 
@@ -120,7 +120,7 @@ let rec search_pos_type t ~pos ~env =
       search_pos_type t1 ~pos ~env;
       search_pos_type t2 ~pos ~env
   | Ptyp_tuple tl ->
-      List.iter tl ~f:(search_pos_type ~pos ~env)
+      List.iter tl ~f:(fun (_,t) -> search_pos_type ~pos ~env t)
   | Ptyp_constr (lid, tl) ->
       List.iter tl ~f:(search_pos_type ~pos ~env);
       add_found_sig (`Type, lid.txt) ~env ~loc:t.ptyp_loc
@@ -133,8 +133,8 @@ let rec search_pos_type t ~pos ~env =
       add_found_sig (`Type, lid.txt) ~env ~loc:t.ptyp_loc
   | Ptyp_alias (t, _)
   | Ptyp_poly (_, t) -> search_pos_type ~pos ~env t
-  | Ptyp_package (_, stl) ->
-     List.iter stl ~f:(fun (_, ty) -> search_pos_type ty ~pos ~env)
+  | Ptyp_package ppt ->
+     List.iter ppt.ppt_cstrs ~f:(fun (_, ty) -> search_pos_type ty ~pos ~env)
   | Ptyp_open (_, ct) ->
       search_pos_type ct ~pos ~env
   | Ptyp_extension _ -> ()
@@ -730,6 +730,10 @@ let view_type_menu kind ~env ~parent =
   end;
   menu
 
+let iter_apply_arg f = function
+  | Arg arg -> f arg
+  | Omitted _ -> ()
+
 let found_str = ref ([] : (fkind * Env.t * Location.t) list)
 let add_found_str = add_found ~found:found_str
 
@@ -792,7 +796,7 @@ and search_pos_class_expr ~pos cl =
     | Tcl_apply (cl, el) ->
         search_pos_class_expr cl ~pos;
         List.iter el
-          ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x)
+          ~f:(fun (_, x) -> iter_apply_arg (search_pos_expr ~pos) x)
     | Tcl_let (_, pel, iel, cl) ->
         List.iter pel ~f:
           begin fun {vb_pat=pat; vb_expr=exp} ->
@@ -857,7 +861,7 @@ and search_pos_expr ~pos exp =
       end
   | Texp_apply (exp, l) ->
       List.iter l
-        ~f:(fun (_, x) -> Stdlib.Option.iter (search_pos_expr ~pos) x);
+        ~f:(fun (_, x) -> iter_apply_arg (search_pos_expr ~pos) x);
       search_pos_expr exp ~pos
   | Texp_match (exp, cl, vl, _) ->
       search_pos_expr exp ~pos;
@@ -866,7 +870,7 @@ and search_pos_expr ~pos exp =
   | Texp_try (exp, exl, efl) ->
       search_pos_expr exp ~pos;
       List.iter (exl @ efl) ~f:(search_case ~pos)
-  | Texp_tuple l -> List.iter l ~f:(search_pos_expr ~pos)
+  | Texp_tuple l -> List.iter l ~f:(fun (_,t) -> search_pos_expr ~pos t)
   | Texp_construct (_, _, l) -> List.iter l ~f:(search_pos_expr ~pos)
   | Texp_variant (_, None) -> ()
   | Texp_variant (_, Some exp) -> search_pos_expr exp ~pos
@@ -877,7 +881,7 @@ and search_pos_expr ~pos exp =
   | Texp_field (exp, _, _) -> search_pos_expr exp ~pos
   | Texp_setfield (a, _, _, b) ->
       search_pos_expr a ~pos; search_pos_expr b ~pos
-  | Texp_array l -> List.iter l ~f:(search_pos_expr ~pos)
+  | Texp_array (_, l) -> List.iter l ~f:(search_pos_expr ~pos)
   | Texp_ifthenelse (a, b, c) ->
       search_pos_expr a ~pos; search_pos_expr b ~pos;
       begin match c with None -> ()
@@ -935,21 +939,21 @@ and search_pos_pat : type a. pos:_ -> env:_ -> a general_pattern -> unit =
   | Tpat_var (id, _, _) ->
       add_found_str (`Exp(`Val (Pident id), pat.pat_type))
         ~env ~loc:pat.pat_loc
-  | Tpat_alias (pat, _, _, _)
+  | Tpat_alias (pat, _, _, _, _)
   | Tpat_lazy pat
   | Tpat_exception pat -> search_pos_pat pat ~pos ~env
   | Tpat_value pat -> search_pos_pat (pat :> pattern) ~pos ~env
   | Tpat_constant _ ->
       add_found_str (`Exp(`Const, pat.pat_type)) ~env ~loc:pat.pat_loc
   | Tpat_tuple l ->
-      List.iter l ~f:(search_pos_pat ~pos ~env)
+      List.iter l ~f:(fun (_,p) -> search_pos_pat p ~pos ~env)
   | Tpat_construct (_, _, l, _) ->
       List.iter l ~f:(search_pos_pat ~pos ~env)
   | Tpat_variant (_, None, _) -> ()
   | Tpat_variant (_, Some pat, _) -> search_pos_pat pat ~pos ~env
   | Tpat_record (l, _) ->
       List.iter l ~f:(fun (_, _, pat) -> search_pos_pat pat ~pos ~env)
-  | Tpat_array l ->
+  | Tpat_array (_, l) ->
       List.iter l ~f:(search_pos_pat ~pos ~env)
   | Tpat_or (a, b, None) ->
       search_pos_pat a ~pos ~env; search_pos_pat b ~pos ~env

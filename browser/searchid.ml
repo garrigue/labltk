@@ -51,17 +51,19 @@ let string_of_kind = function
 
 let rec longident_of_path = function
     Pident id -> Lident (Ident.name id)
-  | Pdot (path, s) -> Ldot (longident_of_path path, s)
-  | Papply (p1, p2) -> Lapply (longident_of_path p1, longident_of_path p2)
+  | Pdot (path, s) -> Ldot (mknoloc (longident_of_path path), mknoloc s)
+  | Papply (p1, p2) ->
+      Lapply (mknoloc (longident_of_path p1), mknoloc (longident_of_path p2))
   | Pextra_ty (p, Pext_ty) -> longident_of_path p
-  | Pextra_ty (p, Pcstr_ty s) -> Ldot (longident_of_path p, s)
+  | Pextra_ty (p, Pcstr_ty s) ->
+      Ldot (mknoloc (longident_of_path p), mknoloc s)
 
 let rec remove_prefix lid ~prefix =
   let rec remove_hd lid ~name =
-  match lid with
-    Ldot (Lident s1, s2) when s1 = name -> Lident s2
-  | Ldot (l, s) -> Ldot (remove_hd ~name l, s)
-  | _ -> raise Not_found
+    match lid with
+      Ldot ({txt=Lident s1}, s2) when s1 = name -> Lident s2.txt
+    | Ldot (l, s) -> Ldot (mknoloc (remove_hd ~name l.txt), s)
+    | _ -> raise Not_found
   in
   match prefix with
     [] -> lid
@@ -133,7 +135,8 @@ let rec equal ~prefix t1 t2 =
       end
   | Ttuple l1, Ttuple l2 ->
       List.length l1 = List.length l2 &&
-      List.for_all2 l1 l2 ~f:(equal ~prefix)
+      List.for_all2 l1 l2
+        ~f:(fun (s1,t1) (s2,t2) -> s1 = s2 && equal ~prefix t1 t2)
   | Tconstr (p1, l1, _), Tconstr (p2, l2, _) ->
       remove_prefix ~prefix (longident_of_path p1) = (longident_of_path p2)
       && List.length l1 = List.length l2
@@ -183,9 +186,11 @@ let rec included ~prefix t1 t2 =
       len1 <= List.length l2 &&
       List.exists (List2.flat_map ~f:permutations (choose len1 ~card:l2)) ~f:
       begin fun l2 ->
-        List.for_all2 l1 l2 ~f:(included ~prefix)
+        List.for_all2 l1 l2 ~f:
+          (fun (s1,t1) (s2,t2) ->
+            (s1 = None || s1 = s2) && included ~prefix t1 t2)
       end
-  | _, Ttuple _ -> included (newty (Ttuple [t1])) t2 ~prefix
+  | _, Ttuple _ -> included (newty (Ttuple [None, t1])) t2 ~prefix
   | Tconstr (p1, l1, _), Tconstr (p2, l2, _) ->
       remove_prefix ~prefix (longident_of_path p1) = (longident_of_path p2)
       && List.length l1 = List.length l2
@@ -195,7 +200,8 @@ let rec included ~prefix t1 t2 =
 let mklid = function
     [] -> raise (Invalid_argument "Searchid.mklid")
   | x :: l ->
-      List.fold_left l ~init:(Lident x) ~f:(fun acc x -> Ldot (acc, x))
+      List.fold_left l ~init:(Lident x)
+        ~f:(fun acc x -> Ldot (mknoloc acc, mknoloc x))
 
 let mkpath = function
     [] -> raise (Invalid_argument "Searchid.mklid")
@@ -336,8 +342,8 @@ let longident_of_string text =
   done;
   let sym = String.sub text ~pos:!l ~len:(String.length text - !l) in
   let rec mklid = function
-      [s] -> Lident s
-    | s :: l -> Ldot (mklid l, s)
+      [s] -> mknoloc (Lident s)
+    | s :: l -> mknoloc (Ldot (mklid l, mknoloc s))
     | [] -> assert false in
   sym, fun l -> mklid (sym :: !exploded @ l)
 
@@ -390,7 +396,8 @@ let search_pattern_symbol text =
   in
   List2.flat_map l ~f:
     begin fun (m, l) ->
-      List.map l ~f:(fun (i, p) -> Ldot (m, Ident.name i), p)
+      List.map l
+        ~f:(fun (i, p) -> Ldot (mknoloc m, mknoloc (Ident.name i)), p)
     end
 
 (*
@@ -403,7 +410,7 @@ let is_pattern s =
 
 let search_string_symbol text =
   if text = "" then [] else
-  let lid = snd (longident_of_string text) [] in
+  let lid = (snd (longident_of_string text) []).txt in
   let try_lookup f k =
     try let _ = f lid !start_env in [lid, k]
     with Not_found | Env.Error _ | Persistent_env.Error _ -> []
@@ -424,7 +431,7 @@ let rec bound_variables pat =
   | Ppat_interval _ -> []
   | Ppat_var s -> [s.txt]
   | Ppat_alias (pat,s) -> s.txt :: bound_variables pat
-  | Ppat_tuple l -> List2.flat_map l ~f:bound_variables
+  | Ppat_tuple (l, _) -> List2.flat_map l ~f:(fun (_,t) -> bound_variables t)
   | Ppat_construct (_,None) -> []
   | Ppat_construct (_,Some (_, pat)) -> bound_variables pat
   | Ppat_variant (_,None) -> []

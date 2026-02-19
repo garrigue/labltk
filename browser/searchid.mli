@@ -16,7 +16,7 @@
 
 val start_env : Env.t ref
 val module_list : string list ref
-val longident_of_path :  Path.t ->Longident.t
+val longident_of_path :  Path.t -> Longident.t
 
 type pkind =
     Pvalue
