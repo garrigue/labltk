@@ -3,7 +3,7 @@
 
 PREREQUISITES
 
-* OCaml (>= 4.08) should be installed  (5.0 for ocamlbrowser)
+* OCaml (>= 4.08) should be installed  (5.4 for ocamlbrowser)
 
 * Tcl/Tk (>= 8.03) should be installed
 
